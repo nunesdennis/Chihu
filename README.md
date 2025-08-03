@@ -15,7 +15,7 @@ Key Features:
 Whether you're a cinephile, bookworm, audiophile, or just someone who loves to document your cultural journey, Chihu is your new favorite place to be.
 
 # Project guide
-- The app does not have the required id/secrets for some services, when running the app do not search anything other than the server option, do not log in normally, use the add local server to login to force the app to get the ids and secrets for your server.
+- The app does not have the required id/secrets for some services, when running the app do not search using any source other than the server option, do not log in normally, use the add local server to login to force the app to get the ids and secrets for your server.
 - The code is not very well made, I don't have a lot of time so I am always in a rush.
 
 Let me know if you need any help:
