@@ -1,0 +1,2745 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "#" : {
+      "comment" : "Inside review screen when a show has a special season, we show the # instead of a number",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "#"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "#"
+          }
+        }
+      }
+    },
+    "## Tip:\n#### Paste the link of one of the compatible sites into the search field:\nDouban, Goodreads, Google Books, BooksTW, IMDb, TMDB, Bandcamp, Spotify, IGDB, Steam, Bangumi, BGG, RSS, Discogs, Apple Music, Fediverse, Qidian, Ypshuo." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Suggerimento:\n#### Incolla il link di uno dei siti compatibili nel campo di ricerca: Douban, Goodreads, Google Books, BooksTW, IMDb, TMDB, Bandcamp, Spotify, IGDB, Steam, Bangumi, BGG, RSS, Discogs, Apple Music, Fediverso, Qidian, Ypshuo."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Dica:\n#### Cole o link de um dos sites compatíveis no campo de busca:\nDouban, Goodreads, Google Books, BooksTW, IMDb, TMDB, Bandcamp, Spotify, IGDB, Steam, Bangumi, BGG, RSS, Discogs, Apple Music, Fediverse, Qidian, Ypshuo."
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "comment" : "Inside review screen when a show has seasons, we show the number of the season",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld / 360" : {
+      "comment" : "character count on the comments of review screen",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld / 360"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld / 360"
+          }
+        }
+      }
+    },
+    "¯\\_(ツ)_/¯" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¯\\_(ツ)_/¯"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¯\\_(ツ)_/¯"
+          }
+        }
+      }
+    },
+    "🧩" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧩"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧩"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧩"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧩"
+          }
+        }
+      }
+    },
+    "About" : {
+      "comment" : "Title of about screen",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sobre"
+          }
+        }
+      }
+    },
+    "About the app" : {
+      "comment" : "settings option that sends the user to about screen",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riguardo l’app"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sobre o app"
+          }
+        }
+      }
+    },
+    "about.text" : {
+      "comment" : "about screen description of the app.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ was created and is in development to fill a gap that I saw when using NeoDB, I wanted to fill this gap by provinding an app for me and whoever likes the service as well."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ è stato creato ed è in fase di sviluppo per riempire l'assenza di un client mentre usavo NeoDB. Volevo fornire un'app a me e a chiunque piaccia il servizio NeoDB."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ foi criado e está em desenvolvimento para preencher uma lacuna que vi no uso do NeoDB, a falta de um aplicativo era algo que quis resolver pelo menos para mim e para quem também está curtindo o serviço."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ was created and is in development to fill a gap that I saw when using NeoDB, I wanted to fill this gap by provinding an app for me and whoever likes the service as well."
+          }
+        }
+      }
+    },
+    "Access keys problem" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Problema chiavi d'accesso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Problemas de chaves de acesso"
+          }
+        }
+      }
+    },
+    "Add" : {
+      "comment" : "On Review screen, add button on the top right",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar"
+          }
+        }
+      }
+    },
+    "Add new" : {
+      "comment" : "On Login screen, add new server locally button",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi nuovo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar novo"
+          }
+        }
+      }
+    },
+    "Add to wishlist" : {
+      "comment" : "On the feed screen, when sliding a post we can add the item of the post to the wish list",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi alla lista dei desideri"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar a lista de desejos"
+          }
+        }
+      }
+    },
+    "Alert" : {
+      "comment" : "On the feed screen, when user sees an alert message",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allerta"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alerta"
+          }
+        }
+      }
+    },
+    "All" : {
+      "comment" : "All categories",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutti"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas"
+          }
+        }
+      }
+    },
+    "App Preferences" : {
+      "comment" : "Screen name, app preferences screen in settings",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferenze App"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferências do aplicativo"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete your review?" : {
+      "comment" : "On Review screen, when trying to delete review, this is the message",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sei sicuro di voler eliminare la tua recensione?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tem certeza que quer deletar sua avaliação?"
+          }
+        }
+      }
+    },
+    "Are you sure you want to remove your item from the collection?" : {
+      "comment" : "On Review(Collection option), when trying to remove an item from a collection",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sei sicuro di voler rimuovere il tuo elemento dalla collezione?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tem certeza que quer remover esse item da sua coleção?"
+          }
+        }
+      }
+    },
+    "Backend Consultant" : {
+      "comment" : "On Thanks to screen",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulente Backend"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consultor Backend"
+          }
+        }
+      }
+    },
+    "Blogs" : {
+      "comment" : "On Thanks to screen, blogs section name",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blog"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blogs"
+          }
+        }
+      }
+    },
+    "Body" : {
+      "comment" : "On review screen, text field text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corpo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corpo"
+          }
+        }
+      }
+    },
+    "Book" : {
+      "comment" : "Book category",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Libro"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Livro"
+          }
+        }
+      }
+    },
+    "BSD-3-Clause license" : {
+      "comment" : "On thanks to screen, license of one of the projects",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenza BSD-3-Clause"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BSD-3-Clause license"
+          }
+        }
+      }
+    },
+    "Can not open this" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non posso aprirlo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não consigo abrir isso"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "comment" : "On Review screen, cancel button on a alert message",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancella"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        }
+      }
+    },
+    "Categories" : {
+      "comment" : "On Search screen, categories filter options",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorias"
+          }
+        }
+      }
+    },
+    "Chapter" : {
+      "comment" : "On review(progress note option), title for text field of items that can have chapters",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capitolo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capítulo"
+          }
+        }
+      }
+    },
+    "Chihu" : {
+      "comment" : "On Login view, app name",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chihu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chihu"
+          }
+        }
+      }
+    },
+    "Clear cache" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulisci cache"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apagar cache"
+          }
+        }
+      }
+    },
+    "Collection" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collezione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coleção"
+          }
+        }
+      }
+    },
+    "Collection not selected" : {
+      "comment" : "On Review (Collection selected), after trying to add an item without any selected collection",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collezione non selezionata"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coleção não foi selecionada"
+          }
+        }
+      }
+    },
+    "Collections" : {
+      "comment" : "tab bar collection option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collezioni"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coleções"
+          }
+        }
+      }
+    },
+    "Completed" : {
+      "comment" : "Shelf screen, filter option completed for marked items",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completos"
+          }
+        }
+      }
+    },
+    "Contact the dev" : {
+      "comment" : "Settings screen, contact the dev option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contatta lo sviluppatore"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contate o desenvolvedor"
+          }
+        }
+      }
+    },
+    "Content Warning (optional)" : {
+      "comment" : "Review view(progress note selected), text field for spoilers (content warning)",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avviso Contenuto (opzionale)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aviso de conteúdo (opcional)"
+          }
+        }
+      }
+    },
+    "Create" : {
+      "comment" : "On Collection view, create new collection option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar"
+          }
+        }
+      }
+    },
+    "Crosspost to timeline" : {
+      "comment" : "On Review screen, crosspost to timeline switch",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condividi sulla timeline"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crosspost na timeline"
+          }
+        }
+      }
+    },
+    "Cycle" : {
+      "comment" : "On review screen, progress note option for games",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripeti"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciclo"
+          }
+        }
+      }
+    },
+    "Dark Mode" : {
+      "comment" : "On theme view, dark mode option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modalità Scura"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo Escuro"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "comment" : "On Collection View, delete collection option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deletar"
+          }
+        }
+      }
+    },
+    "Delete Account" : {
+      "comment" : "On Settings view, delete account option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina Account"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excluir conta"
+          }
+        }
+      }
+    },
+    "Delete Note" : {
+      "comment" : "On review view (progress note selected), delete note option when  swiping note cell",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina Nota"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deletar nota"
+          }
+        }
+      }
+    },
+    "Delete rate" : {
+      "comment" : "On Review view, delete rate button",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina valutazione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deletar avaliação"
+          }
+        }
+      }
+    },
+    "Delete review" : {
+      "comment" : "On Review view, delete review button",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina recensione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deletar resenha"
+          }
+        }
+      }
+    },
+    "Did not find anything" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non è stato trovato nulla"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem resultados"
+          }
+        }
+      }
+    },
+    "Dropped" : {
+      "comment" : "On Shelf view, dropped items filter button option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lasciata"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desistidos"
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "comment" : "On Collection view, edit collection option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar"
+          }
+        }
+      }
+    },
+    "Edit Note" : {
+      "comment" : "On Review view (progress note option), edit note when swiping note cell",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica Nota"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar Nota"
+          }
+        }
+      }
+    },
+    "Episode" : {
+      "comment" : "On Review view (progress note option), episode option for tv shows/podcasts",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episodio"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episódio"
+          }
+        }
+      }
+    },
+    "Error" : {
+      "comment" : "On collection view, error message when showing error alert",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errore"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erro"
+          }
+        }
+      }
+    },
+    "Exhibition" : {
+      "comment" : "On search view, exhibition filter option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esibizione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exibição"
+          }
+        }
+      }
+    },
+    "Fanfic" : {
+      "comment" : "On search view, fanfic filter option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fanfic"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fanfic"
+          }
+        }
+      }
+    },
+    "Feed" : {
+      "comment" : "On tab bar, feed option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feed"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feed"
+          }
+        }
+      }
+    },
+    "Followers Only" : {
+      "comment" : "On Review view, followers only filter option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo Seguaci"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguidores"
+          }
+        }
+      }
+    },
+    "For NeoDB" : {
+      "comment" : "On login view header, \"for NeoDB\" with app name",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per NeoDB"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para NeoDB"
+          }
+        }
+      }
+    },
+    "Game" : {
+      "comment" : "On Search view, filter option game",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gioco"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jogo"
+          }
+        }
+      }
+    },
+    "Google Books" : {
+      "comment" : "On Search View, source filter option google books",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Books"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Livros"
+          }
+        }
+      }
+    },
+    "Hide NeoDB scores from under cards and review screen." : {
+      "comment" : "Message on switch cell for NeoDB score preferences",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi le valutazioni NeoDB da sotto le schede e dalla schermata di valutazione."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esconda as notas do NeoDB dos cartões de itens no app e na tela de review"
+          }
+        }
+      }
+    },
+    "Hide preferences" : {
+      "comment" : "Section title for cells in app preferences screen",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi preferenze"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferências de ocultações"
+          }
+        }
+      }
+    },
+    "Hide your scores from under cards." : {
+      "comment" : "Message on switch cell for Your score preferences",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi i tuoi voti dalle schede."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esconda as suas notas nos cartões de itens no app"
+          }
+        }
+      }
+    },
+    "I can not open this link, sorry" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non posso aprire questo link, mi dispiace"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não consigo abrir esse link, desculpe"
+          }
+        }
+      }
+    },
+    "I could not find the card that you selected, try again maybe" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non sono riuscito a trovare la scheda che hai selezionato, riprova dopo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não consegui achar o item que você selecionou, tente de novo"
+          }
+        }
+      }
+    },
+    "I did not receive the response I was expecting" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non ho ricevuto la risposta che stavo aspettando"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eu não recebi a resposta esperada"
+          }
+        }
+      }
+    },
+    "I don't have my keys that I need here" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non ho le mie chiavi di cui ho bisogno qui"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estou sem minhas chaves de acesso"
+          }
+        }
+      }
+    },
+    "I don't have the keys that I need here" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non ho le chiavi di cui ho bisogno qui"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estou sem as chaves de acesso que preciso"
+          }
+        }
+      }
+    },
+    "I don't have your keys that I need here" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non ho le tue chiavi di cui ho bisogno qui"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estou sem suas chaves de acesso"
+          }
+        }
+      }
+    },
+    "In Progress" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Corso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Em progresso"
+          }
+        }
+      }
+    },
+    "Invalid url" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL non valido"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Url invalida"
+          }
+        }
+      }
+    },
+    "It appears your camera may not be available" : {
+      "comment" : "Error message, when trying to scan book bar code",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sembra che la tua fotocamera non è disponibile"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sua câmera parece não estar disponível"
+          }
+        }
+      }
+    },
+    "It looks like this device doesn't support scanner" : {
+      "comment" : "Error message, when trying to scan book bar code",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sembra che questo dispositivo non supporti lo scanner"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aparelho parece não ser compatível com o leitor de qr code"
+          }
+        }
+      }
+    },
+    "Italian" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Italiano"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Italiano"
+          }
+        }
+      }
+    },
+    "Item not found" : {
+      "comment" : "Error message when trying to send rate/review and item to review is not found",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elemento non trovato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item não encontrado"
+          }
+        }
+      }
+    },
+    "Light Mode" : {
+      "comment" : "Theme view, light mode option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modalità Chiara"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo Claro"
+          }
+        }
+      }
+    },
+    "Localization" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Localizzazione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Localização"
+          }
+        }
+      }
+    },
+    "Logout" : {
+      "comment" : "settings view, logout option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sair"
+          }
+        }
+      }
+    },
+    "Mentioned Only" : {
+      "comment" : "On Review view, mentioned only filter option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo Menzionati"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mencionados"
+          }
+        }
+      }
+    },
+    "MIT License" : {
+      "comment" : "On Thanks to screen, mit license from one of the projects",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenza MIT"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIT License"
+          }
+        }
+      }
+    },
+    "Movie" : {
+      "comment" : "On Search view, category filter option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Film"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filme"
+          }
+        }
+      }
+    },
+    "Music" : {
+      "comment" : "On Search view, category filter option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Musica"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Música"
+          }
+        }
+      }
+    },
+    "NeoDB 🧩" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NeoDB 🧩"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NeoDB 🧩"
+          }
+        }
+      }
+    },
+    "No results, try to search with url" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun risultato, prova a cercare con l'url"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem resultados, tente novamente com um link"
+          }
+        }
+      }
+    },
+    "No URL" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun URL"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem URL"
+          }
+        }
+      }
+    },
+    "None" : {
+      "comment" : "Shelf category option, none (not visible)",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuno"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum"
+          }
+        }
+      }
+    },
+    "Not a valid link" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non è un link valido"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O link não é valido"
+          }
+        }
+      }
+    },
+    "Not finding this card" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non è possibile trovare questa scheda"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não estou achando esse item"
+          }
+        }
+      }
+    },
+    "Not found" : {
+      "comment" : "Generic not found message",
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non trovato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não encontrado"
+          }
+        }
+      }
+    },
+    "Not sure what came, but I don't know how to deal with this" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non so cosa sia successo, ma non sono in grado di affrontarlo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não tenho certeza do que veio, mas eu não sei lidar com isso agora"
+          }
+        }
+      }
+    },
+    "Not sure what happened" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non so cosa sia successo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não sei o que aconteceu"
+          }
+        }
+      }
+    },
+    "Note not found" : {
+      "comment" : "On review view (progress not selected), trying to update note error",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota non trovata"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota não encontrada"
+          }
+        }
+      }
+    },
+    "Notes" : {
+      "comment" : "Notes section on top of note cell list",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notas"
+          }
+        }
+      }
+    },
+    "Nothing came" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun risultato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não chegou nada aqui"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "comment" : "Ok button message for alert messages",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ok"
+          }
+        }
+      }
+    },
+    "Page" : {
+      "comment" : "On Review view (progress note option), book option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagina"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Página"
+          }
+        }
+      }
+    },
+    "Part" : {
+      "comment" : "On Review view (progress note option), movie option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parte"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parte"
+          }
+        }
+      }
+    },
+    "People" : {
+      "comment" : "On thanks to screen, people section",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persone"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pessoas"
+          }
+        }
+      }
+    },
+    "Percentage" : {
+      "comment" : "On review view (progress note option), book, movie, tv show option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Percentuale"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porcentagem"
+          }
+        }
+      }
+    },
+    "performance" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "esibizione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show/Teatro"
+          }
+        }
+      }
+    },
+    "Performance" : {
+      "comment" : "On Search view, filter button option for category",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esibizione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show/Teatro"
+          }
+        }
+      }
+    },
+    "Please type the collection note for this item" : {
+      "comment" : "On Review view (collection option), text field text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrivi la nota di collezione per questo elemento, per favore"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por favor escreva a nota de coleção do seu item aqui"
+          }
+        }
+      }
+    },
+    "Please type the progress note for this item" : {
+      "comment" : "On Review view (progress note option), text field text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrivi la nota di progresso per questo elemento, per favore"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por favor escreva a nota de progresso do seu item aqui"
+          }
+        }
+      }
+    },
+    "Please type your comments here" : {
+      "comment" : "On Review view, text field text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrivi i tuoi commenti qui"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por favor, escreva seu comentário aqui"
+          }
+        }
+      }
+    },
+    "Please type your comments here \nTips: use >!text!< for spoilers \nsome instances may not be able to show posts longer than 360 characters." : {
+      "comment" : "On Review view, text field expanded text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrivi i tuoi commenti qui\nSuggerimenti: usa >!testo!< per gli spoiler, alcune istanze potrebbero non mostrare post più lunghi di 360 caratteri."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por favor, escreva seu comentário aqui:  use >!text!< para spoilers, Algumas instâncias/servidores podem não aceitar mais de 360 caracteres."
+          }
+        }
+      }
+    },
+    "Podcast" : {
+      "comment" : "On search view, category filter button",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podcast"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podcast"
+          }
+        }
+      }
+    },
+    "Podcast Index" : {
+      "comment" : "on search view, source filter button",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indice dei Podcast"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podcast Index"
+          }
+        }
+      }
+    },
+    "Posts" : {
+      "comment" : "On Review view, posts button option at the top",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Post"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Postagens"
+          }
+        }
+      }
+    },
+    "Profile" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profilo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perfil"
+          }
+        }
+      }
+    },
+    "Progress" : {
+      "comment" : "on shelf view, button filter option progress",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progresso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Em progresso"
+          }
+        }
+      }
+    },
+    "Progress (optional)" : {
+      "comment" : "on review view (progress note option), text field for progress value",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progresso (opzionale)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progresso (Opcional)"
+          }
+        }
+      }
+    },
+    "Progress Note" : {
+      "comment" : "on review view, progress note button option at the top",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota di progresso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota de progresso"
+          }
+        }
+      }
+    },
+    "Progress Type (optional)" : {
+      "comment" : "on review view (progress note option), button filter for progress type",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipo di Progresso (opzionale)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipo de progresso (Opcional)"
+          }
+        }
+      }
+    },
+    "Projects" : {
+      "comment" : "on thanks to screen, projects section title",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progetti"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projetos"
+          }
+        }
+      }
+    },
+    "Public" : {
+      "comment" : "on review view, filter button option for visibility level",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pubblica"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Público"
+          }
+        }
+      }
+    },
+    "Rate" : {
+      "comment" : "on review view, button at top left of the screen",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valuta"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avaliar"
+          }
+        }
+      }
+    },
+    "Rating" : {
+      "comment" : "On Review view, rating button option at the top",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valutazione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avaliação"
+          }
+        }
+      }
+    },
+    "Register locally" : {
+      "comment" : "on login view, register locally button text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registra localmente"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrar localmente"
+          }
+        }
+      }
+    },
+    "Register new server locally" : {
+      "comment" : "on login view, register locally text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registra nuovo server localmente"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrar novo servidor localmente"
+          }
+        }
+      }
+    },
+    "Registered Servers" : {
+      "comment" : "on login view, section title text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server Registrati"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servidores registrados"
+          }
+        }
+      }
+    },
+    "Remove from collection" : {
+      "comment" : "on review view (collection option), remove item from collection button",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rimuovi dalla collezione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remover da coleção"
+          }
+        }
+      }
+    },
+    "Restart" : {
+      "comment" : "on login, restart button to restart screen to first state",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavvia"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomeçar"
+          }
+        }
+      }
+    },
+    "Review" : {
+      "comment" : "on review screen, top button option review",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recensisci"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resenhar"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "comment" : "tab bar option search",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Procurar"
+          }
+        }
+      }
+    },
+    "Seems like I don't have the url that I need here" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sembra che io non abbia l'url di cui ho bisogno qui"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parece que não tenho a URL que preciso"
+          }
+        }
+      }
+    },
+    "Sent" : {
+      "comment" : "server message response after sending item",
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inviato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviado"
+          }
+        }
+      }
+    },
+    "Server" : {
+      "comment" : "on search view, source filter option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servidor"
+          }
+        }
+      }
+    },
+    "Server error" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errore del Server"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erro de servidor"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "comment" : "tab bar option settings",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impostazioni"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes"
+          }
+        }
+      }
+    },
+    "Shelf" : {
+      "comment" : "tab bar option settings",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scaffale"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prateleira"
+          }
+        }
+      }
+    },
+    "Shelf type" : {
+      "comment" : "On Shelf screen, text for filter option for item mark state (completed, dropped...)",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipo di scaffale"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipo de prateleira"
+          }
+        }
+      }
+    },
+    "Sign up or Login" : {
+      "comment" : "login view button",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iscriviti o Accedi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inscreva-se ou Entre"
+          }
+        }
+      }
+    },
+    "Something is missing" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manca qualcosa"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algo está faltando"
+          }
+        }
+      }
+    },
+    "Something is not tasting well" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualcosa non è di buon gusto"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alguma coisa não está com o gosto certo"
+          }
+        }
+      }
+    },
+    "Sources" : {
+      "comment" : "Search view, source text on filter options",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fonti"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fontes"
+          }
+        }
+      }
+    },
+    "State" : {
+      "comment" : "On review view, state text for filter option for item mark (completed, dropped, in progress....)",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado"
+          }
+        }
+      }
+    },
+    "Success" : {
+      "comment" : "Login view, success text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Successo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sucesso"
+          }
+        }
+      }
+    },
+    "Support the developer" : {
+      "comment" : "On settings view, support dev option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supporta lo sviluppatore"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajude o desenvolvedor"
+          }
+        }
+      }
+    },
+    "Thanks to" : {
+      "comment" : "on settings view, thanks to option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grazie a"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agradecimentos"
+          }
+        }
+      }
+    },
+    "Thanks To" : {
+      "comment" : "on thanks to view, screen title",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grazie a"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agradecimentos"
+          }
+        }
+      }
+    },
+    "Themes" : {
+      "comment" : "on settings view, themes option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temas"
+          }
+        }
+      }
+    },
+    "This app" : {
+      "comment" : "on about view, text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quest'app"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esse aplicativo"
+          }
+        }
+      }
+    },
+    "This link is not valid, not sure why, sorry" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il link non è valido, non so il perchè, scusa"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esse link não é valido, não tenho certeza do motivo, desculpe"
+          }
+        }
+      }
+    },
+    "Timestamp" : {
+      "comment" : "on review view(progress note option), timestamp option for movie item",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timbro orario"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timestamp"
+          }
+        }
+      }
+    },
+    "Tip Jar" : {
+      "comment" : "on support dev screen, text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barattolo Mance"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caixinha"
+          }
+        }
+      }
+    },
+    "Title" : {
+      "comment" : "new collection view, text field text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titolo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Título"
+          }
+        }
+      }
+    },
+    "Title or Description are empty" : {
+      "comment" : "new collection view creation error",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il Titolo o la Descrizione sono vuoti"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Título ou descrição estão vazios"
+          }
+        }
+      }
+    },
+    "TMDB" : {
+      "comment" : "on search view, item source",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TMDB"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TMDB"
+          }
+        }
+      }
+    },
+    "Track" : {
+      "comment" : "on review view (progress note option), music track option",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traccia"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Track"
+          }
+        }
+      }
+    },
+    "tv" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tv"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tv"
+          }
+        }
+      }
+    },
+    "TV" : {
+      "comment" : "on search view, filter category option tv",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV"
+          }
+        }
+      }
+    },
+    "tvSeason" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "StagioneTv"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tvSeason"
+          }
+        }
+      }
+    },
+    "Unknown" : {
+      "comment" : "on search view, filter category option unknown (not visible)",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sconosciuto"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconhecido"
+          }
+        }
+      }
+    },
+    "Update" : {
+      "comment" : "new collection view, update collection button at top",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiorna"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualizar"
+          }
+        }
+      }
+    },
+    "URL not working" : {
+      "comment" : "thanks to view, error message, url from cell not working",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’URL non funziona"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL não está funcionando"
+          }
+        }
+      }
+    },
+    "Use another server" : {
+      "comment" : "login view, use another server button",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usa un altro server"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use outro servidor"
+          }
+        }
+      }
+    },
+    "Visibility" : {
+      "comment" : "new collection view, visibility filter text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visibilità"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visibilidade"
+          }
+        }
+      }
+    },
+    "what is the shelf type?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "qual è il tipo di scaffale?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qual o tipo de estante?"
+          }
+        }
+      }
+    },
+    "Wishlist" : {
+      "comment" : "shelf view, filter option for item state",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista dei desideri"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista de desejos"
+          }
+        }
+      }
+    },
+    "Write a brief description here" : {
+      "comment" : "new collection view, text field text",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrivi qui una breve descrizione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escreva uma descrição breve"
+          }
+        }
+      }
+    },
+    "Your Scores" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le tue valutazioni"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suas notas de avaliações"
+          }
+        }
+      }
+    },
+    "Youtube" : {
+      "comment" : "on thanks to view, youtube section",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Youtube"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Youtube"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

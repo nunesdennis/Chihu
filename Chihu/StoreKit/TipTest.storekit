@@ -1,0 +1,135 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "B44C519D",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "4FF7F2CD",
+      "localizations" : [
+        {
+          "description" : "A sizable tip that helps with development",
+          "displayName" : "Bountiful Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "me.nunesdennis.Chihu.tip.bountiful",
+      "referenceName" : "Bountiful Tip",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "8702449F",
+      "localizations" : [
+        {
+          "description" : "A generous tip to show your support",
+          "displayName" : "Generous Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "me.nunesdennis.Chihu.tip.generous",
+      "referenceName" : "Generous Tip",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "42A13357",
+      "localizations" : [
+        {
+          "description" : "A small tip to show your appreciation",
+          "displayName" : "Kind Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "me.nunesdennis.Chihu.tip.kind",
+      "referenceName" : "Kind Tip",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "57397F05",
+      "localizations" : [
+        {
+          "description" : "A large tip that helps with development costs",
+          "displayName" : "Supporter Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "me.nunesdennis.Chihu.tip.supporter",
+      "referenceName" : "Supporter Tip",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

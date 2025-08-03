@@ -1,0 +1,52 @@
+//
+//  CatalogPostsModel.swift
+//  Chihu
+//
+//  Created by Dennis Nunes on 15/04/25.
+//
+
+import Foundation
+
+enum CatalogPostsModel {
+    enum Load {
+        struct Request: CatalogPostRequestProtocol {
+            let typeList: [String]
+            let itemUuid: String
+        }
+        
+        struct Response {
+            let posts: PostsSchema
+        }
+        
+        struct ViewModel {
+            struct Account: AccountProtocol {
+                let avatar: String
+                let acct: String
+                var displayName: String?
+            }
+            
+            struct Post: PostProtocol, Identifiable {
+                let id: String
+                let sensitive: Bool
+                let accountValue: (any AccountProtocol)
+                let spoilerText: String
+                var repostValue: (any PostProtocol)?
+                var content: String?
+                var applicationValue: (any ApplicationProtocol)?
+            }
+            
+            let posts: [Post]
+            
+            init(posts: PostsSchema) {
+                self.posts = posts.data.map { post in
+                    let acct = Account(avatar: post.account.avatar, acct: post.account.acct, displayName: post.account.displayName)
+                    return Post(id: post.id,
+                                sensitive: post.sensitive,
+                                accountValue: acct,
+                                spoilerText: post.spoilerText,
+                                content: post.content)
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NEODB_DEADVEY_COM_CLIENT_ID</key>
+	<string>$(NEODB_DEADVEY_COM_CLIENT_ID)</string>
+	<key>NEODB_DEADVEY_COM_CLIENT_SECRET</key>
+	<string>$(NEODB_DEADVEY_COM_CLIENT_SECRET)</string>
+	<key>FANTASTIKA_SOCIAL_CLIENT_SECRET</key>
+	<string>$(FANTASTIKA_SOCIAL_CLIENT_SECRET)</string>
+	<key>FANTASTIKA_SOCIAL_CLIENT_ID</key>
+	<string>$(FANTASTIKA_SOCIAL_CLIENT_ID)</string>
+	<key>NEODB_KEVGA_DE_CLIENT_SECRET</key>
+	<string>$(NEODB_KEVGA_DE_CLIENT_SECRET)</string>
+	<key>NEODB_KEVGA_DE_CLIENT_ID</key>
+	<string>$(NEODB_KEVGA_DE_CLIENT_ID)</string>
+	<key>DB_CASUALLY_CAT_CLIENT_SECRET</key>
+	<string>$(DB_CASUALLY_CAT_CLIENT_SECRET)</string>
+	<key>DB_CASUALLY_CAT_CLIENT_ID</key>
+	<string>$(DB_CASUALLY_CAT_CLIENT_ID)</string>
+	<key>PODCAST_INDEX_SECRET</key>
+	<string>$(PODCAST_INDEX_SECRET)</string>
+	<key>PODCAST_INDEX_KEY</key>
+	<string>$(PODCAST_INDEX_KEY)</string>
+	<key>TEAM_ID</key>
+	<string>$(TEAM_ID)</string>
+	<key>MINREOL_DK_CLIENT_SECRET</key>
+	<string>$(MINREOL_DK_CLIENT_SECRET)</string>
+	<key>MINREOL_DK_CLIENT_ID</key>
+	<string>$(MINREOL_DK_CLIENT_ID)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>REVIEWDB_APP_CLIENT_SECRET</key>
+	<string>$(REVIEWDB_APP_CLIENT_SECRET)</string>
+	<key>REVIEWDB_APP_CLIENT_ID</key>
+	<string>$(REVIEWDB_APP_CLIENT_ID)</string>
+	<key>NEODB_SOCIAL_CLIENT_SECRET</key>
+	<string>$(NEODB_SOCIAL_CLIENT_SECRET)</string>
+	<key>NEODB_SOCIAL_CLIENT_ID</key>
+	<string>$(NEODB_SOCIAL_CLIENT_ID)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access the camera in order to scan barcodes from books, and Find the books</string>
+	<key>API_CLIENT_ID</key>
+	<string>$(API_CLIENT_ID)</string>
+	<key>API_CLIENT_SECRET</key>
+	<string>$(API_CLIENT_SECRET)</string>
+	<key>API_KEY</key>
+	<string>$(API_KEY)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>me.nunesdennis.Chihu</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>Chihu</string>
+			</array>
+		</dict>
+	</array>
+	<key>TMDB_API_KEY</key>
+	<string>$(TMDB_API_KEY)</string>
+</dict>
+</plist>
