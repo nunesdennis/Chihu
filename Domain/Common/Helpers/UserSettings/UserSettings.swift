@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUICore
 
 class UserSettings: ObservableObject {
     enum Constants: String {
@@ -25,16 +24,6 @@ class UserSettings: ObservableObject {
     var instanceURL: String?
     var accessToken: String?
     
-    var colorScheme: ColorScheme {
-        switch selectedTheme {
-        case .lightModeDefault:
-                .light
-        case .darkModeDefault:
-                .dark
-        }
-    }
-    
-    @Environment(\.colorScheme) static var appColorScheme
     @Published var language: Language = .en(region: .standard(code: "US"))
     @Published var userPreference: UserPreference.Load.ViewModel? {
         didSet {
@@ -196,15 +185,6 @@ class UserSettings: ObservableObject {
         shouldShowLogin = accessToken == nil || instanceURL == nil
     }
     
-    private static func getTheme() -> Theme {
-        let appDefaultTheme = appColorScheme == .light ? Theme.lightModeDefault : Theme.darkModeDefault
-        if let themeValue = UserDefaults(suiteName: "group.nunesdennis.chihu")?.string(forKey: Constants.theme.rawValue) {
-            return Theme(rawValue: themeValue) ?? appDefaultTheme
-        } else {
-            return appDefaultTheme
-        }
-    }
-    
     private static func getLanguage() -> Language {
         // Using system language as default
         if let languageValue = Locale.current.language.languageCode?.identifier {
@@ -214,6 +194,14 @@ class UserSettings: ObservableObject {
         } else {
             .en(region: .standard(code: "US"))
         }
+    }
+    
+    static func getTheme() -> Theme {
+        guard let themeValue = UserDefaults(suiteName: "group.nunesdennis.chihu")?.string(forKey: Constants.theme.rawValue) else {
+            return .lightModeDefault
+        }
+        
+        return Theme(rawValue: themeValue) ?? .lightModeDefault
     }
     
     private func saveHideShowNeoDBscore(shouldShow: Bool) {

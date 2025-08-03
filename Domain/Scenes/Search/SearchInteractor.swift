@@ -107,7 +107,7 @@ extension SearchInteractor: SearchBusinessLogic {
                         case .success(let item):
                             let response = SearchByURL.Load.Response.init(shelfItemDetails: item)
                             self.presenter?.presentResultFromURLAndOpen(response: response)
-                        case .failure(let error):
+                        case .failure:
                             self.presenter?.presentResultFromURLAndOpen(response: response)
                         }
                     }

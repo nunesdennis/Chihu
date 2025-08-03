@@ -9,6 +9,13 @@ import SwiftUI
 
 extension View {
     func colorScheme() -> some View {
-        self.preferredColorScheme(UserSettings.shared.colorScheme)
+        let selectedTheme = UserSettings.getTheme()
+        
+        switch selectedTheme {
+        case .lightModeDefault:
+            return self.preferredColorScheme(.light)
+        case .darkModeDefault:
+            return self.preferredColorScheme(.dark)
+        }
     }
 }

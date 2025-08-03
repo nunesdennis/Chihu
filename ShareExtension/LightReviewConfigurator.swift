@@ -16,6 +16,5 @@ extension LightReviewView {
         interactor.presenter = presenter
         presenter.view = view
         return view
-            .colorScheme()
     }
 }

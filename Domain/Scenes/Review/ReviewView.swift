@@ -848,7 +848,7 @@ struct ReviewView: View {
             .padding(EdgeInsets(top: .zero, leading: 20, bottom: .zero, trailing: 20))
             if isReviewTypeExpanded {
                 LazyVGrid(columns: rows) {
-                    ForEach(0..<reviewTypeList.count) { index in
+                    ForEach(reviewTypeList.indices, id: \.self) { index in
                         Button(reviewTypeList[index].rawValue) {
                             reviewTypeSelected = reviewTypeList[index]
                             withAnimation { isReviewTypeExpanded = !isReviewTypeExpanded }
@@ -1164,7 +1164,7 @@ extension ReviewView {
             }
             if isProgressTypeExpanded {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-                    ForEach(0..<progressTypeList.count) { index in
+                    ForEach(progressTypeList.indices, id: \.self) { index in
                         Button(progressTypeList[index].buttonName()) {
                             selectedProgressType = index
                         }
