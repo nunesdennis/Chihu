@@ -241,7 +241,7 @@ struct LoginView: View {
                 } else {
                     return ErrorView(error: apiError)
                 }
-            } else if let keyChain = errorReceived as? KeychainManager.KeychainError {
+            } else if let _ = errorReceived as? KeychainManager.KeychainError {
                 return ErrorView(error: ChihuError.keychain)
             }
             return ErrorView(error: errorReceived)

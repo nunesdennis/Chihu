@@ -244,7 +244,7 @@ struct FilterView: View {
             }
             if isCategoryExpanded {
                 LazyVGrid(columns: threeColumns) {
-                    ForEach(0..<categorySourceList.count) { index in
+                    ForEach(categorySourceList.indices, id: \.self) { index in
                         Button(categorySourceList[index].category.buttonName()) {
                             category = categorySourceList[index].category.itemCategory
                             source = categorySourceList[index].sourceList[0]
@@ -270,7 +270,7 @@ struct FilterView: View {
             }
             if isSourceExpanded {
                 LazyVGrid(columns: threeColumns) {
-                    ForEach(0..<categorySourceList[selectedCategory].sourceList.count) { index in
+                    ForEach(categorySourceList[selectedCategory].sourceList.indices, id: \.self) { index in
                         Button(categorySourceList[selectedCategory].sourceList[index].rawValue) {
                             source = categorySourceList[selectedCategory].sourceList[index]
                         }

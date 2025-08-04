@@ -190,7 +190,7 @@ struct ShelfListFilterView: View {
             }
             if isShelfTypeExpanded {
                 LazyVGrid(columns: threeColumns) {
-                    ForEach(0..<shelfTypeList.count) { index in
+                    ForEach(shelfTypeList.indices, id: \.self) { index in
                         Button(shelfTypeList[index].shelfTypeButtonName()) {
                             dataStore.selectedShelfType = index
                             fetch()
@@ -216,7 +216,7 @@ struct ShelfListFilterView: View {
             }
             if isCategoryExpanded {
                 LazyVGrid(columns: threeColumns) {
-                    ForEach(0..<categoryList.count) { index in
+                    ForEach(categoryList.indices, id: \.self) { index in
                         Button(categoryList[index].itemCategory!.buttonName()) {
                             dataStore.selectedCategory = index
                             fetch()

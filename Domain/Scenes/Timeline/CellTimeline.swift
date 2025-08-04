@@ -167,7 +167,7 @@ struct CellTimeline: View {
     }
     
     func getAvatarUrl(from post: PostProtocol) -> URL? {
-        if let repost = post.repostValue {
+        if let _ = post.repostValue {
             return URL(string: post.accountValue.avatar)
         } else {
             return URL(string: post.accountValue.avatar)

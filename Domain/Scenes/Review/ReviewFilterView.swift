@@ -78,7 +78,7 @@ struct ReviewFilterView: View {
             }
             if isShelfTypeExpanded {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-                    ForEach(0..<shelfTypeList.count) { index in
+                    ForEach(shelfTypeList.indices, id: \.self) { index in
                         Button(shelfTypeList[index].shelfTypeButtonName()) {
                             selectedShelfType = index
                             delegate.didPressShelfTypeButton(shelfTypeList[index])
@@ -109,7 +109,7 @@ struct ReviewFilterView: View {
             }
             if isVisibilityExpanded {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-                    ForEach(0..<visibilityList.count) { index in
+                    ForEach(visibilityList.indices, id: \.self) { index in
                         Button(visibilityList[index].visibilityButtonName()) {
                             selectedVisibility = index
                             delegate.didPressVisibilityButton(visibilityList[index])

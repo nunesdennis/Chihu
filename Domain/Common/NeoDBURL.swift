@@ -97,7 +97,7 @@ class NeoDBURL {
                     switch result {
                     case .success(let response):
                         continuation.resume(returning: response.catalogItem)
-                    case .failure(let error):
+                    case .failure:
                         continuation.resume(throwing: ChihuError.canNotConvertURLtoItem)
                     }
                 }
