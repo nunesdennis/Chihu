@@ -154,7 +154,7 @@ struct NewCollectionView: View {
                         createCollection()
                     }
                 }) {
-                    if let collection {
+                    if collection != nil {
                         Text("Update")
                             .foregroundColor(.chihuGreen)
                     } else {
@@ -211,7 +211,7 @@ struct NewCollectionView: View {
                 .bold()
                 .frame(alignment: .leading)
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-                ForEach(0..<visibilityList.count) { index in
+                ForEach(visibilityList.indices, id: \.self) { index in
                     Button(visibilityList[index].visibilityButtonName()) {
                         selectedVisibility = index
                     }
