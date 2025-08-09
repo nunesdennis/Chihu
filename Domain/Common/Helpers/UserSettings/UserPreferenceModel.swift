@@ -26,25 +26,19 @@ enum UserPreference {
             let defaultCrosspost: Bool
             let defaultVisibility: Visibility
             let hiddenCategories: [String]
-            let language: Language
             
             init(preference: UserPreferenceSchema) {
                 defaultCrosspost = preference.defaultCrosspost
                 defaultVisibility = Visibility(rawValue: preference.defaultVisibility) ?? .public
                 hiddenCategories = preference.hiddenCategories
-                // Not used yet
-                language = Language.from(preference.language) ?? .en(region: .standard(code: "US"))
             }
             
             init(defaultCrosspost: Bool,
                  defaultVisibility: Visibility,
-                 hiddenCategories: [String],
-                 language: Language) {
+                 hiddenCategories: [String]) {
                 self.defaultCrosspost = defaultCrosspost
                 self.defaultVisibility = defaultVisibility
                 self.hiddenCategories = hiddenCategories
-                // Not used yet
-                self.language = language
             }
         }
     }

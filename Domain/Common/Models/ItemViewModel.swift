@@ -239,19 +239,15 @@ class ItemViewModelBuilder {
     }
     
     private static func getPreferredLanguage(itemsText: [LocalizedTitleSchema]) -> String? {
-        let language = UserSettings.shared.language
+        let languageSystem = UserSettings.shared.language
         var languageShort: String?
         var english: String?
         let englishDefaultLanguage: String = Language.en(region: .standard(code: "US")).rawValueShort
         
         return itemsText.compactMap { itemText in
-            if let receivedLang = Language.from(itemText.lang), receivedLang == language {
+            if let receivedLang = Language.from(itemText.lang), receivedLang.sameLanguageAndRegion(languageSystem) {
                 return itemText.text
-            } else if (itemText.lang.caseInsensitiveCompare(language.rawValue) == .orderedSame) &&
-                !itemText.text.isEmpty {
-                return itemText.text
-            } else if (itemText.lang.caseInsensitiveCompare(language.rawValueShort) == .orderedSame) &&
-                        !itemText.text.isEmpty {
+            } else if let receivedLang = Language.from(itemText.lang), receivedLang.sameLanguage(languageSystem) {
                 languageShort = itemText.text
             } else if (itemText.lang.caseInsensitiveCompare(englishDefaultLanguage) == .orderedSame) && !itemText.text.isEmpty {
                 english = itemText.text
