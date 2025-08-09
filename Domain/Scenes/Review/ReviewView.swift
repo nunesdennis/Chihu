@@ -866,7 +866,7 @@ struct ReviewView: View {
                         .tint(buttonReviewTypeColor(type: reviewTypeList[index]))
                     }
                 }
-                .padding(EdgeInsets(top: 20, leading: .zero, bottom: 20, trailing: .zero))
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20))
             } else if isExternalLinksExpanded, let externalResources = dataStore.item.externalResources {
                 VStack(spacing: 1) {
                     ForEach(externalResources) { link in
