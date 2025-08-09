@@ -448,4 +448,12 @@ extension Language: Equatable {
     static func ==(lhs: Language, rhs: Language) -> Bool {
         return lhs.rawValue == rhs.rawValue || lhs.rawValueShort == rhs.rawValueShort
     }
+    
+    func sameLanguageAndRegion(_ other: Language) -> Bool {
+        return self.rawValue == other.rawValue
+    }
+    
+    func sameLanguage(_ other: Language) -> Bool {
+        return self.rawValueShort == other.rawValueShort
+    }
 }

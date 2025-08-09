@@ -11,7 +11,6 @@ import SwiftUICore
 class UserSettings: ObservableObject {
     enum Constants: String {
         case accessTokenKey = "userAccessToken"
-        case language
         case instanceURL
         case tip
         case theme
@@ -36,13 +35,7 @@ class UserSettings: ObservableObject {
     
     @Environment(\.colorScheme) static var appColorScheme
     @Published var language: Language = .en(region: .standard(code: "US"))
-    @Published var userPreference: UserPreference.Load.ViewModel? {
-        didSet {
-            if let lang = userPreference?.language {
-                saveLanguage(lang)
-            }
-        }
-    }
+    @Published var userPreference: UserPreference.Load.ViewModel?
     @Published var selectedTheme: Theme
     @Published var shouldShowLogin: Bool
     
@@ -91,8 +84,7 @@ class UserSettings: ObservableObject {
                 case .failure:
                     userPreference = UserPreference.Load.ViewModel(defaultCrosspost: true,
                                                                    defaultVisibility: .public,
-                                                                   hiddenCategories: [],
-                                                                   language: .en(region: .standard(code: "US")))
+                                                                   hiddenCategories: [])
                 }
             }
         }
@@ -113,11 +105,6 @@ class UserSettings: ObservableObject {
         selectedTheme = theme
     }
     
-    func saveLanguage(_ language: Language) {
-        userDefaultsAppGroup?.setValue(language.rawValue, forKey: Constants.language.rawValue)
-        self.language = UserSettings.getLanguage()
-    }
-    
     func logout() throws {
         userPreference = nil
         instanceURL = nil
@@ -126,7 +113,6 @@ class UserSettings: ObservableObject {
         userDefaultsAppGroup?.removeObject(forKey: EnvironmentKeys.Constants.customClientId.rawValue)
         userDefaultsAppGroup?.removeObject(forKey: EnvironmentKeys.Constants.customClientSecret.rawValue)
         userDefaultsAppGroup?.removeObject(forKey: Constants.instanceURL.rawValue)
-        userDefaultsAppGroup?.removeObject(forKey: Constants.language.rawValue)
         clearAllAppStorage()
         try KeychainManager.instance.deleteToken(forKey: Constants.accessTokenKey.rawValue)
         updateUserSettings()
@@ -206,13 +192,16 @@ class UserSettings: ObservableObject {
     }
     
     private static func getLanguage() -> Language {
-        // Using system language as default
-        if let languageValue = Locale.current.language.languageCode?.identifier {
-            Language.from(languageValue) ?? .en(region: .standard(code: "US"))
-        } else if let languageValue = UserDefaults(suiteName: "group.nunesdennis.chihu")?.string(forKey: Constants.language.rawValue) {
-            Language.from(languageValue) ?? .en(region: .standard(code: "US"))
+        // Using system
+        let languageCode = Locale.current.language.languageCode?.identifier
+        let regionCode = Locale.current.region?.identifier
+        if let languageCode, let regionCode {
+            let languageValue = "\(languageCode)-\(regionCode.lowercased())"
+            return Language.from(languageValue) ?? .en(region: .standard(code: "US"))
+        } else if let languageCode {
+            return Language.from(languageCode) ?? .en(region: .standard(code: "US"))
         } else {
-            .en(region: .standard(code: "US"))
+            return .en(region: .standard(code: "US"))
         }
     }
     
