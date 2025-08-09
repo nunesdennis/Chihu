@@ -30,27 +30,39 @@ struct ThemesView: View {
             List {
                 Section(header: Text("Light Mode")) {
                     ForEach(themeList) { theme in
-                        HStack {
-                            Text(theme.name.buttonName())
-                                .multilineTextAlignment(.leading)
-                            Spacer()
-                        }.onTapGesture {
+                        Button(action: {
                             UserSettings.shared.saveTheme(theme.name)
                             selection = theme.name.rawValue
-                       }
+                        }) {
+                            HStack {
+                                Text(theme.name.buttonName())
+                                    .multilineTextAlignment(.leading)
+                                Spacer()
+                            }
+                            .padding(4)
+                            // This color is redundant, but it increases the button area
+                            .background(getColor(from: theme.name.rawValue))
+                        }
+                        .buttonStyle(PlainButtonStyle())
                         .listRowBackground(getColor(from: theme.name.rawValue))
                     }
                 }
                 Section(header: Text("Dark Mode")) {
                     ForEach(darkThemeList) { theme in
-                        HStack {
-                            Text(theme.name.buttonName())
-                                .multilineTextAlignment(.leading)
-                             Spacer()
-                        }.onTapGesture {
+                        Button(action: {
                             UserSettings.shared.saveTheme(theme.name)
                             selection = theme.name.rawValue
+                        }) {
+                            HStack {
+                                Text(theme.name.buttonName())
+                                    .multilineTextAlignment(.leading)
+                                Spacer()
+                            }
+                            .padding(4)
+                            // This color is redundant, but it increases the button area
+                            .background(getColor(from: theme.name.rawValue))
                         }
+                        .buttonStyle(PlainButtonStyle())
                         .listRowBackground(getColor(from: theme.name.rawValue))
                     }
                 }
