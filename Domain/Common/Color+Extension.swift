@@ -34,7 +34,7 @@ extension Color {
     public static var halfDutchWhite: Color {
         switch UserSettings.shared.selectedTheme {
         case .lightModeDefault:
-                Color(UIColor(red: 250/255, green: 237/255, blue: 206/255, alpha: 1.0))
+            Color(UIColor(red: 250/255, green: 237/255, blue: 206/255, alpha: 1.0))
         case .darkModeDefault:
             Color(UIColor(red: 44/255, green: 44/255, blue: 46/255, alpha: 1.0))
         }
@@ -88,7 +88,7 @@ extension Color {
     public static var chihuGreen: Color {
         switch UserSettings.shared.selectedTheme {
         case .lightModeDefault:
-                .green
+            .green
         case .darkModeDefault:
             Color(UIColor(red: 48/255, green: 209/255, blue: 88/255, alpha: 1.0))
         }
@@ -97,7 +97,7 @@ extension Color {
     public static var chihuRed: Color {
         switch UserSettings.shared.selectedTheme {
         case .lightModeDefault:
-                .red
+            .red
         case .darkModeDefault:
             Color(UIColor(red: 255/255, green: 69/255, blue: 58/255, alpha: 1.0))
         }
@@ -110,7 +110,7 @@ extension Color {
     public static var chihuBlue: Color {
         switch UserSettings.shared.selectedTheme {
         case .lightModeDefault:
-                .blue
+            .blue
         case .darkModeDefault:
             Color(UIColor(red: 10/255, green: 132/255, blue: 255/255, alpha: 1.0))
         }
@@ -119,7 +119,7 @@ extension Color {
     public static var chihuYellow: Color {
         switch UserSettings.shared.selectedTheme {
         case .lightModeDefault:
-                .yellow
+            .yellow
         case .darkModeDefault:
             Color(UIColor(red: 255/255, green: 214/255, blue: 10/255, alpha: 1.0))
         }
@@ -128,7 +128,7 @@ extension Color {
     public static var chihuGray: Color {
         switch UserSettings.shared.selectedTheme {
         case .lightModeDefault:
-                .gray
+            .gray
         case .darkModeDefault:
             Color(UIColor(red: 142/255, green: 142/255, blue: 147/255, alpha: 1.0))
         }
@@ -137,9 +137,9 @@ extension Color {
     public static var chihuBlack: Color {
         switch UserSettings.shared.selectedTheme {
         case .lightModeDefault:
-            .black
+            return Color(red: 30/255, green: 27/255, blue: 27/255)
         case .darkModeDefault:
-            .white
+            return .white
         }
     }
 }
