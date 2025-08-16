@@ -20,23 +20,23 @@ struct PreferenceCell: Identifiable {
 
 struct AppPreferencesView: View {
     
-    @State var showNeoDBscore: Bool
-    @State var showYourScore: Bool
+    @State var hideNeoDBscore: Bool
+    @State var hideYourScore: Bool
     
     let neoDBScoreModel = PreferenceCell(title: "NeoDB 🧩", description: "Hide NeoDB scores from under cards and review screen.")
     let yourScoreModel = PreferenceCell(title: "Your Scores", description: "Hide your scores from under cards.")
     
     init() {
-        showYourScore = UserSettings.shared.showYourScore
-        showNeoDBscore = UserSettings.shared.showNeoDBscore
+        hideYourScore = !UserSettings.shared.showYourScore
+        hideNeoDBscore = !UserSettings.shared.showNeoDBscore
     }
     
     var body: some View {
         NavigationStack {
             List {
                 Section(header: Text("Hide preferences")) {
-                    textCell(preferenceCell: neoDBScoreModel, isOn: $showNeoDBscore)
-                    textCell(preferenceCell: yourScoreModel, isOn: $showYourScore)
+                    textCell(preferenceCell: neoDBScoreModel, isOn: $hideNeoDBscore)
+                    textCell(preferenceCell: yourScoreModel, isOn: $hideYourScore)
                 }
                 .listRowBackground(Color.thanksToViewRowBackgroundColor)
             }
@@ -44,11 +44,11 @@ struct AppPreferencesView: View {
             .background(Color.thanksToViewBackgroundColor)
             .scrollContentBackground(.hidden)
             .navigationTitle("App Preferences")
-            .onChange(of: showYourScore) {
-                UserSettings.shared.showYourScore = showYourScore
+            .onChange(of: hideYourScore) {
+                UserSettings.shared.showYourScore = !hideYourScore
             }
-            .onChange(of: showNeoDBscore) {
-                UserSettings.shared.showNeoDBscore = showNeoDBscore
+            .onChange(of: hideNeoDBscore) {
+                UserSettings.shared.showNeoDBscore = !hideNeoDBscore
             }
         }
     }
