@@ -702,6 +702,16 @@
         }
       }
     },
+    "Default Filters" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtros padrões"
+          }
+        }
+      }
+    },
     "Delete" : {
       "comment" : "On Collection View, delete collection option",
       "localizations" : {
@@ -2090,6 +2100,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Procurar"
+          }
+        }
+      }
+    },
+    "Search Category" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categoria na busca"
           }
         }
       }

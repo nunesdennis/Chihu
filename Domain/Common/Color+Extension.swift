@@ -375,15 +375,24 @@ extension Color {
     }
     
     // Themes
-    public static var ThemesViewRowBackgroundColor: Color {
+    public static var themesViewRowBackgroundColor: Color {
         .halfDutchWhite
     }
     
-    public static var ThemesViewSelectedRowBackgroundColor: Color {
+    public static var themesViewSelectedRowBackgroundColor: Color {
         .tusk
     }
     
     public static var themesViewBackgroundColor: Color {
+        .cornSilk
+    }
+    
+    // App Preferences
+    public static var appPreferencesViewRowBackgroundColor: Color {
+        .halfDutchWhite
+    }
+    
+    public static var appPreferencesViewBackgroundColor: Color {
         .cornSilk
     }
 }

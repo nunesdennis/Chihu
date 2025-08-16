@@ -16,6 +16,8 @@ class UserSettings: ObservableObject {
         case theme
         case neoDBScore
         case yourScore
+        case defaultShelfType
+        case defaultSearchCategory
     }
     
     private let userDefaultsAppGroup = UserDefaults(suiteName: "group.nunesdennis.chihu")
@@ -45,6 +47,18 @@ class UserSettings: ObservableObject {
         }
     }
     
+    @Published var defaultShelfType: String {
+        didSet {
+            saveDefaultShelfType(defaultShelfType)
+        }
+    }
+    
+    @Published var defaultSearchCategory: String {
+        didSet {
+            saveDefaultSearchCategory(defaultSearchCategory)
+        }
+    }
+    
     @Published var showNeoDBscore: Bool {
         didSet {
             saveHideShowNeoDBscore(shouldShow: showNeoDBscore)
@@ -67,6 +81,8 @@ class UserSettings: ObservableObject {
         shouldHideTip = userDefaultsAppGroup?.bool(forKey: Constants.tip.rawValue) ?? false
         showYourScore = userDefaultsAppGroup?.bool(forKey: Constants.yourScore.rawValue) ?? true
         showNeoDBscore = userDefaultsAppGroup?.bool(forKey: Constants.neoDBScore.rawValue) ?? true
+        defaultShelfType = userDefaultsAppGroup?.string(forKey: Constants.defaultShelfType.rawValue) ?? ShelfType.progress.rawValue
+        defaultSearchCategory = userDefaultsAppGroup?.string(forKey: Constants.defaultSearchCategory.rawValue) ?? ItemCategory.movie.rawValue
         
         selectedTheme = UserSettings.getTheme()
         if !shouldShowLogin {
@@ -215,5 +231,13 @@ class UserSettings: ObservableObject {
     
     private func saveIgnoreTip(shouldIgnore: Bool) {
         userDefaultsAppGroup?.setValue(shouldIgnore, forKey: Constants.tip.rawValue)
+    }
+    
+    private func saveDefaultShelfType(_ defaultShelfType: String) {
+        userDefaultsAppGroup?.setValue(defaultShelfType, forKey: Constants.defaultShelfType.rawValue)
+    }
+    
+    private func saveDefaultSearchCategory(_ defaultSearchCategory: String) {
+        userDefaultsAppGroup?.setValue(defaultSearchCategory, forKey: Constants.defaultSearchCategory.rawValue)
     }
 }
