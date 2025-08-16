@@ -230,6 +230,7 @@ struct SearchView: View {
     
     init(dataStore: SearchDataStore = SearchDataStore()) {
         self.dataStore = dataStore
+        self.dataStore.category = ItemCategory(rawValue: UserSettings.shared.defaultSearchCategory) ?? .movie
     }
     
     var body: some View {

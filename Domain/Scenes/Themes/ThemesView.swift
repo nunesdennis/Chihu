@@ -79,8 +79,8 @@ struct ThemesView: View {
     
     func getColor(from selection: String) -> Color {
         return self.selection == selection
-                               ? Color.ThemesViewSelectedRowBackgroundColor
-                               : Color.ThemesViewRowBackgroundColor
+                               ? Color.themesViewSelectedRowBackgroundColor
+                               : Color.themesViewRowBackgroundColor
     }
 }
 
