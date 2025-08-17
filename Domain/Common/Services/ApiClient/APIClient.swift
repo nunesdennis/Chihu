@@ -30,6 +30,8 @@ enum ChihuError: Error {
     case genericErrorFromServer
     case unauthorized
     case codeError
+    case loadImageError
+    case processImageError
 }
 
 extension ChihuError: LocalizedError {
@@ -135,6 +137,10 @@ extension ChihuError: LocalizedError {
             description = "Unauthorized"
         case .codeError:
             description = "My bad, I have something to fix here"
+        case .loadImageError:
+            description = "Failed to load image"
+        case .processImageError:
+            description = "Failed to process image"
         default:
             description = "Not sure what happened"
         }

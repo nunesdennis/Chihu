@@ -15,6 +15,6 @@ extension SettingsView {
         view.interactor = interactor
         interactor.presenter = presenter
         presenter.view = view
-        return view.colorScheme()
+        return view.colorScheme().withToast()
     }
 }

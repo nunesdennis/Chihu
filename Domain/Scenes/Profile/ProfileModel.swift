@@ -31,6 +31,24 @@ enum Profile {
                 avatar = URL(string: user.avatar)
                 username = user.username
             }
+            
+            init(url: URL?, externalAccount: String?, displayName: String, avatar: URL?, username: String) {
+                self.url = url
+                self.externalAccount = externalAccount
+                self.displayName = displayName
+                self.avatar = avatar
+                self.username = username
+            }
+        }
+    }
+    
+    enum UpdateAvatar {
+        struct Request {
+            let imageData: Data
+        }
+        
+        struct Response: Decodable {
+            let user: User
         }
     }
 }

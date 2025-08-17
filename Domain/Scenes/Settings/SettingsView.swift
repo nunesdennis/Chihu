@@ -9,18 +9,29 @@ import SwiftUI
 
 protocol ProfileDisplayLogic {
     func display(viewModel: Profile.Load.ViewModel)
+    func displayAvatarUpdate(viewModel: Profile.Load.ViewModel)
     func displayError(_ error: Error)
 }
 
 extension SettingsView: ProfileDisplayLogic {
     func displayError(_ error: any Error) {
-        //no-op
+        DispatchQueue.main.async {
+            dataStore.errorMessage = LocalizedStringKey(ChihuError.api(error: error).localizedDescription)
+            dataStore.showError = true
+        }
     }
     
     func display(viewModel: Profile.Load.ViewModel) {
         userSettings.profileInfo = viewModel
         dataStore.profileViewModel = viewModel
         dataStore.state = .loaded
+    }
+    
+    func displayAvatarUpdate(viewModel: Profile.Load.ViewModel) {
+        userSettings.profileInfo = viewModel
+        dataStore.profileViewModel = viewModel
+        dataStore.alertMessage = LocalizedStringKey("OK")
+        dataStore.showAlert = true
     }
     
     func fetch() {
@@ -40,6 +51,7 @@ struct SettingsView: View {
     var interactor: ProfileBusinessLogic?
     
     @Environment(\.openURL) var openURL
+    @Environment(\.showToast) private var showToast
     @StateObject var userSettings = UserSettings.shared
     
     @ObservedObject var dataStore: SettingsDataStore
@@ -62,7 +74,7 @@ struct SettingsView: View {
             List {
                 if let viewModel = dataStore.profileViewModel {
                     Section {
-                        ProfileCell(viewModel: viewModel)
+                        ProfileCell(viewModel: viewModel, interactor: interactor, dataStore: dataStore)
                     }
                     .listRowBackground(Color.settingsRowBackgroundColor)
                 }
@@ -108,6 +120,12 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .task {
                 fetch()
+            }
+            .onChange(of: dataStore.showAlert) {
+                showToast(.success(nil, dataStore.alertMessage))
+            }
+            .onChange(of: dataStore.showError) {
+                showToast(.failure(nil, dataStore.errorMessage))
             }
         }
     }
