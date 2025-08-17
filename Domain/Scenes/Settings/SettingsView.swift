@@ -30,7 +30,7 @@ extension SettingsView: ProfileDisplayLogic {
     func displayAvatarUpdate(viewModel: Profile.Load.ViewModel) {
         userSettings.profileInfo = viewModel
         dataStore.profileViewModel = viewModel
-        dataStore.alertMessage = LocalizedStringKey("ok")
+        dataStore.alertMessage = LocalizedStringKey("OK")
         dataStore.showAlert = true
     }
     

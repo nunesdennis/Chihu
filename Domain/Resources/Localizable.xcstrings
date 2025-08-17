@@ -262,7 +262,20 @@
       }
     },
     "AGPL-3.0 License" : {
-
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AGPL-3.0 License"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AGPL-3.0 License"
+          }
+        }
+      }
     },
     "Alert" : {
       "comment" : "On the feed screen, when user sees an alert message",
@@ -1596,9 +1609,6 @@
           }
         }
       }
-    },
-    "ok" : {
-
     },
     "OK" : {
       "comment" : "Ok button message for alert messages",
