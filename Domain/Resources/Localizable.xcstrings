@@ -261,6 +261,9 @@
         }
       }
     },
+    "AGPL-3.0 License" : {
+
+    },
     "Alert" : {
       "comment" : "On the feed screen, when user sees an alert message",
       "localizations" : {
@@ -1593,6 +1596,9 @@
           }
         }
       }
+    },
+    "ok" : {
+
     },
     "OK" : {
       "comment" : "Ok button message for alert messages",

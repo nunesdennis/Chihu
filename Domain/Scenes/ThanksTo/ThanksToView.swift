@@ -46,7 +46,9 @@ struct ThanksToView: View {
         .init(title: "TootSDK", description: "BSD-3-Clause license", url: "https://github.com/TootSDK/TootSDK"),
         .init(title: "MarkdownUI", description: "MIT License", url: "https://github.com/gonzalezreal/swift-markdown-ui"),
         .init(title: "VIP Clean Architecture Pattern with SwiftUI", description: "MIT License", url: "https://github.com/arthurgivigir/vip-swiftui-template-xcode"),
-        .init(title: "HTML2Markdown", description: "MIT License", url: "https://gitlab.com/mflint/HTML2Markdown")
+        .init(title: "HTML2Markdown", description: "MIT License", url: "https://gitlab.com/mflint/HTML2Markdown"),
+        .init(title: "Ice Cubes App", description: "AGPL-3.0 License", url: "https://github.com/Dimillian/IceCubesApp"),
+        .init(title: "Fedicat App", description: "MIT License", url: "https://codeberg.org/technicat/fedicat")
     ]
     
     var localization: [CellInfo] = [
