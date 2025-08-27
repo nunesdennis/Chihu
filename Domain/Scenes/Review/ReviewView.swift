@@ -517,6 +517,8 @@ struct ReviewView: View {
     
     init(item: ItemViewModel, dataStore: ReviewDataStore = ReviewDataStore()) {
         if dataStore.item == nil {
+            dataStore.visibility = UserSettings.shared.userPreference?.defaultVisibility ?? .public
+            dataStore.shelfType = item.shelfType ?? .complete
             dataStore.selectedShelfType = item.shelfType?.rawValueInt() ?? .zero
             dataStore.rating = (item.rating != nil) ? Double(item.rating!)/2.0 : nil
             dataStore.item = item
