@@ -517,14 +517,24 @@ struct ReviewView: View {
     
     init(item: ItemViewModel, dataStore: ReviewDataStore = ReviewDataStore()) {
         if dataStore.item == nil {
-            dataStore.visibility = UserSettings.shared.userPreference?.defaultVisibility ?? .public
-            dataStore.shelfType = item.shelfType ?? .complete
-            dataStore.selectedShelfType = item.shelfType?.rawValueInt() ?? .zero
+            if let visibility = UserSettings.shared.userPreference?.defaultVisibility {
+                dataStore.visibility = visibility
+            }
+            if let shelfType = item.shelfType {
+                dataStore.shelfType = shelfType
+            }
+            if let selectedShelfType = item.shelfType?.rawValueInt() {
+                dataStore.selectedShelfType = selectedShelfType
+            }
+            if let shouldCrosspost = UserSettings.shared.userPreference?.defaultCrosspost {
+                dataStore.shouldCrosspost = shouldCrosspost
+            }
+            if let selectedVisibility = UserSettings.shared.userPreference?.defaultVisibility.rawValue {
+                dataStore.selectedVisibility = selectedVisibility
+            }
             dataStore.rating = (item.rating != nil) ? Double(item.rating!)/2.0 : nil
             dataStore.item = item
             dataStore.inputText = item.comment
-            dataStore.shouldCrosspost = UserSettings.shared.userPreference?.defaultCrosspost ?? true
-            dataStore.selectedVisibility = UserSettings.shared.userPreference?.defaultVisibility.rawValue ?? 0
         }
         self.dataStore = dataStore
     }
