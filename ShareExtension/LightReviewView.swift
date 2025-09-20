@@ -324,6 +324,7 @@ struct LightReviewView: View {
                                 .foregroundColor(.chihuGreen)
                         }
                     }
+                    .chihuButtonStyle()
                     .frame(height: 30)
                 }
             }
