@@ -96,6 +96,7 @@ extension LoginView {
             }
         }
         .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.roundedRectangle(radius: 8))
         .tint(Color.loginRowBackgroundColor)
         .foregroundColor(Color.chihuBlack)
     }
@@ -150,11 +151,13 @@ struct LoginView: View {
                     authorize(with: LoginConstants.eggplantUrl)
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.roundedRectangle(radius: 8))
                 .tint(Color.loginPrimaryBackgroundColor)
                 Button("Use another server") {
                     dataStore.state = .useAnotherServer
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.roundedRectangle(radius: 8))
                 .tint(Color.loginSecondaryBackgroundColor)
             case .useAnotherServer:
                 Text("Registered Servers")
@@ -183,6 +186,7 @@ struct LoginView: View {
                     registerLocally()
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.roundedRectangle(radius: 8))
                 .tint(Color.loginPrimaryBackgroundColor)
             default:
                 errorView(dataStore.state)
@@ -193,12 +197,14 @@ struct LoginView: View {
                         restart()
                     }
                     .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.roundedRectangle(radius: 8))
                     .tint(Color.loginSecondaryBackgroundColor)
                     if dataStore.state == .useAnotherServer {
                         Button("Add new") {
                             dataStore.state = .registerLocally
                         }
                         .buttonStyle(.borderedProminent)
+                        .buttonBorderShape(.roundedRectangle(radius: 8))
                         .tint(Color.loginSecondaryBackgroundColor)
                     }
                 }

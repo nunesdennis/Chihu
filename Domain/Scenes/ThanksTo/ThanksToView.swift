@@ -48,7 +48,8 @@ struct ThanksToView: View {
         .init(title: "VIP Clean Architecture Pattern with SwiftUI", description: "MIT License", url: "https://github.com/arthurgivigir/vip-swiftui-template-xcode"),
         .init(title: "HTML2Markdown", description: "MIT License", url: "https://gitlab.com/mflint/HTML2Markdown"),
         .init(title: "Ice Cubes App", description: "AGPL-3.0 License", url: "https://github.com/Dimillian/IceCubesApp"),
-        .init(title: "Fedicat App", description: "MIT License", url: "https://codeberg.org/technicat/fedicat")
+        .init(title: "Fedicat App", description: "MIT License", url: "https://codeberg.org/technicat/fedicat"),
+        .init(title: "Piecelet App", description: "AGPL-3.0 License", url: "https://github.com/Piecelet/neodb-app"),
     ]
     
     var localization: [CellInfo] = [

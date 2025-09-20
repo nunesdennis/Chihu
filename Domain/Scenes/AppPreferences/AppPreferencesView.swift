@@ -132,7 +132,7 @@ struct AppPreferencesView: View {
                         isSearchCategoryExpanded = !isSearchCategoryExpanded
                     }
                 }
-                .buttonStyle(.bordered)
+                .chihuButtonStyle()
                 .tint(.filterButtonSelectedColor)
             }
             if isSearchCategoryExpanded {
@@ -141,7 +141,7 @@ struct AppPreferencesView: View {
                         Button(searchCategoryList[index].category.buttonName()) {
                             defaultSearchCategory = index
                         }
-                        .buttonStyle(.bordered)
+                        .chihuButtonStyle()
                         .tint(buttonCategoryColor(index: index))
                     }
                 }
@@ -161,7 +161,7 @@ struct AppPreferencesView: View {
                             isShelfTypeExpanded.toggle()
                         }
                     }
-                    .buttonStyle(.bordered)
+                    .chihuButtonStyle()
                     .tint(.filterButtonSelectedColor)
             }
             if isShelfTypeExpanded {
@@ -170,7 +170,7 @@ struct AppPreferencesView: View {
                         Button(shelfTypeList[index].shelfTypeButtonName()) {
                             defaultShelfType = index
                         }
-                        .buttonStyle(.bordered)
+                        .chihuButtonStyle()
                         .tint(buttonShelfTypeColor(index: index))
                     }
                 }

@@ -786,7 +786,7 @@ struct ReviewView: View {
                 return
             }
         }
-        .buttonStyle(.bordered)
+        .chihuButtonStyle()
         .tint(.reviewActionButtonColor)
         .padding(8)
     }
@@ -795,7 +795,7 @@ struct ReviewView: View {
         Button(deleteButtonTitle) {
             deleteAlert()
         }
-        .buttonStyle(.bordered)
+        .chihuButtonStyle()
         .tint(.reviewDeleteButtonColor)
         .padding(8)
     }
@@ -837,7 +837,7 @@ struct ReviewView: View {
                     Button(reviewTypeSelected.rawValue) {
                         withAnimation { isReviewTypeExpanded = !isReviewTypeExpanded }
                     }
-                    .buttonStyle(.bordered)
+                    .chihuButtonStyle()
                     .tint(.reviewFilterButtonSelectedColor)
                     Spacer()
                     if let externalResources = dataStore.item.externalResources,
@@ -874,7 +874,7 @@ struct ReviewView: View {
                                 dataStore.state = .loading
                             }
                         }
-                        .buttonStyle(.bordered)
+                        .chihuButtonStyle()
                         .tint(buttonReviewTypeColor(type: reviewTypeList[index]))
                     }
                 }
@@ -904,6 +904,7 @@ struct ReviewView: View {
             }
         }
         .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.roundedRectangle(radius: 8))
         .tint(Color.externalResourcesReviewViewRowBackgroundColor)
         .foregroundColor(Color.chihuBlack)
     }
@@ -1166,7 +1167,7 @@ extension ReviewView {
                         isProgressTypeExpanded = !isProgressTypeExpanded
                     }
                 }
-                .buttonStyle(.bordered)
+                .chihuButtonStyle()
                 .tint(.filterButtonSelectedColor)
                 TextField("Progress (optional)", text: $dataStore.progressNoteValueInputText, axis: .vertical)
                     .focused($progressNoteValueIsFocused)
@@ -1180,7 +1181,7 @@ extension ReviewView {
                         Button(progressTypeList[index].buttonName()) {
                             selectedProgressType = index
                         }
-                        .buttonStyle(.bordered)
+                        .chihuButtonStyle()
                         .tint(buttonProgressTypeColor(index: index))
                     }
                 }

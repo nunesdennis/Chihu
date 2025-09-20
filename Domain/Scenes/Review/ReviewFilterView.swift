@@ -73,7 +73,7 @@ struct ReviewFilterView: View {
                         isShelfTypeExpanded = !isShelfTypeExpanded
                     }
                 }
-                .buttonStyle(.bordered)
+                .chihuButtonStyle()
                 .tint(.filterButtonSelectedColor)
             }
             if isShelfTypeExpanded {
@@ -83,7 +83,7 @@ struct ReviewFilterView: View {
                             selectedShelfType = index
                             delegate.didPressShelfTypeButton(shelfTypeList[index])
                         }
-                        .buttonStyle(.bordered)
+                        .chihuButtonStyle()
                         .tint(buttonShelfTypeColor(index: index))
                     }
                 }
@@ -104,7 +104,7 @@ struct ReviewFilterView: View {
                         isVisibilityExpanded = !isVisibilityExpanded
                     }
                 }
-                .buttonStyle(.bordered)
+                .chihuButtonStyle()
                 .tint(.filterButtonSelectedColor)
             }
             if isVisibilityExpanded {
@@ -114,7 +114,7 @@ struct ReviewFilterView: View {
                             selectedVisibility = index
                             delegate.didPressVisibilityButton(visibilityList[index])
                         }
-                        .buttonStyle(.bordered)
+                        .chihuButtonStyle()
                         .tint(buttonVisibilityColor(index: index))
                     }
                 }
@@ -131,6 +131,7 @@ struct ReviewFilterView: View {
             Spacer()
             Toggle(buttonCrosspostText(shouldCrosspost), isOn: $shouldCrosspost)
                 .toggleStyle(.button)
+                .buttonBorderShape(.roundedRectangle(radius: 8))
                 .tint(buttonCrosspostColor(shouldCrosspost))
                 .onChange(of: shouldCrosspost) {
                     delegate.didPressCrosspostSwitch(shouldCrosspost)
