@@ -220,7 +220,7 @@ struct CollectionsView: View {
                 Button {
                     dataStore.showNewCollection = true
                 } label: {
-                    Image(systemName: "plus.square")
+                    Image(systemName: "plus")
                         .resizable()
                         .frame(width: 25, height:  25)
                 }

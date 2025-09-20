@@ -196,7 +196,7 @@ extension Color {
     }
     
     public static var filterButtonNotSelectedColor: Color {
-        .springRain
+        .parisWhite
     }
     
     // Tabbar

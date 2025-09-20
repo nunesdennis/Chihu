@@ -239,7 +239,7 @@ struct FilterView: View {
                             isCategoryExpanded = !isCategoryExpanded
                         }
                     }
-                    .buttonStyle(.bordered)
+                    .chihuButtonStyle()
                     .tint(.filterButtonSelectedColor)
             }
             if isCategoryExpanded {
@@ -249,7 +249,7 @@ struct FilterView: View {
                             category = categorySourceList[index].category.itemCategory
                             source = categorySourceList[index].sourceList[0]
                         }
-                        .buttonStyle(.bordered)
+                        .chihuButtonStyle()
                         .tint(buttonCategoryColor(index: index))
                     }
                 }
@@ -265,7 +265,7 @@ struct FilterView: View {
                             isSourceExpanded = !isSourceExpanded
                         }
                     }
-                    .buttonStyle(.bordered)
+                    .chihuButtonStyle()
                     .tint(.filterButtonSelectedColor)
             }
             if isSourceExpanded {
@@ -274,7 +274,7 @@ struct FilterView: View {
                         Button(categorySourceList[selectedCategory].sourceList[index].rawValue) {
                             source = categorySourceList[selectedCategory].sourceList[index]
                         }
-                        .buttonStyle(.bordered)
+                        .chihuButtonStyle()
                         .tint(buttonSourceColor(index: index))
                     }
                 }

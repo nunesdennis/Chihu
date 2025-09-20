@@ -279,7 +279,7 @@ struct LightReviewView: View {
         Button(deleteButtonTitle) {
             deleteAlert()
         }
-        .buttonStyle(.bordered)
+        .chihuButtonStyle()
         .tint(.reviewDeleteButtonColor)
     }
     

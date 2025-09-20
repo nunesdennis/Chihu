@@ -110,6 +110,8 @@
 		7F18DA432E524D76001B1D3F /* ImageCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F18DA422E524D76001B1D3F /* ImageCompressor.swift */; };
 		7F18DA452E524DA5001B1D3F /* ImageFileTransferable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F18DA442E524DA5001B1D3F /* ImageFileTransferable.swift */; };
 		7F233A9E2E0AD7680001E188 /* RatingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F233A9D2E0AD7680001E188 /* RatingRow.swift */; };
+		7F2E74972E7E95AF0084A650 /* Button+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2E74962E7E95A50084A650 /* Button+Extension.swift */; };
+		7F2E74982E7E95AF0084A650 /* Button+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2E74962E7E95A50084A650 /* Button+Extension.swift */; };
 		7F364E8A2E08918600BDFF01 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7F364E892E08918600BDFF01 /* Localizable.xcstrings */; };
 		7F364E8B2E08918600BDFF01 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7F364E892E08918600BDFF01 /* Localizable.xcstrings */; };
 		7F4911A72E2D9B3E00F6F5F0 /* AppPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4911A62E2D9B3900F6F5F0 /* AppPreferencesView.swift */; };
@@ -421,6 +423,7 @@
 		7F18DA422E524D76001B1D3F /* ImageCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCompressor.swift; sourceTree = "<group>"; };
 		7F18DA442E524DA5001B1D3F /* ImageFileTransferable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileTransferable.swift; sourceTree = "<group>"; };
 		7F233A9D2E0AD7680001E188 /* RatingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingRow.swift; sourceTree = "<group>"; };
+		7F2E74962E7E95A50084A650 /* Button+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Extension.swift"; sourceTree = "<group>"; };
 		7F364E892E08918600BDFF01 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		7F4911A62E2D9B3900F6F5F0 /* AppPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferencesView.swift; sourceTree = "<group>"; };
 		7FE791CE2E30DE4E00931B93 /* ReviewView+Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewView+Modal.swift"; sourceTree = "<group>"; };
@@ -784,6 +787,7 @@
 		21EFAC692C7A95CF001DD16D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7F2E74962E7E95A50084A650 /* Button+Extension.swift */,
 				212EA8472DEBDE4A002B8A49 /* CachedAsyncImage.swift */,
 				21EFAC632C7A7C88001DD16D /* Color+Extension.swift */,
 				B325F8DC2CD1D1A8001ED469 /* EnvironmentKeys.swift */,
@@ -1340,6 +1344,7 @@
 				216D93E72C84BDEC006252A6 /* MainView.swift in Sources */,
 				B39BFB222DA2B84400D774E1 /* AppRegistrationEndpoint.swift in Sources */,
 				216D93D92C84A36E006252A6 /* SearchDataStore.swift in Sources */,
+				7F2E74982E7E95AF0084A650 /* Button+Extension.swift in Sources */,
 				B3E512F02C8F59420071ED50 /* UserSettings.swift in Sources */,
 				B3980A592D8AD123003780D5 /* EmitterView.swift in Sources */,
 				B335E51F2CEA0C3E00D829C3 /* HeaderLoginView.swift in Sources */,
@@ -1492,6 +1497,7 @@
 				B390A3DC2D1AFFFF00923AA4 /* TMDBError.swift in Sources */,
 				7FE793822E35545900931B93 /* UrlCleaner.swift in Sources */,
 				B390A3CB2D1AFDD700923AA4 /* SearchPresenter.swift in Sources */,
+				7F2E74972E7E95AF0084A650 /* Button+Extension.swift in Sources */,
 				B390A3BF2D1AF6E200923AA4 /* APIClient.swift in Sources */,
 				21D741B02DFDF1E000A95C13 /* ProfileModel.swift in Sources */,
 				B3E4206F2DAF3D4200FA1599 /* CatalogPostsModel.swift in Sources */,
@@ -1723,7 +1729,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.1;
+				MARKETING_VERSION = 1.11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1767,7 +1773,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.1;
+				MARKETING_VERSION = 1.11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1871,7 +1877,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.10.1;
+				MARKETING_VERSION = 1.11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1903,7 +1909,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.10.1;
+				MARKETING_VERSION = 1.11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

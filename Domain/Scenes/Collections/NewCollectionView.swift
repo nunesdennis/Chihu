@@ -147,26 +147,33 @@ struct NewCollectionView: View {
                 }
                 .frame(width: 30, height: 30)
                 Spacer()
-                Button(action: {
-                    if let collection {
-                        updateCollection(collection)
-                    } else {
-                        createCollection()
-                    }
-                }) {
-                    if collection != nil {
-                        Text("Update")
-                            .foregroundColor(.chihuGreen)
-                    } else {
-                        Text("Create")
-                            .foregroundColor(.chihuGreen)
-                    }
-                    
+                if #available(iOS 26, *) {
+                    actionButton()
+                        .buttonStyle(.glass)
+                } else {
+                    actionButton()
                 }
-                .frame(height: 30)
             }
         }
         .padding(20)
+    }
+    
+    func actionButton() -> some View {
+        Button(action: {
+            if let collection {
+                updateCollection(collection)
+            } else {
+                createCollection()
+            }
+        }) {
+            if collection != nil {
+                Text("Update")
+            } else {
+                Text("Create")
+            }
+        }
+        .tint(.chihuGreen)
+        .frame(height: 30)
     }
     
     func closeButton() -> some View {
@@ -215,7 +222,7 @@ struct NewCollectionView: View {
                     Button(visibilityList[index].visibilityButtonName()) {
                         selectedVisibility = index
                     }
-                    .buttonStyle(.bordered)
+                    .chihuButtonStyle()
                     .tint(buttonVisibilityColor(index: index))
                 }
             }

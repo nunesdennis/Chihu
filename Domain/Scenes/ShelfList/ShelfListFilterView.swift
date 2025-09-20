@@ -186,7 +186,7 @@ struct ShelfListFilterView: View {
                             isShelfTypeExpanded.toggle()
                         }
                     }
-                    .buttonStyle(.bordered)
+                    .chihuButtonStyle()
                     .tint(.filterButtonSelectedColor)
             }
             if isShelfTypeExpanded {
@@ -196,7 +196,7 @@ struct ShelfListFilterView: View {
                             dataStore.selectedShelfType = index
                             fetch()
                         }
-                        .buttonStyle(.bordered)
+                        .chihuButtonStyle()
                         .tint(buttonShelfTypeColor(index: index))
                     }
                 }
@@ -212,7 +212,7 @@ struct ShelfListFilterView: View {
                             isCategoryExpanded.toggle()
                         }
                     }
-                    .buttonStyle(.bordered)
+                    .chihuButtonStyle()
                     .tint(.filterButtonSelectedColor)
             }
             if isCategoryExpanded {
@@ -222,7 +222,7 @@ struct ShelfListFilterView: View {
                             dataStore.selectedCategory = index
                             fetch()
                         }
-                        .buttonStyle(.bordered)
+                        .chihuButtonStyle()
                         .tint(buttonCategoryColor(index: index))
                     }
                 }
