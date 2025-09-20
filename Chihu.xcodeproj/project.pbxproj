@@ -112,6 +112,7 @@
 		7F233A9E2E0AD7680001E188 /* RatingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F233A9D2E0AD7680001E188 /* RatingRow.swift */; };
 		7F2E74972E7E95AF0084A650 /* Button+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2E74962E7E95A50084A650 /* Button+Extension.swift */; };
 		7F2E74982E7E95AF0084A650 /* Button+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2E74962E7E95A50084A650 /* Button+Extension.swift */; };
+		7F2E749C2E7EE8300084A650 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 7F2E749B2E7EE8300084A650 /* AppIcon.icon */; };
 		7F364E8A2E08918600BDFF01 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7F364E892E08918600BDFF01 /* Localizable.xcstrings */; };
 		7F364E8B2E08918600BDFF01 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7F364E892E08918600BDFF01 /* Localizable.xcstrings */; };
 		7F4911A72E2D9B3E00F6F5F0 /* AppPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4911A62E2D9B3900F6F5F0 /* AppPreferencesView.swift */; };
@@ -424,6 +425,7 @@
 		7F18DA442E524DA5001B1D3F /* ImageFileTransferable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileTransferable.swift; sourceTree = "<group>"; };
 		7F233A9D2E0AD7680001E188 /* RatingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingRow.swift; sourceTree = "<group>"; };
 		7F2E74962E7E95A50084A650 /* Button+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Extension.swift"; sourceTree = "<group>"; };
+		7F2E749B2E7EE8300084A650 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		7F364E892E08918600BDFF01 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		7F4911A62E2D9B3900F6F5F0 /* AppPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferencesView.swift; sourceTree = "<group>"; };
 		7FE791CE2E30DE4E00931B93 /* ReviewView+Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewView+Modal.swift"; sourceTree = "<group>"; };
@@ -675,6 +677,7 @@
 		21EFAC202C7A7214001DD16D /* Chihu */ = {
 			isa = PBXGroup;
 			children = (
+				7F2E749B2E7EE8300084A650 /* AppIcon.icon */,
 				215204F42C9CBBBE009B3C1F /* Chihu.entitlements */,
 				215204EF2C9C8E61009B3C1F /* Info.plist */,
 				21EFAC212C7A7214001DD16D /* ChihuApp.swift */,
@@ -1206,6 +1209,7 @@
 			files = (
 				7FE791CC2E2EF58200931B93 /* Secrets.xcconfig in Resources */,
 				B3EE08BA2DADCEF400630084 /* TipTest.storekit in Resources */,
+				7F2E749C2E7EE8300084A650 /* AppIcon.icon in Resources */,
 				7F364E8B2E08918600BDFF01 /* Localizable.xcstrings in Resources */,
 				B3EE08B42DADBC8600630084 /* StoreKitTestCertificate.cer in Resources */,
 				B3EE08B82DADC4EC00630084 /* Tips.storekit in Resources */,
