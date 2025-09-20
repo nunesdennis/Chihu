@@ -313,23 +313,31 @@ struct LightReviewView: View {
                 Spacer()
                 if dataStore.state == .full && !commentIsFocused {
                     Spacer()
-                    Button(action: {
-                        sendRate()
-                    }) {
-                        if dataStore.shelfType != .wishlist && reviewTypeSelected == .rate {
-                            Text("Rate")
-                                .foregroundColor(.chihuGreen)
-                        } else {
-                            Text("Add")
-                                .foregroundColor(.chihuGreen)
-                        }
+                    if #available(iOS 26, *) {
+                        actionButton()
+                            .buttonStyle(.glass)
+                    } else {
+                        actionButton()
                     }
-                    .chihuButtonStyle()
-                    .frame(height: 30)
                 }
             }
         }
         .padding(EdgeInsets(top: .zero, leading: 20, bottom: .zero, trailing: 20))
+    }
+    
+    func actionButton() -> some View  {
+        Button(action: {
+            sendRate()
+        }) {
+            if dataStore.shelfType != .wishlist && reviewTypeSelected == .rate {
+                Text("Rate")
+                    .foregroundColor(.chihuGreen)
+            } else {
+                Text("Add")
+                    .foregroundColor(.chihuGreen)
+            }
+        }
+        .frame(height: 30)
     }
     
     func ratingView() -> some View {
