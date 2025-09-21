@@ -11,42 +11,38 @@ import MarkdownUI
 struct MarkdownEditorView: View {
     
     @Binding var text: String
+    @Binding var showPreview: Bool
     
     private var isIpad: Bool {
         UIDevice.current.userInterfaceIdiom == .pad
     }
     
-    private var textEditorHeight: CGFloat {
-        if isIpad {
-            200
-        } else {
-            100
-        }
-    }
-    
-    init(_ text: Binding<String>) {
+    init(_ text: Binding<String>, showPreview: Binding<Bool>) {
         _text = text
+        _showPreview = showPreview
     }
     
     var body: some View {
         ScrollView {
-            Markdown(text)
-                .markdownTextStyle(\.text) {
-                    ForegroundColor(.chihuBlack)
-                    BackgroundColor(.chihuClear)
-                }
-                .markdownTheme(.gitHub)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .padding()
-                .background(Color.markdownEditorBackgroundColor)
+            if showPreview {
+                Markdown(text)
+                    .markdownTextStyle(\.text) {
+                        ForegroundColor(.chihuBlack)
+                        BackgroundColor(.chihuClear)
+                    }
+                    .markdownTheme(.gitHub)
+                    .frame(minHeight: 600,alignment: .topLeading)
+                    .padding(14)
+                    .background(Color.markdownEditorBackgroundColor)
+                    .allowsHitTesting(false)
+            } else {
+                TextEditor(text: $text)
+                    .scrollContentBackground(.hidden)
+                    .frame(minHeight: 600, alignment: .topLeading)
+                    .padding(14)
+                    .background(Color.markdownEditorEditorBackgroundColor)
+            }
         }
-        Divider()
-        TextEditor(text: $text)
-            .scrollContentBackground(.hidden)
-            .frame(height: textEditorHeight)
-            .padding(.bottom)
-            .background(Color.markdownEditorEditorBackgroundColor)
-            .layoutPriority(1)
     }
 }
 

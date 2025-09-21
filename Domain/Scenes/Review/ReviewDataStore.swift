@@ -40,6 +40,7 @@ final class ReviewDataStore: ObservableObject {
     @Published var item: ItemViewModel!
     @Published var shouldShowAlert: Bool
     @Published var shouldShowToast: Bool
+    @Published var showFullReviewMarkdownPreview: Bool
     @Published var state: ReviewState
     @Published var rating: Double?
     @Published var inputText: String
@@ -112,6 +113,7 @@ final class ReviewDataStore: ObservableObject {
         self.progressNoteContentWarningInputText = progressNoteContentWarningInputText
         self.shouldPushToSeason = shouldPushToSeason
         self.reviewDataStore = reviewDataStore
+        showFullReviewMarkdownPreview = false
     }
     
     func createNewReviewDataStore() -> ReviewDataStore {
