@@ -549,7 +549,7 @@ struct ReviewView: View {
                         .scaleEffect(2)
                         .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: .infinity)
                 } else if dataStore.state == .markdownEditor {
-                    MarkdownEditorView($dataStore.bodyInputText)
+                    MarkdownEditorView($dataStore.bodyInputText, showPreview: $dataStore.showFullReviewMarkdownPreview)
                 } else if dataStore.state == .full {
                     if commentIsFocused || reviewTypeSelected == .progressNote || reviewTypeSelected == .posts {
                         Text(item.localizedTitle)
@@ -855,38 +855,51 @@ struct ReviewView: View {
                             .fill(Color.clear)
                             .frame(width: 30, height: 30)
                     }
+                } else if dataStore.state == .markdownEditor {
+                    let previewButtonName = dataStore.showFullReviewMarkdownPreview ? "Preview On" : "Preview Off"
+                    Button(previewButtonName) {
+                        withAnimation { dataStore.showFullReviewMarkdownPreview = !dataStore.showFullReviewMarkdownPreview }
+                    }
+                    .chihuButtonStyle()
+                    .tint(buttonPreviewMarkdownColor())
+                    Spacer()
+                    Rectangle()
+                        .fill(Color.clear)
+                        .frame(width: 30, height: 30)
                 }
             }
             .padding(EdgeInsets(top: .zero, leading: 20, bottom: .zero, trailing: 20))
-            if isReviewTypeExpanded {
-                LazyVGrid(columns: rows) {
-                    ForEach(reviewTypeList.indices, id: \.self) { index in
-                        Button(reviewTypeList[index].rawValue) {
-                            reviewTypeSelected = reviewTypeList[index]
-                            withAnimation { isReviewTypeExpanded = !isReviewTypeExpanded }
-                            if shouldFetchReviewItem() && reviewTypeSelected == .review {
-                                fetch(itemUUID: item.uuid)
-                                dataStore.state = .loading
+            if dataStore.state != .markdownEditor {
+                if isReviewTypeExpanded {
+                    LazyVGrid(columns: rows) {
+                        ForEach(reviewTypeList.indices, id: \.self) { index in
+                            Button(reviewTypeList[index].rawValue) {
+                                reviewTypeSelected = reviewTypeList[index]
+                                withAnimation { isReviewTypeExpanded = !isReviewTypeExpanded }
+                                if shouldFetchReviewItem() && reviewTypeSelected == .review {
+                                    fetch(itemUUID: item.uuid)
+                                    dataStore.state = .loading
+                                }
+                                
+                                if reviewTypeSelected == .posts {
+                                    fetchPosts(itemUUID: item.uuid)
+                                    dataStore.state = .loading
+                                }
                             }
-                            
-                            if reviewTypeSelected == .posts {
-                                fetchPosts(itemUUID: item.uuid)
-                                dataStore.state = .loading
-                            }
+                            .chihuButtonStyle()
+                            .tint(buttonReviewTypeColor(type: reviewTypeList[index]))
                         }
-                        .chihuButtonStyle()
-                        .tint(buttonReviewTypeColor(type: reviewTypeList[index]))
                     }
-                }
-                .padding(EdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20))
-            } else if isExternalLinksExpanded, let externalResources = dataStore.item.externalResources {
-                VStack(spacing: 1) {
-                    ForEach(externalResources) { link in
-                        linkCell(name: UrlCleaner.keepSiteName(from: link.url), url: link.url)
+                    .padding(EdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20))
+                } else if isExternalLinksExpanded, let externalResources = dataStore.item.externalResources {
+                    VStack(spacing: 1) {
+                        ForEach(externalResources) { link in
+                            linkCell(name: UrlCleaner.keepSiteName(from: link.url), url: link.url)
+                        }
                     }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 20)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 20)
             }
         }
     }
@@ -911,6 +924,10 @@ struct ReviewView: View {
     
     func buttonReviewTypeColor(type: ReviewType) -> Color {
         type == reviewTypeSelected ? .filterButtonSelectedColor : .filterButtonNotSelectedColor
+    }
+    
+    func buttonPreviewMarkdownColor() -> Color {
+        dataStore.showFullReviewMarkdownPreview ? .filterButtonSelectedColor : .filterButtonNotSelectedColor
     }
     
     func ratingView() -> some View {
