@@ -424,8 +424,11 @@ struct ReviewView: View {
     @FocusState private var progressNoteValueIsFocused: Bool
     @FocusState private var progressNoteContentWarningIsFocused: Bool
     
-    @Environment(\.openURL) var openURL
     @Environment(\.showToast) private var showToast
+    
+    @State private var replyViewDetent = PresentationDetent.medium
+    
+    @Environment(\.openURL) var openURL
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var dataStore: ReviewDataStore
@@ -637,6 +640,30 @@ struct ReviewView: View {
                     fetch(itemUUID: item.uuid)
                 } else {
                     dataStore.state = .full
+                }
+            }
+            .sheet(isPresented: $dataStore.showReplyView, onDismiss: {
+                dataStore.postClicked = nil
+                dataStore.showReplyView = false
+            }) {
+                if let postClicked = dataStore.postClicked {
+                    ReplyView(delegate: self, post: postClicked).configureView()
+                        .presentationDetents(
+                            [.medium, .large],
+                            selection: $replyViewDetent
+                        )
+                }
+            }
+            .sheet(isPresented: $dataStore.showUpdateReplyView, onDismiss: {
+                dataStore.postClicked = nil
+                dataStore.showUpdateReplyView = false
+            }) {
+                if let postClicked = dataStore.postClicked {
+                    ReplyView(delegate: self, reply: postClicked).configureView()
+                        .presentationDetents(
+                            [.medium, .large],
+                            selection: $replyViewDetent
+                        )
                 }
             }
             .fullScreenCover(isPresented: $dataStore.shouldPushToSeason, onDismiss: {
@@ -856,7 +883,7 @@ struct ReviewView: View {
                             .frame(width: 30, height: 30)
                     }
                 } else if dataStore.state == .markdownEditor {
-                    let previewButtonName = dataStore.showFullReviewMarkdownPreview ? "Preview On" : "Preview Off"
+                    let previewButtonName = LocalizedStringKey(dataStore.showFullReviewMarkdownPreview ? "Preview On" : "Preview Off")
                     Button(previewButtonName) {
                         withAnimation { dataStore.showFullReviewMarkdownPreview = !dataStore.showFullReviewMarkdownPreview }
                     }
@@ -1143,6 +1170,7 @@ extension ReviewView {
         VStack(alignment: .leading) {
             ForEach(dataStore.posts) { post in
                 CellTimeline(post: post, image: ImageState.none, avatarImage: ImageState.needsLoading, delegate: self)
+                    .padding(.horizontal, 10)
                 Divider()
             }
         }
@@ -1151,6 +1179,27 @@ extension ReviewView {
 }
 
 extension ReviewView: CellTimelineDelegate {
+    func editError() {
+        DispatchQueue.main.async {
+            dataStore.shouldShowAlert = true
+            dataStore.alertMessage = "Invalid url"
+        }
+    }
+    
+    func didPressUpdate(on post: any PostProtocol) {
+        DispatchQueue.main.async {
+            dataStore.postClicked = post
+            dataStore.showUpdateReplyView = true
+        }
+    }
+    
+    func didPressReply(on post: any PostProtocol) {
+        DispatchQueue.main.async {
+            dataStore.postClicked = post
+            dataStore.showReplyView = true
+        }
+    }
+    
     func handleURL(_ url: URL) {
         URLHandler.handleItemURL(url) { item in
             if let item {
@@ -1161,6 +1210,12 @@ extension ReviewView: CellTimelineDelegate {
                 openURL(url)
             }
         }
+    }
+}
+
+extension ReviewView: ReplyDelegate {
+    func didEndReply() {
+        dataStore.showReplyView = false
     }
 }
 

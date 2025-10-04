@@ -34,8 +34,11 @@ final class ReviewDataStore: ObservableObject {
     var seasonSelected: ItemViewModel?
     var posts: [CatalogPostsModel.Load.ViewModel.Post]
     var noteList: [NoteSchema]
+    var postClicked: PostProtocol?
     var noteListNeedsToUpdate: Bool
     
+    @Published var showReplyView: Bool = false
+    @Published var showUpdateReplyView: Bool = false
     @Published var shelfType: ShelfType
     @Published var item: ItemViewModel!
     @Published var shouldShowAlert: Bool

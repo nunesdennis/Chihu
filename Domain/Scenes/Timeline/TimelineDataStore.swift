@@ -23,6 +23,9 @@ enum TimelineState {
 final class TimelineDataStore: ObservableObject {
     @Published var state: TimelineState = .firstLoad
     @Published var shouldShowAlert = false
+    @Published var showReplyView: Bool = false
+    @Published var showUpdateReplyView: Bool = false
+    var postClicked: PostProtocol?
     var imagesDictionary: [String : ImageState] = [:]
     var imagesDictionaryURL: [URL : ImageState] = [:]
     var avatarImagesDictionary: [String : ImageState] = [:]
