@@ -133,6 +133,8 @@ struct TimelineView: View {
     @ObservedObject var dataStore: TimelineDataStore
     @Binding var tabTapped: Bool
     
+    @State private var replyViewDetent = PresentationDetent.medium
+    
     init(tabTapped: Binding<Bool>, dataStore: TimelineDataStore = TimelineDataStore()) {
         _tabTapped = tabTapped
         self.dataStore = dataStore
@@ -211,6 +213,30 @@ struct TimelineView: View {
             .toolbarBackground(Color.timelineNavBackgroundColor)
             .refreshable {
                 fetch()
+            }
+            .sheet(isPresented: $dataStore.showReplyView, onDismiss: {
+                dataStore.postClicked = nil
+                dataStore.showReplyView = false
+            }) {
+                if let postClicked = dataStore.postClicked {
+                    ReplyView(delegate: self, post: postClicked).configureView()
+                        .presentationDetents(
+                            [.medium, .large],
+                            selection: $replyViewDetent
+                        )
+                }
+            }
+            .sheet(isPresented: $dataStore.showUpdateReplyView, onDismiss: {
+                dataStore.postClicked = nil
+                dataStore.showUpdateReplyView = false
+            }) {
+                if let postClicked = dataStore.postClicked {
+                    ReplyView(delegate: self, reply: postClicked).configureView()
+                        .presentationDetents(
+                            [.medium, .large],
+                            selection: $replyViewDetent
+                        )
+                }
             }
             .alert("Alert", isPresented: $dataStore.shouldShowAlert) {
                 Button("OK", role: .cancel) {}
@@ -389,6 +415,27 @@ struct TimelineView: View {
 }
 
 extension TimelineView: CellTimelineDelegate {
+    func editError() {
+        DispatchQueue.main.async {
+            dataStore.shouldShowAlert = true
+            dataStore.alertMessage = "Invalid url"
+        }
+    }
+    
+    func didPressUpdate(on post: any PostProtocol) {
+        DispatchQueue.main.async {
+            dataStore.postClicked = post
+            dataStore.showUpdateReplyView = true
+        }
+    }
+    
+    func didPressReply(on post: any PostProtocol) {
+        DispatchQueue.main.async {
+            dataStore.postClicked = post
+            dataStore.showReplyView = true
+        }
+    }
+    
     func handleURL(_ url: URL) {
         URLHandler.handleItemURL(url) { item in
             if let item {
@@ -401,5 +448,12 @@ extension TimelineView: CellTimelineDelegate {
                 openURL(url)
             }
         }
+    }
+}
+
+extension TimelineView: ReplyDelegate {
+    func didEndReply() {
+        dataStore.showReplyView = false
+        dataStore.showUpdateReplyView = false
     }
 }

@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import UIKit
 import TootSDK
 import HTML2Markdown
 import MarkdownUI
+import Translation
 
 protocol CellTimelineDelegate {
     func handleURL(_ url: URL)
+    func didPressReply(on post: PostProtocol)
+    func didPressUpdate(on post: PostProtocol)
+    func editError()
 }
 
 extension TootSDK.TootApplication: ApplicationProtocol {}
@@ -34,18 +39,33 @@ extension TootSDK.Post: PostProtocol {
 struct CellTimeline: View {
     @State var sensitive: Bool
     @State var showSpoilerEffect: Bool
+    @State var showTranslation: Bool = false
+    
+    @Environment(\.colorScheme) private var colorScheme
+    
+    private var sourceText: String {
+        if let content = post.content {
+            return TootHTML.extractAsPlainText(html: content) ?? String()
+        }
+        
+        return String()
+    }
     
     private var image: Image?
     private var avatarImage: Image?
     private var shouldLoadOnCell: Bool = false
+    private var isMyPost: Bool {
+        isMyUsername(postUsername: post.accountValue.acct)
+    }
     
     private let post: PostProtocol
     private let delegate: CellTimelineDelegate
 
     // MARK: - Init
-    init(post: PostProtocol, image: ImageState?, avatarImage: ImageState?, delegate: CellTimelineDelegate) {
-        self.sensitive = post.sensitive
-        self.showSpoilerEffect = post.sensitive
+    init(post: PostProtocol, image: ImageState?, avatarImage: ImageState?, itemURL: String? = nil, delegate: CellTimelineDelegate) {
+        self._sensitive = State(initialValue: post.sensitive)
+        self._showSpoilerEffect = State(initialValue: post.sensitive)
+        
         self.delegate = delegate
         self.post = post
         self.image = get(image, of: .poster)
@@ -63,23 +83,87 @@ struct CellTimeline: View {
 
     // MARK: - Body
     var body: some View {
-        HStack {
-            if post.repostValue != nil {
-                repost(from: post)
-            } else {
-                account(from: post)
-            }
-            if let image = image {
+        if #available(iOS 18.0, *) {
+            cellView
+                .translationPresentation(isPresented: $showTranslation, text: sourceText)
+        } else {
+            cellView
+        }
+    }
+    
+    var cellView: some View {
+        VStack {
+            HStack {
+                if post.repostValue != nil {
+                    repost(from: post)
+                } else {
+                    account(from: post)
+                }
+                if let image = image {
+                    Spacer()
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 75, height: 150)
+                        .cornerRadius(2)
+                }
                 Spacer()
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 75, height: 150)
-                    .cornerRadius(2)
             }
+            HStack(alignment: .center) {
+                replyButton
+                if isMyPost {
+                    editButton
+                }
+                if #available(iOS 18.0, *) {
+                    translateButton
+                }
+            }
+            .frame(height: 30)
         }
         .listRowBackground(Color.timelineCellBackgroundColor)
-        .padding(10)
+    }
+    
+    var replyButton: some View {
+        Image(systemName: "bubble.left")
+            .resizable()
+            .scaledToFit()
+            .foregroundColor(buttonColor(isHighlighted: false))
+            .frame(width: 20, height: 20)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onTapGesture {
+            print("reply button")
+            delegate.didPressReply(on: post)
+        }
+    }
+    
+    var editButton: some View {
+        Image(systemName: "pencil")
+            .resizable()
+            .scaledToFit()
+            .foregroundColor(buttonColor(isHighlighted: false))
+            .frame(width: 20, height: 20)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onTapGesture {
+            if let itemURLString = getItemURL(),
+               let url = URL(string: itemURLString) {
+                delegate.handleURL(url)
+            } else {
+                delegate.didPressUpdate(on: post)
+            }
+        }
+    }
+    
+    @available(iOS 18.0, *)
+    var translateButton: some View {
+        Image(systemName: "t.bubble")
+            .resizable()
+            .scaledToFit()
+            .foregroundColor(buttonColor(isHighlighted: false))
+            .frame(width: 20, height: 20)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onTapGesture {
+            showTranslation.toggle()
+        }
     }
     
     var loadableAvatarImage: some View {
@@ -111,6 +195,18 @@ struct CellTimeline: View {
                 .stroke(.primary.opacity(0.25), lineWidth: 1)
         )
         .frame(width: 40, height: 40)
+    }
+    
+    func isMyUsername(postUsername: String) -> Bool {
+        guard let fullUsername = UserSettings.shared.fullUsername else {
+            return false
+        }
+        
+        return postUsername == fullUsername
+    }
+    
+    func buttonColor(isHighlighted: Bool) -> Color {
+        isHighlighted ? .timelineButtonCellHighlightedColor : .timelineButtonCellNormalColor
     }
     
     func repost(from post: PostProtocol) -> some View {
@@ -209,4 +305,42 @@ struct CellTimeline: View {
         
         return Markdown(markdown)
     }
+    
+    private func getItemURL() -> String? {
+        func alertError() {
+            delegate.editError()
+        }
+        
+        do {
+            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            
+            guard let content = post.content, content.contains("~neodb~/") else {
+                alertError()
+                return nil
+            }
+            
+            let input = content.replacingOccurrences(of: "~neodb~/", with: String())
+            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
+            
+            for match in matches {
+                guard let range = Range(match.range, in: input) else {
+                    alertError()
+                    return nil
+                }
+                let urlString = String(input[range])
+                guard let _ = URL(string: urlString) else {
+                    alertError()
+                    return nil
+                }
+                
+                return urlString
+            }
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        alertError()
+        return nil
+    }
 }
+

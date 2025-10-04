@@ -306,6 +306,14 @@ extension Color {
         .chihuGreen
     }
     
+    public static var timelineButtonCellHighlightedColor: Color {
+        .chihuGreen
+    }
+    
+    public static var timelineButtonCellNormalColor: Color {
+        .parisWhite
+    }
+    
     // Error view
     public static var errorViewBackgroundColor: Color {
         .cornSilk
@@ -394,5 +402,10 @@ extension Color {
     
     public static var appPreferencesViewBackgroundColor: Color {
         .cornSilk
+    }
+    
+    // Reply
+    public static var replyViewBackgroundColor: Color {
+        .halfDutchWhite
     }
 }

@@ -25,6 +25,7 @@ class UserSettings: ObservableObject {
     
     var instanceURL: String?
     var accessToken: String?
+    var fullUsername: String?
     
     var colorScheme: ColorScheme {
         switch selectedTheme {
@@ -71,7 +72,7 @@ class UserSettings: ObservableObject {
         }
     }
     
-    var profileInfo: Profile.Load.ViewModel?
+    @Published var profileInfo: Profile.Load.ViewModel?
     
     private init() {
         language = UserSettings.getLanguage()
@@ -87,7 +88,34 @@ class UserSettings: ObservableObject {
         selectedTheme = UserSettings.getTheme()
         if !shouldShowLogin {
             fetchUserPreference()
+            fetchProfile()
         }
+    }
+    
+    func fetchProfile() {
+        let worker = ProfileNetworkingWorker()
+        Task(priority: .background) {
+            worker.fetchUser(request: Profile.Load.Request()) { [unowned self] result in
+                switch result {
+                case .success(let response):
+                    profileInfo = Profile.Load.ViewModel(user: response.user)
+                    fullUsername = setFullUsername()
+                case .failure:
+                    // no-op
+                    return
+                }
+            }
+        }
+    }
+    
+    func setFullUsername() -> String? {
+        guard let baseUrlString = instanceURL?.trimmingCharacters(in:.whitespacesAndNewlines),
+              let baseUrl = URL(string: baseUrlString),
+              let username = profileInfo?.username else {
+            return nil
+        }
+        let baseUrlName = UrlCleaner.keepSiteName(from: baseUrl)
+        return username + "@" + baseUrlName
     }
     
     func fetchUserPreference() {
