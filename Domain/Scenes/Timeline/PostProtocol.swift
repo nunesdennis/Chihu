@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import TootSDK
 
 protocol AccountProtocol {
     var displayName: String? { get }
@@ -13,7 +14,27 @@ protocol AccountProtocol {
     var avatar: String { get }
 }
 
-protocol PostProtocol {
+extension AccountProtocol {
+    func asClass() -> Account {
+        .init(id: "",
+              acct: self.acct,
+              url: "",
+              displayName: self.displayName,
+              note: "",
+              avatar: self.avatar,
+              header: "",
+              headerStatic: "",
+              locked: false,
+              emojis: [],
+              createdAt: .init(),
+              postsCount: .zero,
+              followersCount: .zero,
+              followingCount: .zero,
+              fields: [])
+    }
+}
+
+protocol PostProtocol: Identifiable {
     var id: String { get }
     var sensitive: Bool { get }
     var repostValue: (any PostProtocol)? { get }
@@ -21,9 +42,39 @@ protocol PostProtocol {
     var spoilerText: String { get }
     var content: String? { get }
     var applicationValue: ApplicationProtocol? { get }
+    var favourited: Bool? { get }
+}
+
+extension PostProtocol {
+    func asClass() -> Post {
+        .init(id: self.id,
+              uri: "",
+              createdAt: .init(),
+              account: self.accountValue.asClass(),
+              content: self.content,
+              visibility: .unlisted,
+              sensitive: self.sensitive,
+              spoilerText: self.spoilerText,
+              mediaAttachments: [],
+              application: self.applicationValue?.asClass(),
+              mentions: [],
+              tags: [],
+              emojis: [],
+              repostsCount: .zero,
+              favouritesCount: .zero,
+              repliesCount: .zero,
+              repost: self.repostValue?.asClass(),
+              favourited: self.favourited)
+    }
 }
 
 protocol ApplicationProtocol {
     /// The name of your application.
     var name: String { get }
+}
+
+extension ApplicationProtocol {
+    func asClass() -> TootApplication {
+        .init(name: self.name)
+    }
 }

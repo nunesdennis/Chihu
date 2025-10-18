@@ -9,6 +9,33 @@
 import SwiftUI
 import Combine
 
+extension ReviewView: PostInteractionsDisplayLogic {
+    func display(viewModel: PostInteraction.LikeDislike.ViewModel) {
+        DispatchQueue.main.async {
+            let newPost = viewModel.post
+            let index = dataStore.posts.firstIndex {
+                $0.id == newPost.id
+            }
+            
+            if let index {
+                dataStore.posts[index] = newPost.asClass()
+            } else {
+                dataStore.alertType = .actionFailed
+                dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
+                dataStore.shouldShowToast = true
+            }
+        }
+    }
+    
+    func displayToastError(_ error: any Error) {
+        DispatchQueue.main.async {
+            dataStore.alertType = .actionFailed
+            dataStore.alertMessage = LocalizedStringKey(error.localizedDescription)
+            dataStore.shouldShowToast = true
+        }
+    }
+}
+
 extension ReviewView: ReviewDisplayLogic {
     func update(rateViewModel: Review.Update.ViewModel?,
                 noteViewModel: ProgressNoteList.Update.ViewModel?) {
@@ -416,6 +443,7 @@ extension ReviewView: SimpleProgressNoteListViewDelegate {
 
 struct ReviewView: View {
     var interactor: ReviewBusinessLogic?
+    var postInteractionInteractor: PostInteractionsInteractor?
     
     @FocusState private var commentIsFocused: Bool
     @FocusState private var titleIsFocused: Bool
@@ -644,6 +672,7 @@ struct ReviewView: View {
             }
             .sheet(isPresented: $dataStore.showReplyView, onDismiss: {
                 dataStore.postClicked = nil
+                dataStore.replyPostClicked = nil
                 dataStore.showReplyView = false
             }) {
                 if let postClicked = dataStore.postClicked {
@@ -652,14 +681,8 @@ struct ReviewView: View {
                             [.medium, .large],
                             selection: $replyViewDetent
                         )
-                }
-            }
-            .sheet(isPresented: $dataStore.showUpdateReplyView, onDismiss: {
-                dataStore.postClicked = nil
-                dataStore.showUpdateReplyView = false
-            }) {
-                if let postClicked = dataStore.postClicked {
-                    ReplyView(delegate: self, reply: postClicked).configureView()
+                } else if let replyPostClicked = dataStore.replyPostClicked {
+                    ReplyView(delegate: self, reply: replyPostClicked).configureView()
                         .presentationDetents(
                             [.medium, .large],
                             selection: $replyViewDetent
@@ -1188,9 +1211,21 @@ extension ReviewView: CellTimelineDelegate {
     
     func didPressUpdate(on post: any PostProtocol) {
         DispatchQueue.main.async {
-            dataStore.postClicked = post
-            dataStore.showUpdateReplyView = true
+            dataStore.replyPostClicked = post
+            dataStore.showReplyView = true
         }
+    }
+    
+    func didPressLike(on post: PostProtocol) {
+        guard let postInteractionInteractor else {
+            dataStore.alertType = .actionFailed
+            dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
+            dataStore.shouldShowToast = true
+            return
+        }
+
+        let likeRequest = PostInteraction.LikeDislike.Request(postId: post.id, favourited: post.favourited ?? false)
+        postInteractionInteractor.likeDislike(request: likeRequest)
     }
     
     func didPressReply(on post: any PostProtocol) {

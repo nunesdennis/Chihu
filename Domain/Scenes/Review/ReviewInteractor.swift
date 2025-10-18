@@ -30,7 +30,7 @@ protocol ReviewBusinessLogic {
 }
 
 final class ReviewInteractor {
-    var presenter: ReviewPresentationLogic?
+    var presenter: (ReviewPresentationLogic & PostInteractionsPresentationLogic)?
 }
 
 extension ReviewInteractor: ReviewBusinessLogic {

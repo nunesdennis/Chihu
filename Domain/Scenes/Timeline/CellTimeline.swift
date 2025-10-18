@@ -14,6 +14,7 @@ import Translation
 
 protocol CellTimelineDelegate {
     func handleURL(_ url: URL)
+    func didPressLike(on post: PostProtocol)
     func didPressReply(on post: PostProtocol)
     func didPressUpdate(on post: PostProtocol)
     func editError()
@@ -110,6 +111,7 @@ struct CellTimeline: View {
                 Spacer()
             }
             HStack(alignment: .center) {
+                likeButton
                 replyButton
                 if isMyPost {
                     editButton
@@ -123,6 +125,18 @@ struct CellTimeline: View {
         .listRowBackground(Color.timelineCellBackgroundColor)
     }
     
+    var likeButton: some View {
+        Image(systemName: heartEmoji(isHighlighted: post.favourited ?? false))
+            .resizable()
+            .scaledToFit()
+            .foregroundColor(buttonColor(isHighlighted: post.favourited ?? false))
+            .frame(width: 20, height: 20)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onTapGesture {
+            delegate.didPressLike(on: post)
+        }
+    }
+    
     var replyButton: some View {
         Image(systemName: "bubble.left")
             .resizable()
@@ -131,7 +145,6 @@ struct CellTimeline: View {
             .frame(width: 20, height: 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onTapGesture {
-            print("reply button")
             delegate.didPressReply(on: post)
         }
     }
@@ -195,6 +208,10 @@ struct CellTimeline: View {
                 .stroke(.primary.opacity(0.25), lineWidth: 1)
         )
         .frame(width: 40, height: 40)
+    }
+    
+    func heartEmoji(isHighlighted: Bool) -> String {
+        isHighlighted ? "heart.fill" : "heart"
     }
     
     func isMyUsername(postUsername: String) -> Bool {
@@ -307,15 +324,10 @@ struct CellTimeline: View {
     }
     
     private func getItemURL() -> String? {
-        func alertError() {
-            delegate.editError()
-        }
-        
         do {
             let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
             
             guard let content = post.content, content.contains("~neodb~/") else {
-                alertError()
                 return nil
             }
             
@@ -324,12 +336,10 @@ struct CellTimeline: View {
             
             for match in matches {
                 guard let range = Range(match.range, in: input) else {
-                    alertError()
                     return nil
                 }
                 let urlString = String(input[range])
                 guard let _ = URL(string: urlString) else {
-                    alertError()
                     return nil
                 }
                 
@@ -339,7 +349,6 @@ struct CellTimeline: View {
             print(error.localizedDescription)
         }
         
-        alertError()
         return nil
     }
 }

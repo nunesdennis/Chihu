@@ -22,6 +22,7 @@ struct PostSchema: Decodable {
     let spoilerText: String
     var language: String?
     let text: String
+    var favourited: Bool?
 }
 
 struct PostsSchema: Decodable {
