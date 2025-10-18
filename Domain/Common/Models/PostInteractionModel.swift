@@ -1,0 +1,27 @@
+//
+//  PostInteractionModel.swift
+//  Chihu
+//
+//  Created by Angela Rosanne Santos de Oliveira on 18/10/25.
+//
+
+import Foundation
+import TootSDK
+
+enum PostInteraction {
+    enum LikeDislike {
+        struct Request: PostInteractionRequestProtocol {
+            let method: HTTPMethod = .post
+            let postId: String
+            let favourited: Bool
+        }
+        
+        struct Response {
+            let post: Post
+        }
+        
+        struct ViewModel {
+            let post: PostProtocol
+        }
+    }
+}

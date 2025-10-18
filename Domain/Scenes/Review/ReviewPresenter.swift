@@ -27,7 +27,20 @@ protocol ReviewPresentationLogic {
 }
 
 final class ReviewPresenter {
-    var view: ReviewDisplayLogic?
+    var view: (ReviewDisplayLogic & PostInteractionsDisplayLogic)?
+}
+
+extension ReviewPresenter: PostInteractionsPresentationLogic {
+    func present(response: PostInteraction.LikeDislike.Response) {
+        if let newPost = response.post as? (any PostProtocol) {
+            let viewModel = PostInteraction.LikeDislike.ViewModel(post: newPost)
+            Task {
+                await view?.display(viewModel: viewModel)
+            }
+        } else {
+            present(error: ChihuError.codeError)
+        }
+    }
 }
 
 extension ReviewPresenter: ReviewPresentationLogic {

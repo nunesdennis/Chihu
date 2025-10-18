@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import TootSDK
 
 enum ReviewState {
     case loading
@@ -32,13 +33,13 @@ final class ReviewDataStore: ObservableObject {
     var collectionSelected: CollectionModel?
     var noteSelected: NoteSchema?
     var seasonSelected: ItemViewModel?
-    var posts: [CatalogPostsModel.Load.ViewModel.Post]
     var noteList: [NoteSchema]
-    var postClicked: PostProtocol?
+    var postClicked: (any PostProtocol)?
+    var replyPostClicked: (any PostProtocol)?
     var noteListNeedsToUpdate: Bool
     
+    @Published var posts: [Post]
     @Published var showReplyView: Bool = false
-    @Published var showUpdateReplyView: Bool = false
     @Published var shelfType: ShelfType
     @Published var item: ItemViewModel!
     @Published var shouldShowAlert: Bool
@@ -67,7 +68,7 @@ final class ReviewDataStore: ObservableObject {
         collectionSelected: CollectionModel? = nil,
         noteSelected: NoteSchema? = nil,
         seasonSelected: ItemViewModel? = nil,
-        posts: [CatalogPostsModel.Load.ViewModel.Post] = [],
+        posts: [Post] = [],
         noteList: [NoteSchema] = [],
         noteListNeedsToUpdate: Bool = true,
         shouldShowAlert: Bool = false,

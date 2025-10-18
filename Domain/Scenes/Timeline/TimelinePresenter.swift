@@ -17,7 +17,7 @@ protocol TimelinePresentationLogic {
 final class TimelinePresenter {
     typealias Response = Timeline.Load.Response
     typealias ViewModel = Timeline.Load.ViewModel
-    var view: TimelineDisplayLogic?
+    var view: (TimelineDisplayLogic & PostInteractionsDisplayLogic)?
 }
 
 extension TimelinePresenter: TimelinePresentationLogic {
@@ -41,6 +41,15 @@ extension TimelinePresenter: TimelinePresentationLogic {
     
     func presentAlert(error: any Error) {
         view?.displayAlertError(error)
+    }
+}
+
+extension TimelinePresenter: PostInteractionsPresentationLogic {
+    func present(response: PostInteraction.LikeDislike.Response) {
+        let viewModel = PostInteraction.LikeDislike.ViewModel(post: response.post)
+        Task {
+            await view?.display(viewModel: viewModel)
+        }
     }
 }
 

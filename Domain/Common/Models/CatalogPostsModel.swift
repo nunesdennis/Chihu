@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import TootSDK
 
 enum CatalogPostsModel {
     enum Load {
@@ -25,7 +26,7 @@ enum CatalogPostsModel {
                 var displayName: String?
             }
             
-            struct Post: PostProtocol, Identifiable {
+            struct SimplePost: PostProtocol, Identifiable {
                 let id: String
                 let sensitive: Bool
                 let accountValue: (any AccountProtocol)
@@ -33,6 +34,7 @@ enum CatalogPostsModel {
                 var repostValue: (any PostProtocol)?
                 var content: String?
                 var applicationValue: (any ApplicationProtocol)?
+                var favourited: Bool?
             }
             
             let posts: [Post]
@@ -40,11 +42,12 @@ enum CatalogPostsModel {
             init(posts: PostsSchema) {
                 self.posts = posts.data.map { post in
                     let acct = Account(avatar: post.account.avatar, acct: post.account.acct, displayName: post.account.displayName)
-                    return Post(id: post.id,
+                    return SimplePost(id: post.id,
                                 sensitive: post.sensitive,
                                 accountValue: acct,
                                 spoilerText: post.spoilerText,
-                                content: post.content)
+                                content: post.content,
+                                favourited: post.favourited).asClass()
                 }
             }
         }

@@ -20,16 +20,26 @@ enum TimelineState {
     case error
 }
 
+enum TimelineAlertType {
+    case success
+    case error
+    case delete
+    case actionFailed
+    case deleteError
+}
+
 final class TimelineDataStore: ObservableObject {
     @Published var state: TimelineState = .firstLoad
     @Published var shouldShowAlert = false
     @Published var showReplyView: Bool = false
-    @Published var showUpdateReplyView: Bool = false
+    @Published var shouldShowToast: Bool = false
+    @Published var posts: [Post] = []
+    var alertType: TimelineAlertType?
     var postClicked: PostProtocol?
+    var replyPostClicked: PostProtocol?
     var imagesDictionary: [String : ImageState] = [:]
     var imagesDictionaryURL: [URL : ImageState] = [:]
     var avatarImagesDictionary: [String : ImageState] = [:]
     var alertMessage: LocalizedStringKey?
     var lastError: Error?
-    var posts: [Post] = []
 }

@@ -9,6 +9,16 @@
 import SwiftUI
 import Combine
 
+extension LightReviewView: PostInteractionsDisplayLogic {
+    func display(viewModel: PostInteraction.LikeDislike.ViewModel) async {
+        //no-op
+    }
+    
+    func displayToastError(_ error: any Error) {
+        //no-op
+    }
+}
+
 extension LightReviewView: ReviewDisplayLogic {
     func displayPosts(viewModel: CatalogPostsModel.Load.ViewModel) {
         // no-op
