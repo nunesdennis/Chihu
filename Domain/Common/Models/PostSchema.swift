@@ -20,9 +20,13 @@ struct PostSchema: Decodable {
     let content: String
     let sensitive: Bool
     let spoilerText: String
-    var language: String?
     let text: String
+    var language: String?
     var favourited: Bool?
+    var favouritesCount: Int?
+    var repostsCount: Int?
+    var repliesCount: Int?
+    var url: String?
 }
 
 struct PostsSchema: Decodable {

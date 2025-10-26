@@ -42,6 +42,7 @@ struct CellTimeline: View {
     @State var showSpoilerEffect: Bool
     @State var showTranslation: Bool = false
     
+    @Environment(\.openURL) var openURL
     @Environment(\.colorScheme) private var colorScheme
     
     private var sourceText: String {
@@ -119,6 +120,9 @@ struct CellTimeline: View {
                 if #available(iOS 18.0, *) {
                     translateButton
                 }
+                if post.url != nil {
+                    externalLinkButton
+                }
             }
             .frame(height: 30)
         }
@@ -126,26 +130,55 @@ struct CellTimeline: View {
     }
     
     var likeButton: some View {
-        Image(systemName: heartEmoji(isHighlighted: post.favourited ?? false))
-            .resizable()
-            .scaledToFit()
-            .foregroundColor(buttonColor(isHighlighted: post.favourited ?? false))
-            .frame(width: 20, height: 20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        HStack {
+            Image(systemName: heartEmoji(isHighlighted: post.favourited ?? false))
+                .resizable()
+                .scaledToFit()
+                .frame(width: 20, height: 20)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            if post.favouritesCount > 0 {
+                Spacer().frame(width: 1)
+                Text("\(post.favouritesCount)")
+                Spacer()
+            }
+        }
+        .foregroundColor(buttonColor(isHighlighted: post.favourited ?? false))
         .onTapGesture {
             delegate.didPressLike(on: post)
         }
     }
     
     var replyButton: some View {
-        Image(systemName: "bubble.left")
+        HStack {
+            Image(systemName: "bubble.left")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 20, height: 20)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            if post.repliesCount > 0 {
+                Spacer().frame(width: 1)
+                Text("\(post.repliesCount)")
+                Spacer()
+            }
+        }
+        .foregroundColor(buttonColor(isHighlighted: false))
+        .onTapGesture {
+            delegate.didPressReply(on: post)
+        }
+    }
+    
+    var externalLinkButton: some View {
+        Image(systemName: "arrow.up.right.square")
             .resizable()
             .scaledToFit()
             .foregroundColor(buttonColor(isHighlighted: false))
             .frame(width: 20, height: 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onTapGesture {
-            delegate.didPressReply(on: post)
+            if let urlString = post.url,
+               let url = URL(string: urlString) {
+                openURL(url)
+            }
         }
     }
     

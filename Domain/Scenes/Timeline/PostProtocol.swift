@@ -43,6 +43,10 @@ protocol PostProtocol: Identifiable {
     var content: String? { get }
     var applicationValue: ApplicationProtocol? { get }
     var favourited: Bool? { get }
+    var favouritesCount: Int { get }
+    var repostsCount: Int { get }
+    var repliesCount: Int { get }
+    var url: String? { get }
 }
 
 extension PostProtocol {
@@ -60,9 +64,10 @@ extension PostProtocol {
               mentions: [],
               tags: [],
               emojis: [],
-              repostsCount: .zero,
-              favouritesCount: .zero,
-              repliesCount: .zero,
+              repostsCount: self.repostsCount,
+              favouritesCount: self.favouritesCount,
+              repliesCount: self.repliesCount,
+              url: self.url,
               repost: self.repostValue?.asClass(),
               favourited: self.favourited)
     }

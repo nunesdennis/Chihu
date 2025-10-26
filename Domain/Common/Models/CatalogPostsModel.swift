@@ -35,6 +35,10 @@ enum CatalogPostsModel {
                 var content: String?
                 var applicationValue: (any ApplicationProtocol)?
                 var favourited: Bool?
+                var favouritesCount: Int
+                var repostsCount: Int
+                var repliesCount: Int
+                var url: String?
             }
             
             let posts: [Post]
@@ -47,7 +51,11 @@ enum CatalogPostsModel {
                                 accountValue: acct,
                                 spoilerText: post.spoilerText,
                                 content: post.content,
-                                favourited: post.favourited).asClass()
+                                favourited: post.favourited,
+                                favouritesCount: post.favouritesCount ?? .zero,
+                                repostsCount: post.repostsCount ?? .zero,
+                                repliesCount: post.repliesCount ?? .zero,
+                                      url: post.url).asClass()
                 }
             }
         }
