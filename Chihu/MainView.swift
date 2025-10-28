@@ -16,7 +16,6 @@ final class MainDataStore: ObservableObject {
         if selectedItem?.id == reviewDataStore.item?.id {
             return reviewDataStore
         }
-        
         self.reviewDataStore = ReviewDataStore()
         
         return reviewDataStore
