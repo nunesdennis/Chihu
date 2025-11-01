@@ -8,17 +8,17 @@
 
 import SwiftUI
 import Combine
+import TootSDK
 
 extension ReviewView: PostInteractionsDisplayLogic {
-    func display(viewModel: PostInteraction.LikeDislike.ViewModel) {
+    func display(post: Post) {
         DispatchQueue.main.async {
-            let newPost = viewModel.post
             let index = dataStore.posts.firstIndex {
-                $0.id == newPost.id
+                $0.id == post.id
             }
             
             if let index {
-                dataStore.posts[index] = newPost.asClass()
+                dataStore.posts[index] = post
             } else {
                 dataStore.alertType = .actionFailed
                 dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
@@ -83,10 +83,15 @@ extension ReviewView: ReviewDisplayLogic {
         }
     }
     
-    func displayLoadingError(_ error: any Error) {
+    func displaySilentError(_ error: any Error) {
         print(error.localizedDescription)
-        // TODO: improve this with a better error handling, alert snapbar?
+    }
+    
+    func displayLoadingError(_ error: any Error) {
         DispatchQueue.main.async {
+            dataStore.alertType = .error
+            dataStore.alertMessage = LocalizedStringKey(error.localizedDescription)
+            dataStore.shouldShowToast = true
             dataStore.state = .full
         }
     }
@@ -1202,6 +1207,18 @@ extension ReviewView {
 }
 
 extension ReviewView: CellTimelineDelegate {
+    func didPressRepost(on post: TootSDK.Post) {
+        guard let postInteractionInteractor else {
+            dataStore.alertType = .actionFailed
+            dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
+            dataStore.shouldShowToast = true
+            return
+        }
+
+        let likeRequest = PostInteraction.Repost.Request(postId: post.id, reposted: post.reposted ?? false)
+        postInteractionInteractor.repost(request: likeRequest)
+    }
+    
     func editError() {
         DispatchQueue.main.async {
             dataStore.shouldShowAlert = true
@@ -1209,14 +1226,14 @@ extension ReviewView: CellTimelineDelegate {
         }
     }
     
-    func didPressUpdate(on post: any PostProtocol) {
+    func didPressUpdate(on post: Post) {
         DispatchQueue.main.async {
             dataStore.replyPostClicked = post
             dataStore.showReplyView = true
         }
     }
     
-    func didPressLike(on post: PostProtocol) {
+    func didPressLike(on post: Post) {
         guard let postInteractionInteractor else {
             dataStore.alertType = .actionFailed
             dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
@@ -1228,7 +1245,7 @@ extension ReviewView: CellTimelineDelegate {
         postInteractionInteractor.likeDislike(request: likeRequest)
     }
     
-    func didPressReply(on post: any PostProtocol) {
+    func didPressReply(on post: Post) {
         DispatchQueue.main.async {
             dataStore.postClicked = post
             dataStore.showReplyView = true
@@ -1249,8 +1266,19 @@ extension ReviewView: CellTimelineDelegate {
 }
 
 extension ReviewView: ReplyDelegate {
-    func didEndReply() {
-        dataStore.showReplyView = false
+    func didEndReply(with post: Post) {
+        DispatchQueue.main.async {
+            dataStore.showReplyView = false
+            let index = dataStore.posts.firstIndex {
+                $0.id == post.id
+            }
+            
+            if let index {
+                dataStore.posts[index] = post
+            } else {
+                dataStore.posts.insert(post, at: 0)
+            }
+        }
     }
 }
 

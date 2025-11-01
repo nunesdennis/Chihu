@@ -18,21 +18,14 @@ protocol TimelineDisplayLogic {
 }
 
 extension TimelineView: PostInteractionsDisplayLogic {
-    func display(viewModel: PostInteraction.LikeDislike.ViewModel) {
+    func display(post: Post) {
         DispatchQueue.main.async {
-            guard let newPost = viewModel.post as? Post else {
-                dataStore.alertType = .actionFailed
-                dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
-                dataStore.shouldShowToast = true
-                return
-            }
-            
             let index = dataStore.posts.firstIndex {
-                $0.id == newPost.id
+                $0.id == post.id
             }
             
             if let index {
-                dataStore.posts[index] = newPost
+                dataStore.posts[index] = post
             } else {
                 dataStore.alertType = .actionFailed
                 dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
@@ -456,6 +449,18 @@ struct TimelineView: View {
 }
 
 extension TimelineView: CellTimelineDelegate {
+    func didPressRepost(on post: TootSDK.Post) {
+        guard let postInteractionInteractor else {
+            dataStore.alertType = .actionFailed
+            dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
+            dataStore.shouldShowToast = true
+            return
+        }
+
+        let repostRequest = PostInteraction.Repost.Request(postId: post.id, reposted: post.reposted ?? false)
+        postInteractionInteractor.repost(request: repostRequest)
+    }
+    
     func editError() {
         DispatchQueue.main.async {
             dataStore.shouldShowAlert = true
@@ -463,14 +468,14 @@ extension TimelineView: CellTimelineDelegate {
         }
     }
     
-    func didPressUpdate(on post: any PostProtocol) {
+    func didPressUpdate(on post: Post) {
         DispatchQueue.main.async {
             dataStore.replyPostClicked = post
             dataStore.showReplyView = true
         }
     }
     
-    func didPressLike(on post: PostProtocol) {
+    func didPressLike(on post: Post) {
         guard let postInteractionInteractor else {
             dataStore.alertType = .actionFailed
             dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
@@ -482,7 +487,7 @@ extension TimelineView: CellTimelineDelegate {
         postInteractionInteractor.likeDislike(request: likeRequest)
     }
     
-    func didPressReply(on post: any PostProtocol) {
+    func didPressReply(on post: Post) {
         DispatchQueue.main.async {
             dataStore.postClicked = post
             dataStore.showReplyView = true
@@ -505,7 +510,18 @@ extension TimelineView: CellTimelineDelegate {
 }
 
 extension TimelineView: ReplyDelegate {
-    func didEndReply() {
-        dataStore.showReplyView = false
+    func didEndReply(with post: Post) {
+        DispatchQueue.main.async {
+            dataStore.showReplyView = false
+            let index = dataStore.posts.firstIndex {
+                $0.id == post.id
+            }
+            
+            if let index {
+                dataStore.posts[index] = post
+            } else {
+                dataStore.posts.insert(post, at: 0)
+            }
+        }
     }
 }

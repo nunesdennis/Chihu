@@ -9,6 +9,7 @@ import Foundation
 
 protocol PostInteractionsBusinessLogic {
     func likeDislike(request: PostInteraction.LikeDislike.Request)
+    func repost(request: PostInteraction.Repost.Request)
 }
 
 final class PostInteractionsInteractor {
@@ -16,6 +17,20 @@ final class PostInteractionsInteractor {
 }
 
 extension PostInteractionsInteractor: PostInteractionsBusinessLogic {
+    func repost(request: PostInteraction.Repost.Request) {
+        let worker = PostInteractionsNetworkingWorker()
+        Task(priority: .background) {
+            await worker.repost(request: request) { [unowned self] result in
+                switch result {
+                case .success(let response):
+                    presenter?.present(response: response)
+                case .failure(let error):
+                    presenter?.present(error: error)
+                }
+            }
+        }
+    }
+    
     func likeDislike(request: PostInteraction.LikeDislike.Request) {
         let worker = PostInteractionsNetworkingWorker()
         Task(priority: .background) {

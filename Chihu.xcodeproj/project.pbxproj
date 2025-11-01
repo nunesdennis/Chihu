@@ -279,9 +279,7 @@
 		B3E420652DAF162C00FA1599 /* PostSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E420642DAF162C00FA1599 /* PostSchema.swift */; };
 		B3E420662DAF162C00FA1599 /* PostSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E420642DAF162C00FA1599 /* PostSchema.swift */; };
 		B3E420692DAF1A2D00FA1599 /* CatalogPostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E420672DAF1A2D00FA1599 /* CatalogPostsModel.swift */; };
-		B3E4206D2DAF3CE400FA1599 /* PostProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E4206C2DAF3CE400FA1599 /* PostProtocol.swift */; };
 		B3E4206F2DAF3D4200FA1599 /* CatalogPostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E420672DAF1A2D00FA1599 /* CatalogPostsModel.swift */; };
-		B3E420702DAF3D5600FA1599 /* PostProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E4206C2DAF3CE400FA1599 /* PostProtocol.swift */; };
 		B3E420722DAF3E4900FA1599 /* ImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E420712DAF3E4900FA1599 /* ImageState.swift */; };
 		B3E420732DAF3E4900FA1599 /* ImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E420712DAF3E4900FA1599 /* ImageState.swift */; };
 		B3E420742DAF3F8400FA1599 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B390A38A2D1AF38800923AA4 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -534,7 +532,6 @@
 		B3E420612DAF134200FA1599 /* CatalogPostEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogPostEndpoint.swift; sourceTree = "<group>"; };
 		B3E420642DAF162C00FA1599 /* PostSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSchema.swift; sourceTree = "<group>"; };
 		B3E420672DAF1A2D00FA1599 /* CatalogPostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogPostsModel.swift; sourceTree = "<group>"; };
-		B3E4206C2DAF3CE400FA1599 /* PostProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProtocol.swift; sourceTree = "<group>"; };
 		B3E420712DAF3E4900FA1599 /* ImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageState.swift; sourceTree = "<group>"; };
 		B3E512E92C8F4AC20071ED50 /* TMDBAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBAPIClient.swift; sourceTree = "<group>"; };
 		B3E512EB2C8F52E60071ED50 /* SearchByNameTMDBendpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByNameTMDBendpoint.swift; sourceTree = "<group>"; };
@@ -1099,7 +1096,6 @@
 				B3A0B4482CE2A54E0046DEA5 /* TimelineModel.swift */,
 				B3A0B4492CE2A54E0046DEA5 /* TimelinePresenter.swift */,
 				B3A0B44A2CE2A54E0046DEA5 /* TimelineView.swift */,
-				B3E4206C2DAF3CE400FA1599 /* PostProtocol.swift */,
 				B3E420712DAF3E4900FA1599 /* ImageState.swift */,
 			);
 			path = Timeline;
@@ -1355,7 +1351,6 @@
 				21ECB5FE2D242421006CBE85 /* SearchByNamePIendpoint.swift in Sources */,
 				B3F4A4672D05B7B000DFED6E /* SafariWebView.swift in Sources */,
 				B3E512F62C8FB7370071ED50 /* ShelfTMDB.swift in Sources */,
-				B3E4206D2DAF3CE400FA1599 /* PostProtocol.swift in Sources */,
 				21EFAC562C7A7289001DD16D /* ProfilePresenter.swift in Sources */,
 				7F233A9E2E0AD7680001E188 /* RatingRow.swift in Sources */,
 				B3EF26CD2CD965A600946836 /* SearchByNameGoogleBooksEndpoint.swift in Sources */,
@@ -1554,7 +1549,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3E420702DAF3D5600FA1599 /* PostProtocol.swift in Sources */,
 				21EE06B92D37283C00DF30A1 /* CollectionItemList.swift in Sources */,
 				B3C8231A2D73B67C00524CF0 /* ApiUrlEndpoint.swift in Sources */,
 				B36EA2FB2D1EBFD6005A3F66 /* LightReviewConfigurator.swift in Sources */,
@@ -1837,7 +1831,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.0;
+				MARKETING_VERSION = 1.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1880,7 +1874,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.0;
+				MARKETING_VERSION = 1.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1979,7 +1973,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.13.0;
+				MARKETING_VERSION = 1.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2010,7 +2004,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.13.0;
+				MARKETING_VERSION = 1.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

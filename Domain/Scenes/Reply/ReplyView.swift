@@ -18,7 +18,7 @@ protocol ReplyDisplayLogic {
 extension ReplyView: ReplyDisplayLogic {
     func display(viewModel: Reply.Update.ViewModel) {
         DispatchQueue.main.async {
-            closeSheet()
+            closeSheet(with: viewModel.replyModel)
         }
     }
     
@@ -32,7 +32,7 @@ extension ReplyView: ReplyDisplayLogic {
     
     func display(viewModel: Reply.Send.ViewModel) {
         DispatchQueue.main.async {
-            closeSheet()
+            closeSheet(with: viewModel.replyModel)
         }
     }
     
@@ -106,14 +106,14 @@ extension ReplyView: ReplyDisplayLogic {
 }
 
 protocol ReplyDelegate {
-    func didEndReply()
+    func didEndReply(with post: Post)
 }
 
 struct ReplyView: View {
     let delegate: ReplyDelegate
     
-    var post: PostProtocol?
-    var reply: PostProtocol?
+    var post: Post?
+    var reply: Post?
     
     var interactor: ReplyBusinessLogic?
     
@@ -129,7 +129,7 @@ struct ReplyView: View {
     
     let visibilityList: [Visibility] = [.public, .followersOnly, .mentionedOnly]
     
-    init(delegate: ReplyDelegate, post: PostProtocol? = nil, reply: PostProtocol? = nil) {
+    init(delegate: ReplyDelegate, post: Post? = nil, reply: Post? = nil) {
         self.delegate = delegate
         self.post = post
         self.reply = reply
@@ -245,7 +245,7 @@ struct ReplyView: View {
         index == selectedVisibility ? .filterButtonSelectedColor : .filterButtonNotSelectedColor
     }
     
-    func closeSheet() {
-        delegate.didEndReply()
+    func closeSheet(with post: Post) {
+        delegate.didEndReply(with: post)
     }
 }

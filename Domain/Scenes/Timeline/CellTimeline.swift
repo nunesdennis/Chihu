@@ -14,26 +14,11 @@ import Translation
 
 protocol CellTimelineDelegate {
     func handleURL(_ url: URL)
-    func didPressLike(on post: PostProtocol)
-    func didPressReply(on post: PostProtocol)
-    func didPressUpdate(on post: PostProtocol)
+    func didPressLike(on post: Post)
+    func didPressReply(on post: Post)
+    func didPressRepost(on post: Post)
+    func didPressUpdate(on post: Post)
     func editError()
-}
-
-extension TootSDK.TootApplication: ApplicationProtocol {}
-extension TootSDK.Account: AccountProtocol {}
-extension TootSDK.Post: PostProtocol {
-    var applicationValue: (any ApplicationProtocol)? {
-        application
-    }
-    
-    var repostValue: (any PostProtocol)? {
-        repost
-    }
-    
-    var accountValue: (any AccountProtocol) {
-        account
-    }
 }
 
 @MainActor
@@ -57,14 +42,14 @@ struct CellTimeline: View {
     private var avatarImage: Image?
     private var shouldLoadOnCell: Bool = false
     private var isMyPost: Bool {
-        isMyUsername(postUsername: post.accountValue.acct)
+        isMyUsername(postUsername: post.account.acct)
     }
     
-    private let post: PostProtocol
+    private let post: Post
     private let delegate: CellTimelineDelegate
 
     // MARK: - Init
-    init(post: PostProtocol, image: ImageState?, avatarImage: ImageState?, itemURL: String? = nil, delegate: CellTimelineDelegate) {
+    init(post: Post, image: ImageState?, avatarImage: ImageState?, itemURL: String? = nil, delegate: CellTimelineDelegate) {
         self._sensitive = State(initialValue: post.sensitive)
         self._showSpoilerEffect = State(initialValue: post.sensitive)
         
@@ -96,7 +81,7 @@ struct CellTimeline: View {
     var cellView: some View {
         VStack {
             HStack {
-                if post.repostValue != nil {
+                if post.repost != nil {
                     repost(from: post)
                 } else {
                     account(from: post)
@@ -114,6 +99,7 @@ struct CellTimeline: View {
             HStack(alignment: .center) {
                 likeButton
                 replyButton
+                repostButton
                 if isMyPost {
                     editButton
                 }
@@ -145,6 +131,25 @@ struct CellTimeline: View {
         .foregroundColor(buttonColor(isHighlighted: post.favourited ?? false))
         .onTapGesture {
             delegate.didPressLike(on: post)
+        }
+    }
+    
+    var repostButton: some View {
+        HStack {
+            Image(systemName: "arrow.2.squarepath")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 23, height: 23)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            if post.repostsCount > 0 {
+                Spacer().frame(width: 1)
+                Text("\(post.repostsCount)")
+                Spacer()
+            }
+        }
+        .foregroundColor(buttonColor(isHighlighted: post.reposted ?? false))
+        .onTapGesture {
+            delegate.didPressRepost(on: post)
         }
     }
     
@@ -205,7 +210,7 @@ struct CellTimeline: View {
             .resizable()
             .scaledToFit()
             .foregroundColor(buttonColor(isHighlighted: false))
-            .frame(width: 20, height: 20)
+            .frame(width: 22, height: 22)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onTapGesture {
             showTranslation.toggle()
@@ -259,10 +264,10 @@ struct CellTimeline: View {
         isHighlighted ? .timelineButtonCellHighlightedColor : .timelineButtonCellNormalColor
     }
     
-    func repost(from post: PostProtocol) -> some View {
+    func repost(from post: Post) -> some View {
         VStack(alignment: .leading) {
             HStack {
-                if let displayName = post.accountValue.displayName {
+                if let displayName = post.account.displayName {
                     Text(displayName)
                         .font(.headline)
                         .padding(5)
@@ -273,20 +278,20 @@ struct CellTimeline: View {
                     .frame(width: 15, height: 15)
                     .background(Color.chihuClear)
             }
-            account(from: post.repostValue!)
+            account(from: post.repost!)
         }
     }
     
-    func account(from post: PostProtocol) -> some View {
+    func account(from post: Post) -> some View {
         VStack(alignment: .leading) {
             HStack {
                 loadableAvatarImage
                 VStack(alignment: .leading) {
-                    if let displayName = post.accountValue.displayName {
+                    if let displayName = post.account.displayName {
                         Text(displayName)
                             .font(.headline)
                     }
-                    Text(post.accountValue.acct + " " + (post.applicationValue?.name ?? ""))
+                    Text(post.account.acct + " " + (post.application?.name ?? ""))
                         .font(.body)
                         .foregroundColor(.chihuGray)
                 }
@@ -301,7 +306,7 @@ struct CellTimeline: View {
         }
     }
     
-    func cellContent(from post: PostProtocol) -> some View {
+    func cellContent(from post: Post) -> some View {
         parseHTML(from: post)
             .environment(
                 \.openURL,
@@ -312,11 +317,11 @@ struct CellTimeline: View {
             )
     }
     
-    func getAvatarUrl(from post: PostProtocol) -> URL? {
-        if let _ = post.repostValue {
-            return URL(string: post.accountValue.avatar)
+    func getAvatarUrl(from post: Post) -> URL? {
+        if let _ = post.repost {
+            return URL(string: post.account.avatar)
         } else {
-            return URL(string: post.accountValue.avatar)
+            return URL(string: post.account.avatar)
         }
     }
     
@@ -345,7 +350,7 @@ struct CellTimeline: View {
         }
     }
     
-    func parseHTML(from post: PostProtocol) -> some View {
+    func parseHTML(from post: Post) -> some View {
         guard let content = post.content,
               let html = try? HTMLParser().parse(html: content) else {
             return Markdown("")
