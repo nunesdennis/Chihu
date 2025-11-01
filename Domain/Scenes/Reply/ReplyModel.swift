@@ -23,11 +23,11 @@ enum Reply {
         }
         
         struct Response {
-            let replyModel: TootSDK.Post
+            let replyModel: Post
         }
         
         struct ViewModel {
-            let replyModel: TootSDK.Post
+            let replyModel: Post
         }
     }
     
@@ -42,11 +42,11 @@ enum Reply {
         }
         
         struct Response {
-            let replyModel: TootSDK.Post
+            let replyModel: Post
         }
         
         struct ViewModel {
-            let replyModel: TootSDK.Post
+            let replyModel: Post
         }
     }
 }

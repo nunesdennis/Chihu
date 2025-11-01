@@ -35,8 +35,8 @@ final class TimelineDataStore: ObservableObject {
     @Published var shouldShowToast: Bool = false
     @Published var posts: [Post] = []
     var alertType: TimelineAlertType?
-    var postClicked: PostProtocol?
-    var replyPostClicked: PostProtocol?
+    var postClicked: Post?
+    var replyPostClicked: Post?
     var imagesDictionary: [String : ImageState] = [:]
     var imagesDictionaryURL: [URL : ImageState] = [:]
     var avatarImagesDictionary: [String : ImageState] = [:]

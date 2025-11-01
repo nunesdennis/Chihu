@@ -8,9 +8,10 @@
 
 import SwiftUI
 import Combine
+import TootSDK
 
 extension LightReviewView: PostInteractionsDisplayLogic {
-    func display(viewModel: PostInteraction.LikeDislike.ViewModel) async {
+    func display(post: Post) async {
         //no-op
     }
     
@@ -20,6 +21,10 @@ extension LightReviewView: PostInteractionsDisplayLogic {
 }
 
 extension LightReviewView: ReviewDisplayLogic {
+    func displaySilentError(_ error: any Error) {
+        // no-op
+    }
+    
     func displayPosts(viewModel: CatalogPostsModel.Load.ViewModel) {
         // no-op
     }

@@ -82,7 +82,7 @@ extension ReviewInteractor: ReviewBusinessLogic {
             case .success(let response):
                 presenter?.present(rateResponse:  response, reviewResponse: nil)
             case .failure(let error):
-                presenter?.presentLoading(error: error)
+                presenter?.presentSilentError(error: error)
             }
         }
     }
@@ -95,7 +95,7 @@ extension ReviewInteractor: ReviewBusinessLogic {
                 let response = Review.LoadSeason.Response(item: item)
                 presenter?.open(response: response)
             case .failure(let error):
-                presenter?.presentLoading(error: error)
+                presenter?.presentSilentError(error: error)
             }
         }
     }
@@ -149,7 +149,7 @@ extension ReviewInteractor: ReviewBusinessLogic {
             case .success(let response):
                 presenter?.present(rateResponse: nil, reviewResponse:  response)
             case .failure(let error):
-                presenter?.presentLoading(error: error)
+                presenter?.presentSilentError(error: error)
             }
         }
     }
@@ -205,7 +205,7 @@ extension ReviewInteractor: ReviewBusinessLogic {
             case .success(let response):
                 presenter?.presentPosts(response: response)
             case .failure(let error):
-                presenter?.presentLoading(error: error)
+                presenter?.presentSilentError(error: error)
             }
         }
     }

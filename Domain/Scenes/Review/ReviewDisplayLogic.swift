@@ -20,6 +20,7 @@ protocol ReviewDisplayLogic {
     func displayPosts(viewModel: CatalogPostsModel.Load.ViewModel)
     func displayError(_ error: Error)
     func displayLoadingError(_ error: Error)
+    func displaySilentError(_ error: any Error)
     func displayDeleteError(_ error: Error)
     func displayActionError(_ error: any Error)
 }

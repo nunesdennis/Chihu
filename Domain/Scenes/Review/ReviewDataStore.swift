@@ -34,8 +34,8 @@ final class ReviewDataStore: ObservableObject {
     var noteSelected: NoteSchema?
     var seasonSelected: ItemViewModel?
     var noteList: [NoteSchema]
-    var postClicked: (any PostProtocol)?
-    var replyPostClicked: (any PostProtocol)?
+    var postClicked: Post?
+    var replyPostClicked: Post?
     var noteListNeedsToUpdate: Bool
     
     @Published var posts: [Post]

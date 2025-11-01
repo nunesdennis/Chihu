@@ -45,15 +45,26 @@ extension TimelinePresenter: TimelinePresentationLogic {
 }
 
 extension TimelinePresenter: PostInteractionsPresentationLogic {
+    func present(response: PostInteraction.Repost.Response) {
+        let viewModel = PostInteraction.Repost.ViewModel(post: response.post)
+        Task {
+            await view?.display(post: viewModel.post)
+        }
+    }
+    
     func present(response: PostInteraction.LikeDislike.Response) {
         let viewModel = PostInteraction.LikeDislike.ViewModel(post: response.post)
         Task {
-            await view?.display(viewModel: viewModel)
+            await view?.display(post: viewModel.post)
         }
     }
 }
 
 extension TimelinePresenter: ReviewPresentationLogic {
+    func presentSilentError(error: any Error) {
+        // no-op
+    }
+    
     func presentPosts(response: CatalogPostsModel.Load.Response) {
         // no-op
     }

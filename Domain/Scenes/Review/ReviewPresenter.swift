@@ -23,6 +23,7 @@ protocol ReviewPresentationLogic {
     func present(error: Error)
     func presentDelete(error: Error)
     func presentLoading(error: Error)
+    func presentSilentError(error: Error)
     func presentActionError(error: Error)
 }
 
@@ -31,14 +32,17 @@ final class ReviewPresenter {
 }
 
 extension ReviewPresenter: PostInteractionsPresentationLogic {
+    func present(response: PostInteraction.Repost.Response) {
+        let viewModel = PostInteraction.Repost.ViewModel(post: response.post)
+        Task {
+            await view?.display(post: viewModel.post)
+        }
+    }
+    
     func present(response: PostInteraction.LikeDislike.Response) {
-        if let newPost = response.post as? (any PostProtocol) {
-            let viewModel = PostInteraction.LikeDislike.ViewModel(post: newPost)
-            Task {
-                await view?.display(viewModel: viewModel)
-            }
-        } else {
-            present(error: ChihuError.codeError)
+        let viewModel = PostInteraction.LikeDislike.ViewModel(post: response.post)
+        Task {
+            await view?.display(post: viewModel.post)
         }
     }
 }
@@ -74,6 +78,10 @@ extension ReviewPresenter: ReviewPresentationLogic {
             let viewModel = Collections.DeleteItems.ViewModel(message: collectionItemResponse.message)
             view?.display(rateViewModel: nil, reviewViewModel: nil, collectionsItemViewModel: viewModel)
         }
+    }
+    
+    func presentSilentError(error: any Error) {
+        view?.displaySilentError(error)
     }
     
     func presentLoading(error: any Error) {
