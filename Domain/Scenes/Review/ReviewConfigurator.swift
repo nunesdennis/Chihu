@@ -21,6 +21,5 @@ extension ReviewView {
         presenter.view = view
         return view
             .withToast()
-            .colorScheme()
     }
 }
