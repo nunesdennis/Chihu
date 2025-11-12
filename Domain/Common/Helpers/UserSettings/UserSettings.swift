@@ -14,6 +14,7 @@ class UserSettings: ObservableObject {
         case instanceURL
         case tip
         case theme
+        case systemThemeMode
         case neoDBScore
         case yourScore
         case defaultShelfType
@@ -27,19 +28,10 @@ class UserSettings: ObservableObject {
     var accessToken: String?
     var fullUsername: String?
     
-    var colorScheme: ColorScheme {
-        switch selectedTheme {
-        case .lightModeDefault:
-                .light
-        case .darkModeDefault:
-                .dark
-        }
-    }
-    
-    @Environment(\.colorScheme) static var appColorScheme
     @Published var language: Language = .en(region: .standard(code: "US"))
     @Published var userPreference: UserPreference.Load.ViewModel?
     @Published var selectedTheme: Theme
+    @Published var currentColorScheme: ColorScheme?
     @Published var shouldShowLogin: Bool
     
     @Published var shouldHideTip: Bool {
@@ -72,6 +64,7 @@ class UserSettings: ObservableObject {
         }
     }
     
+    @Published var shouldUseSystemTheme: Bool
     @Published var profileInfo: Profile.Load.ViewModel?
     
     private init() {
@@ -82,10 +75,16 @@ class UserSettings: ObservableObject {
         shouldHideTip = userDefaultsAppGroup?.bool(forKey: Constants.tip.rawValue) ?? false
         showYourScore = userDefaultsAppGroup?.bool(forKey: Constants.yourScore.rawValue) ?? true
         showNeoDBscore = userDefaultsAppGroup?.bool(forKey: Constants.neoDBScore.rawValue) ?? true
+        shouldUseSystemTheme = userDefaultsAppGroup?.bool(forKey: Constants.systemThemeMode.rawValue) ?? false
         defaultShelfType = userDefaultsAppGroup?.string(forKey: Constants.defaultShelfType.rawValue) ?? ShelfType.progress.rawValue
         defaultSearchCategory = userDefaultsAppGroup?.string(forKey: Constants.defaultSearchCategory.rawValue) ?? ItemCategory.movie.rawValue
         
-        selectedTheme = UserSettings.getTheme()
+        if let themeValue = UserDefaults(suiteName: "group.nunesdennis.chihu")?.string(forKey: Constants.theme.rawValue) {
+            selectedTheme = Theme(rawValue: themeValue) ?? .lightModeDefault
+        } else {
+            selectedTheme = .lightModeDefault
+        }
+        
         if !shouldShowLogin {
             fetchUserPreference()
             fetchProfile()
@@ -169,6 +168,11 @@ class UserSettings: ObservableObject {
         clearTemporaryDirectory()
     }
     
+    func saveShouldUseSystemTheme(shouldUseSystemTheme: Bool) {
+        self.shouldUseSystemTheme = shouldUseSystemTheme
+        userDefaultsAppGroup?.setValue(shouldUseSystemTheme, forKey: Constants.systemThemeMode.rawValue)
+    }
+    
     private func clearAllAppStorage() {
         let dictionary = userDefaultsAppGroup?.dictionaryRepresentation()
         dictionary?.keys.forEach { key in
@@ -224,15 +228,6 @@ class UserSettings: ObservableObject {
         instanceURL = userDefaultsAppGroup?.string(forKey: Constants.instanceURL.rawValue)
         accessToken = KeychainManager.instance.getToken(forKey: Constants.accessTokenKey.rawValue)
         shouldShowLogin = accessToken == nil || instanceURL == nil
-    }
-    
-    private static func getTheme() -> Theme {
-        let appDefaultTheme = appColorScheme == .light ? Theme.lightModeDefault : Theme.darkModeDefault
-        if let themeValue = UserDefaults(suiteName: "group.nunesdennis.chihu")?.string(forKey: Constants.theme.rawValue) {
-            return Theme(rawValue: themeValue) ?? appDefaultTheme
-        } else {
-            return appDefaultTheme
-        }
     }
     
     private static func getLanguage() -> Language {

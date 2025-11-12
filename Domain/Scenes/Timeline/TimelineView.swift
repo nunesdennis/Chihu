@@ -153,6 +153,7 @@ extension TimelineView: TimelineDisplayLogic {
 }
 
 struct TimelineView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.showToast) private var showToast
     @Environment(\.reviewItem) private var reviewItem
     @Environment(\.openURL) var openURL

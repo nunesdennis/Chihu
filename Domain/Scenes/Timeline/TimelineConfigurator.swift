@@ -20,6 +20,5 @@ extension TimelineView {
         presenter.view = view
         return view
             .withToast()
-            .colorScheme()
     }
 }
