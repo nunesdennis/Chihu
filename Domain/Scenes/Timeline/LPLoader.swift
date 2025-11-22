@@ -4,6 +4,8 @@
 //
 //  Created by Dennis Nunes on 13/11/24.
 //
+
+import SwiftUI
 import LinkPresentation
 import UniformTypeIdentifiers
 
@@ -20,7 +22,7 @@ class LPLoader {
         case faviconDataInvalid
     }
     
-    static func createPoster(for url: URL) async throws -> UIImage {
+    static func createPoster(from postId: String, for url: URL) async throws -> UIImage {
         let metadataProvider = LPMetadataProvider()
         
         let metadata: LPLinkMetadata
@@ -51,7 +53,12 @@ class LPLoader {
                     throw LPLoaderError.faviconDataInvalid
                 }
                 
-                image = UIImage(data: data)
+                PostPreviewSingleton.shared.imagesDictionary[postId] = url
+                
+                if let uiImage = UIImage(data: data) {
+                    image = uiImage
+                    ImageCache[url] = Image(uiImage: uiImage)
+                }
             }
             
             if item is Data {
@@ -66,6 +73,8 @@ class LPLoader {
         guard let imageResult = image else {
             throw LPLoaderError.faviconCouldNotBeLoaded
         }
+        
+        ImageCache[url] = Image(uiImage: imageResult)
         
         return imageResult
     }

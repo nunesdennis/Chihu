@@ -14,6 +14,7 @@ import Translation
 
 protocol CellTimelineDelegate {
     func handleURL(_ url: URL)
+    func didClick(on post: Post)
     func didPressLike(on post: Post)
     func didPressReply(on post: Post)
     func didPressRepost(on post: Post)
@@ -26,6 +27,9 @@ struct CellTimeline: View {
     @State var sensitive: Bool
     @State var showSpoilerEffect: Bool
     @State var showTranslation: Bool = false
+    @State var neoDBurlReady: Bool = false
+    
+    @State var image: Image?
     
     @Environment(\.openURL) var openURL
     @Environment(\.colorScheme) private var colorScheme
@@ -38,9 +42,11 @@ struct CellTimeline: View {
         return String()
     }
     
-    private var image: Image?
+    private var itemUrl: URL?
+    private var postPreviews = PostPreviewSingleton.shared
     private var avatarImage: Image?
-    private var shouldLoadOnCell: Bool = false
+    private var shouldShowPreview: Bool
+    private var showThreadButton: Bool
     private var isMyPost: Bool {
         isMyUsername(postUsername: post.account.acct)
     }
@@ -49,23 +55,16 @@ struct CellTimeline: View {
     private let delegate: CellTimelineDelegate
 
     // MARK: - Init
-    init(post: Post, image: ImageState?, avatarImage: ImageState?, itemURL: String? = nil, delegate: CellTimelineDelegate) {
+    init(post: Post, image: ImageState?, avatarImage: ImageState?, itemURL: String? = nil, showThreadButton: Bool = false, delegate: CellTimelineDelegate) {
         self._sensitive = State(initialValue: post.sensitive)
         self._showSpoilerEffect = State(initialValue: post.sensitive)
         
+        self.shouldShowPreview = (image ?? .needsLoading) != .none
         self.delegate = delegate
         self.post = post
+        self.showThreadButton = showThreadButton
         self.image = get(image, of: .poster)
-        
-        shouldLoadOnCell = avatarImage == .needsLoading
-        
-        if let avatarImage = get(avatarImage ?? ImageState.none, of: .avatar) {
-            self.avatarImage = avatarImage
-        } else if let uiImage = UIImage(named: "ProfileAvatar") {
-            self.avatarImage = Image(uiImage: uiImage)
-        } else {
-            self.avatarImage = Image("ProfileAvatar")
-        }
+        self.avatarImage = get(avatarImage ?? ImageState.none, of: .avatar)
     }
 
     // MARK: - Body
@@ -86,15 +85,25 @@ struct CellTimeline: View {
                 } else {
                     account(from: post)
                 }
-                if let image = image {
+                if neoDBurlReady {
                     Spacer()
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 75, height: 150)
-                        .cornerRadius(2)
+                    loadablePostImage
                 }
                 Spacer()
+                if showThreadButton {
+                    VStack(alignment: .center) {
+                        Image(systemName: "chevron.up")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 14, height: 14)
+                            .foregroundColor(buttonColor(isHighlighted: false))
+                            .padding(8)
+                    }
+                    .frame(width: 30)
+                    .onTapGesture {
+                        delegate.didClick(on: post)
+                    }
+                }
             }
             HStack(alignment: .center) {
                 likeButton
@@ -113,6 +122,21 @@ struct CellTimeline: View {
             .frame(height: 30)
         }
         .listRowBackground(Color.timelineCellBackgroundColor)
+        .task {
+            if let itemUrl = getItemURL(), shouldShowPreview {
+                neoDBurlReady = true
+                if let cachedImage = ImageCache[itemUrl] {
+                    self.image = cachedImage
+                } else {
+                    do {
+                        let uiimage = try await LPLoader.createPoster(from: post.id, for: itemUrl)
+                        self.image = Image(uiImage: uiimage)
+                    } catch {
+                        print("error loading image")
+                    }
+                }
+            }
+        }
     }
     
     var likeButton: some View {
@@ -195,8 +219,7 @@ struct CellTimeline: View {
             .frame(width: 20, height: 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onTapGesture {
-            if let itemURLString = getItemURL(),
-               let url = URL(string: itemURLString) {
+            if let url = itemUrl {
                 delegate.handleURL(url)
             } else {
                 delegate.didPressUpdate(on: post)
@@ -217,26 +240,39 @@ struct CellTimeline: View {
         }
     }
     
-    var loadableAvatarImage: some View {
-        Group {
-            if shouldLoadOnCell {
-                CachedAsyncImage(url: getAvatarUrl(from: post)) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                    default:
-                        if let avatarImage {
-                            avatarImage
-                                .resizable()
-                        } else {
-                            Image("ProfileAvatar").resizable()
-                        }
-                    }
-                }
-            } else {
-                avatarImage?
+    var loadablePostImage: some View {
+        CachedAsyncImage(url: getPostPreviewUrl(from: post)) { phase in
+            switch phase {
+            case .success(let image):
+                image
                     .resizable()
+            default:
+                if let image {
+                    image
+                        .resizable()
+                } else {
+                    Image("ImagePlaceHolder").resizable()
+                }
+            }
+        }
+        .aspectRatio(contentMode: .fit)
+        .frame(width: 75, height: 150)
+        .cornerRadius(2)
+    }
+    
+    var loadableAvatarImage: some View {
+        CachedAsyncImage(url: getAvatarUrl(from: post)) { phase in
+            switch phase {
+            case .success(let image):
+                image
+                    .resizable()
+            default:
+                if let avatarImage {
+                    avatarImage
+                        .resizable()
+                } else {
+                    Image("ProfileAvatar").resizable()
+                }
             }
         }
         .scaledToFit()
@@ -317,6 +353,14 @@ struct CellTimeline: View {
             )
     }
     
+    func getPostPreviewUrl(from post: Post) -> URL? {
+        if let url = postPreviews.imagesDictionary[post.id] {
+            return url
+        }
+        
+        return nil
+    }
+    
     func getAvatarUrl(from post: Post) -> URL? {
         if let _ = post.repost {
             return URL(string: post.account.avatar)
@@ -361,8 +405,12 @@ struct CellTimeline: View {
         return Markdown(markdown)
     }
     
-    private func getItemURL() -> String? {
+    private func getItemURL() -> URL? {
         do {
+            if let url = postPreviews.imagesDictionary[post.id] {
+                return url
+            }
+            
             let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
             
             guard let content = post.content, content.contains("~neodb~/") else {
@@ -377,11 +425,12 @@ struct CellTimeline: View {
                     return nil
                 }
                 let urlString = String(input[range])
-                guard let _ = URL(string: urlString) else {
+                guard let url = URL(string: urlString) else {
                     return nil
                 }
                 
-                return urlString
+                postPreviews.imagesDictionary[post.id] = url
+                return url
             }
         } catch let error {
             print(error.localizedDescription)

@@ -34,12 +34,28 @@ final class TimelineDataStore: ObservableObject {
     @Published var showReplyView: Bool = false
     @Published var shouldShowToast: Bool = false
     @Published var posts: [Post] = []
+    @Published var openThread: Bool = false
     var alertType: TimelineAlertType?
     var postClicked: Post?
     var replyPostClicked: Post?
-    var imagesDictionary: [String : ImageState] = [:]
-    var imagesDictionaryURL: [URL : ImageState] = [:]
-    var avatarImagesDictionary: [String : ImageState] = [:]
     var alertMessage: LocalizedStringKey?
     var lastError: Error?
+    
+    var threadDataStore: ThreadDataStore?
+    
+    func createNewThreadDataStore(with post: Post) -> ThreadDataStore {
+        guard let threadDataStore else {
+            let dataStore = ThreadDataStore(referencePost: post)
+            self.threadDataStore = dataStore
+            return dataStore
+        }
+        
+        if post.id == threadDataStore.referencePost.id {
+            return threadDataStore
+        }
+        
+        let dataStore = ThreadDataStore(referencePost: post)
+        self.threadDataStore = dataStore
+        return dataStore
+    }
 }
