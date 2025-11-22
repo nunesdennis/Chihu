@@ -16,6 +16,7 @@ struct ThemeItem: Identifiable {
 struct ThemesView: View {
     
     @State private var selection: String?
+    @State private var shouldUseSystemTheme: Bool = UserSettings.shared.shouldUseSystemTheme
     
     var themeList: [ThemeItem] = [
         ThemeItem(name: .lightModeDefault)
@@ -28,6 +29,22 @@ struct ThemesView: View {
     var body: some View {
         NavigationStack {
             List {
+//                Section(header: Text("System Mode")) {
+//                    HStack {
+//                        Text("Change from system theme")
+//                            .font(.title3)
+//                            .multilineTextAlignment(.leading)
+//                        Spacer()
+//                        Toggle(buttonSystemSettingsText(shouldUseSystemTheme), isOn: $shouldUseSystemTheme)
+//                            .toggleStyle(.button)
+//                            .buttonBorderShape(.roundedRectangle(radius: 8))
+//                            .tint(buttonSystemSettingsColor(shouldUseSystemTheme))
+//                            .onChange(of: shouldUseSystemTheme) {
+//                                UserSettings.shared.saveShouldUseSystemTheme(shouldUseSystemTheme: shouldUseSystemTheme)
+//                            }
+//                    }
+//                    .listRowBackground(Color.themesViewRowBackgroundColor)
+//                }
                 Section(header: Text("Light Mode")) {
                     ForEach(themeList) { theme in
                         Button(action: {
@@ -73,7 +90,19 @@ struct ThemesView: View {
             .background(Color.themesViewBackgroundColor)
             .scrollContentBackground(.hidden)
             .navigationTitle("Themes")
-            .colorScheme()
+            .preferredColorScheme(getColorScheme())
+        }
+    }
+    
+    func getColorScheme() -> ColorScheme? {
+        if shouldUseSystemTheme {
+            return nil
+        }
+        
+        if selection == Theme.lightModeDefault.rawValue {
+            return .light
+        } else {
+            return .dark
         }
     }
     
@@ -81,6 +110,14 @@ struct ThemesView: View {
         return self.selection == selection
                                ? Color.themesViewSelectedRowBackgroundColor
                                : Color.themesViewRowBackgroundColor
+    }
+    
+    func buttonSystemSettingsText(_ shouldUseSystemTheme: Bool) -> String {
+        shouldUseSystemTheme ? "On" : "Off"
+    }
+    
+    func buttonSystemSettingsColor(_ shouldUseSystemTheme: Bool) -> Color {
+        shouldUseSystemTheme ? .filterButtonSelectedColor : .filterButtonNotSelectedColor
     }
 }
 

@@ -675,6 +675,13 @@ struct ReviewView: View {
                     dataStore.state = .full
                 }
             }
+            .fullScreenCover(isPresented: $dataStore.openThread, onDismiss: {
+                dataStore.postClicked = nil
+            }, content: {
+                if let postClicked = dataStore.postClicked {
+                    ThreadView(dataStore: dataStore.createNewThreadDataStore(with: postClicked)).configureView()
+                }
+            })
             .sheet(isPresented: $dataStore.showReplyView, onDismiss: {
                 dataStore.postClicked = nil
                 dataStore.replyPostClicked = nil
@@ -1197,7 +1204,7 @@ extension ReviewView {
     var timelineView: some View {
         VStack(alignment: .leading) {
             ForEach(dataStore.posts) { post in
-                CellTimeline(post: post, image: ImageState.none, avatarImage: ImageState.needsLoading, delegate: self)
+                CellTimeline(post: post, image: ImageState.none, avatarImage: ImageState.needsLoading, showThreadButton: true, delegate: self)
                     .padding(.horizontal, 10)
                 Divider()
             }
@@ -1207,6 +1214,13 @@ extension ReviewView {
 }
 
 extension ReviewView: CellTimelineDelegate {
+    func didClick(on post: TootSDK.Post) {
+        DispatchQueue.main.async {
+            dataStore.openThread = true
+            dataStore.postClicked = post
+        }
+    }
+    
     func didPressRepost(on post: TootSDK.Post) {
         guard let postInteractionInteractor else {
             dataStore.alertType = .actionFailed

@@ -58,16 +58,6 @@ extension TimelineView: TimelineDisplayLogic {
         }
     }
     
-    func loadAllImages(posts: [Post]) async {
-        await withTaskGroup(of: Void.self) { group in
-            for post in posts {
-                group.addTask(priority: .background) {
-                    await loadImages(from: post)
-                }
-            }
-        }
-    }
-    
     func display(viewModel: Timeline.Load.ViewModel) async {
         dataStore.posts = viewModel.posts
         if dataStore.posts.isEmpty {
@@ -77,10 +67,6 @@ extension TimelineView: TimelineDisplayLogic {
         } else {
             DispatchQueue.main.async {
                 dataStore.state = .textLoaded
-            }
-            await loadAllImages(posts: viewModel.posts)
-            DispatchQueue.main.async {
-                dataStore.state = .loaded
             }
         }
     }
@@ -101,10 +87,6 @@ extension TimelineView: TimelineDisplayLogic {
         } else {
             DispatchQueue.main.async {
                 dataStore.state = .textLoaded
-            }
-            await loadAllImages(posts: dataStore.posts)
-            DispatchQueue.main.async {
-                dataStore.state = .loaded
             }
         }
     }
@@ -153,6 +135,7 @@ extension TimelineView: TimelineDisplayLogic {
 }
 
 struct TimelineView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.showToast) private var showToast
     @Environment(\.reviewItem) private var reviewItem
     @Environment(\.openURL) var openURL
@@ -210,7 +193,7 @@ struct TimelineView: View {
         ScrollViewReader { proxy in
             List {
                 ForEach(dataStore.posts) { post in
-                    CellTimeline(post: post, image: getImageState(from: post), avatarImage: getAvatarImageState(from: post), delegate: self)
+                    CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, showThreadButton: true, delegate: self)
                         .swipeActions(edge: .leading) {
                             Button("Add to wishlist") {
                                 sendToWishlist(itemUUID: getItemUUIDFrom(post: post))
@@ -242,6 +225,14 @@ struct TimelineView: View {
             .refreshable {
                 fetch()
             }
+            .fullScreenCover(isPresented: $dataStore.openThread, onDismiss: {
+                // TODO: Update post with changes from thread
+                dataStore.postClicked = nil
+            }, content: {
+                if let postClicked = dataStore.postClicked {
+                    ThreadView(dataStore: dataStore.createNewThreadDataStore(with: postClicked)).configureView()
+                }
+            })
             .sheet(isPresented: $dataStore.showReplyView, onDismiss: {
                 dataStore.postClicked = nil
                 dataStore.replyPostClicked = nil
@@ -301,114 +292,6 @@ struct TimelineView: View {
             }
     }
     
-    private func getAvatarImageState(from post: Post) -> ImageState? {
-        if let repost = post.repost {
-            return dataStore.avatarImagesDictionary[repost.account.avatar]
-        } else {
-            return dataStore.avatarImagesDictionary[post.account.avatar]
-        }
-    }
-    
-    private func getImageState(from post: Post) -> ImageState? {
-        if let repost = post.repost {
-            return dataStore.imagesDictionary[repost.id]
-        } else {
-            return dataStore.imagesDictionary[post.id]
-        }
-    }
-    
-    private func loadAvatar(from url: String) {
-        Task(priority: .background) {
-            do {
-                guard dataStore.avatarImagesDictionary[url] != ImageState.none  else {
-                    return
-                }
-                
-                guard let avatarURL = URL(string: url) else {
-                    dataStore.avatarImagesDictionary[url] = ImageState.none
-                    return
-                }
-                let (data, _) = try await URLSession.shared.data(from: avatarURL)
-                guard let image = UIImage(data: data) else {
-                    dataStore.avatarImagesDictionary[url] = ImageState.none
-                    return
-                }
-                dataStore.avatarImagesDictionary[url] = .loaded(Image(uiImage: image))
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    private func loadImages(from post: Post) async {
-        do {
-            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            if let repost = post.repost {
-                loadAvatar(from: repost.account.avatar)
-            } else {
-                loadAvatar(from: post.account.avatar)
-            }
-            
-            guard let content = post.repost?.content ?? post.content else {
-                dataStore.imagesDictionary[post.id] = ImageState.none
-                return
-            }
-            
-            if let savedImage = dataStore.imagesDictionary[post.id],
-                savedImage != .none &&
-                savedImage != .placeHolder {
-                return
-            } else if content.contains("~neodb~/") {
-                dataStore.imagesDictionary[post.id] = ImageState.placeHolder
-            } else {
-                dataStore.imagesDictionary[post.id] = ImageState.none
-            }
-            
-            let input = content.replacingOccurrences(of: "~neodb~/", with: String())
-            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
-            
-            await withTaskGroup(of: Void.self) { group in
-                for match in matches {
-                    group.addTask(priority: .background) {
-                        await getPoster(input: input, post: post, match: match)
-                    }
-                }
-            }
-        } catch let error {
-            print(error.localizedDescription)
-        }
-    }
-    
-    private func getPoster(input: String, post: Post,match: NSTextCheckingResult) async {
-        do {
-            guard let range = Range(match.range, in: input) else {
-                dataStore.imagesDictionary[post.id] = ImageState.none
-                return
-            }
-            let urlString = String(input[range])
-            if urlString.contains("/tags/") {
-                return
-            }
-            
-            guard let url = URL(string: urlString) else {
-                dataStore.imagesDictionary[post.id] = ImageState.none
-                return
-            }
-            
-            if let image = dataStore.imagesDictionaryURL[url] {
-                dataStore.imagesDictionary[post.id] = image
-                return
-            }
-            
-            let uiimage = try await LPLoader.createPoster(for: url)
-            let image = ImageState.loaded(Image(uiImage: uiimage))
-            dataStore.imagesDictionaryURL[url] = image
-            dataStore.imagesDictionary[post.id] = image
-        } catch let error {
-            print(error.localizedDescription)
-        }
-    }
-    
     private func getItemUUIDFrom(post: Post) -> String? {
         func alertError() {
             dataStore.shouldShowAlert = true
@@ -449,6 +332,13 @@ struct TimelineView: View {
 }
 
 extension TimelineView: CellTimelineDelegate {
+    func didClick(on post: Post) {
+        DispatchQueue.main.async {
+            dataStore.openThread = true
+            dataStore.postClicked = post
+        }
+    }
+    
     func didPressRepost(on post: TootSDK.Post) {
         guard let postInteractionInteractor else {
             dataStore.alertType = .actionFailed

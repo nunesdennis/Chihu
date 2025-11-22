@@ -95,6 +95,7 @@ struct MainView: View {
             }
         }))
         .tint(.tabbarButtonColor)
+        .colorScheme()
     }
 }
 

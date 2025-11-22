@@ -15,7 +15,7 @@ extension SimpleCollectionListView {
         view.interactor = interactor
         interactor.presenter = presenter
         presenter.view = view
-        return view.colorScheme()
+        return view
     }
 }
 
@@ -27,6 +27,6 @@ extension CollectionsView {
         view.interactor = interactor
         interactor.presenter = presenter
         presenter.view = view
-        return view.colorScheme()
+        return view
     }
 }

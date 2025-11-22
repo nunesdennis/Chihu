@@ -45,6 +45,7 @@ final class ReviewDataStore: ObservableObject {
     @Published var shouldShowAlert: Bool
     @Published var shouldShowToast: Bool
     @Published var showFullReviewMarkdownPreview: Bool
+    @Published var openThread: Bool = false
     @Published var state: ReviewState
     @Published var rating: Double?
     @Published var inputText: String
@@ -61,6 +62,7 @@ final class ReviewDataStore: ObservableObject {
     @Published var shouldCrosspost: Bool!
     
     private var reviewDataStore: ReviewDataStore?
+    private var threadDataStore: ThreadDataStore?
     
     init(
         alertType: ReviewAlertType? = nil,
@@ -128,5 +130,21 @@ final class ReviewDataStore: ObservableObject {
         self.reviewDataStore = ReviewDataStore()
         
         return reviewDataStore ?? ReviewDataStore()
+    }
+    
+    func createNewThreadDataStore(with post: Post) -> ThreadDataStore {
+        guard let threadDataStore else {
+            let dataStore = ThreadDataStore(referencePost: post)
+            self.threadDataStore = dataStore
+            return dataStore
+        }
+        
+        if post.id == threadDataStore.referencePost.id {
+            return threadDataStore
+        }
+        
+        let dataStore = ThreadDataStore(referencePost: post)
+        self.threadDataStore = dataStore
+        return dataStore
     }
 }

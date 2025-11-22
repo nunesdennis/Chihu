@@ -219,6 +219,7 @@ extension SearchView: GridContentViewDelegate {
 struct SearchView: View {
     var interactor: SearchBusinessLogic?
     
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.reviewItem) private var reviewItem
     @ObservedObject var dataStore: SearchDataStore
     @StateObject var userSettings = UserSettings.shared
