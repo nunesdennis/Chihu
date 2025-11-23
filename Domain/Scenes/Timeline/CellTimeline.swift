@@ -133,6 +133,7 @@ struct CellTimeline: View {
                         self.image = Image(uiImage: uiimage)
                     } catch {
                         print("error loading image")
+                        self.image = .none
                     }
                 }
             }
@@ -413,7 +414,7 @@ struct CellTimeline: View {
             
             let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
             
-            guard let content = post.content, content.contains("~neodb~/") else {
+            guard let content = post.content, NeoDBURL.hasNeoDBlink(content) else {
                 return nil
             }
             
@@ -425,8 +426,18 @@ struct CellTimeline: View {
                     return nil
                 }
                 let urlString = String(input[range])
+                
+                if let username = post.account.username,
+                   urlString.contains(username) {
+                    continue
+                }
+                
+                if urlString.contains("/tags/") {
+                    continue
+                }
+                
                 guard let url = URL(string: urlString) else {
-                    return nil
+                    continue
                 }
                 
                 postPreviews.imagesDictionary[post.id] = url
@@ -439,4 +450,3 @@ struct CellTimeline: View {
         return nil
     }
 }
-

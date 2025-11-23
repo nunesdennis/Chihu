@@ -21,11 +21,51 @@ class URLHandler {
 }
 
 class NeoDBURL {
+    enum knownServersUrl {
+        static let eggplantUrl = "eggplant.place"
+        static let neodbUrl = "neodb.social"
+        static let reviewDB = "reviewdb.app"
+        static let minreol = "minreol.dk"
+        static let dbCasually = "db.casually.cat"
+        static let neodbKevga = "neodb.kevga.de"
+        static let fantastika = "fantastika.social"
+        static let neodbDeadvey = "neodb.deadvey.com"
+    }
+    
     private static let neodbItemIdentifier = "~neodb~"
     private static let isDebugLoggingEnabled = false
     
     private static func log(_ message: String) {
         guard isDebugLoggingEnabled else { return }
+    }
+    
+    static func hasNeoDBlink(_ content: String?) -> Bool {
+        guard let content else {
+            return false
+        }
+        
+        if content.contains("~neodb~/") {
+            return true
+        }
+        
+        var searchBaseUrl = [
+            knownServersUrl.eggplantUrl,
+            knownServersUrl.neodbUrl,
+            knownServersUrl.reviewDB,
+            knownServersUrl.minreol,
+            knownServersUrl.dbCasually,
+            knownServersUrl.neodbKevga,
+            knownServersUrl.fantastika,
+            knownServersUrl.neodbDeadvey
+        ]
+        
+        if let baseUrlString = UserSettings.shared.instanceURL?.trimmingCharacters(in:.whitespacesAndNewlines) {
+            searchBaseUrl.append(baseUrlString)
+        }
+        
+        let containsKnownServer = searchBaseUrl.contains(where: content.contains)
+        
+        return containsKnownServer
     }
     
     static func parseItemURL(_ url: URL) async -> ItemSchema? {
