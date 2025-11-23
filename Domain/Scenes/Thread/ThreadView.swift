@@ -63,7 +63,28 @@ struct ThreadView: View {
     @State var shouldShowAlert = false
     @State var showReplyView: Bool = false
     @State var shouldShowToast: Bool = false
-    @State var posts: [Post] = []
+    @State var posts: [Post] = [] {
+        didSet {
+            var dict: [String: [Post]] = [:]
+            for post in posts {
+                if let key = post.inReplyToId {
+                    if dict[key] != nil {
+                        dict[key]?.append(post)
+                    } else {
+                        dict[key] = [post]
+                    }
+                } else {
+                    if dict["main"] != nil {
+                        dict["main"]?.append(post)
+                    } else {
+                        dict["main"] = [post]
+                    }
+                }
+            }
+            self.postsDict = dict
+        }
+    }
+    @State var postsDict: [String: [Post]] = [:]
     
     @State var postClicked: Post?
     @State var replyPostClicked: Post?
@@ -165,28 +186,19 @@ struct ThreadView: View {
     
     var thread: some View {
         List {
-            ForEach(posts, id: \.self) { post in
+            ForEach(postsDict["main"] ?? [], id: \.self) { post in
                 NavigationLink(destination: ThreadView(wasPushed: true, dataStore: ThreadDataStore(referencePost: post)).configureView()) {
                     CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, delegate: self)
-                        .swipeActions(edge: .leading) {
-                            Button("Add to wishlist") {
-                                //                                sendToWishlist(itemUUID: getItemUUIDFrom(post: post))
-                            }
-                            .tint(.chihuGreen)
-                        }
-                        .swipeActions(edge: .trailing) {
-                            Button("Add to wishlist") {
-                                //                                sendToWishlist(itemUUID: getItemUUIDFrom(post: post))
-                            }
-                            .tint(.chihuGreen)
-                        }
                         .id(post.id)
                 }
-                .listRowBackground(Color.chihuClear)
+                .listRowBackground(rowColor(on: post.id))
                 .onDisappear {
                     Task {
                         posts = await getPosts()
                     }
+                }
+                if postsDict[post.id] != nil {
+                    subThread(for: post.id, deepcount: 1)
                 }
             }
         }
@@ -208,6 +220,41 @@ struct ThreadView: View {
                 let posts = await getPosts()
                 self.posts = posts
             }
+    }
+    
+    func subThread(for parentId: String, deepcount: Int) -> some View {
+        ForEach(postsDict[parentId] ?? [], id: \.self) { post in
+            NavigationLink(destination: ThreadView(wasPushed: true, dataStore: ThreadDataStore(referencePost: post)).configureView()) {
+                HStack {
+                    ForEach(0..<deepcount, id: \.self) { _ in
+                        Divider()
+                    }
+                    CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, delegate: self)
+                        .id(post.id)
+                }
+            }
+            .listRowBackground(rowColor(on: post.id))
+            .onDisappear {
+                Task {
+                    posts = await getPosts()
+                }
+            }
+            if postsDict[post.id] != nil {
+                AnyView(subThread(for: post.id, deepcount: deepcount+1))
+            }
+        }
+    }
+    
+    func rowColor(on postId: String) -> Color {
+        if needsHighlightColor(on: postId) {
+            return .halfDutchWhite.opacity(0.3)
+        } else {
+            return .chihuClear
+        }
+    }
+    
+    func needsHighlightColor(on postId: String) -> Bool {
+        postId == dataStore.referencePost.id
     }
     
     func getPosts() async -> [Post] {
