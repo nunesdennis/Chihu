@@ -74,7 +74,8 @@ extension TimelineView: TimelineDisplayLogic {
     func display(viewModel: Review.Send.ViewModel) {
         DispatchQueue.main.async {
             dataStore.alertMessage = LocalizedStringKey(viewModel.message)
-            dataStore.shouldShowAlert = true
+            dataStore.alertType = .success
+            dataStore.shouldShowToast = true
         }
     }
     
@@ -298,50 +299,12 @@ struct TimelineView: View {
             dataStore.alertMessage = "Invalid url"
         }
         
-        do {
-            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            
-            guard let content = post.content, NeoDBURL.hasNeoDBlink(content) else {
-                alertError()
-                return nil
-            }
-            
-            let input = content.replacingOccurrences(of: "~neodb~/", with: String())
-            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
-            
-            for match in matches {
-                guard let range = Range(match.range, in: input) else {
-                    alertError()
-                    return nil
-                }
-                let urlString = String(input[range])
-                
-                if let username = post.account.username,
-                   urlString.contains(username) {
-                    continue
-                }
-                
-                if urlString.contains("/tags/") {
-                    continue
-                }
-                
-                guard let url = URL(string: urlString) else {
-                    continue
-                }
-                
-                guard let _ = URL(string: urlString) else {
-                    alertError()
-                    return nil
-                }
-                
-                return urlString.components(separatedBy: "/").last
-            }
-        } catch let error {
-            print(error.localizedDescription)
+        guard let url = NeoDBURL.getItemURL(from: post) else {
+            alertError()
+            return nil
         }
-        
-        alertError()
-        return nil
+          
+        return url.absoluteString.components(separatedBy: "/").last
     }
 }
 

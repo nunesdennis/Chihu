@@ -9,10 +9,11 @@
 import Foundation
 import SwiftSoup
 import SwiftUI
+import TootSDK
 
 class URLHandler {
     static func handleItemURL(
-        _ url: URL, completion: @escaping (ItemSchema?) -> Void
+        _ url: URL, completion: @escaping ((any ItemProtocol)?) -> Void
     ) {
         Task {
             completion(await NeoDBURL.parseItemURL(url))
@@ -68,8 +69,85 @@ class NeoDBURL {
         return containsKnownServer
     }
     
-    static func parseItemURL(_ url: URL) async -> ItemSchema? {
-        guard
+    static func getItemURL(from post: Post) -> URL? {
+        do {
+            let postPreviews = PostPreviewSingleton.shared
+            if let url = postPreviews.imagesDictionary[post.id] {
+                return url
+            }
+            
+            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            
+            guard let content = post.content, NeoDBURL.hasNeoDBlink(content) else {
+                return nil
+            }
+            
+            let input = content.replacingOccurrences(of: "~neodb~/", with: String())
+            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
+            
+            for match in matches {
+                guard let range = Range(match.range, in: input) else {
+                    return nil
+                }
+                var urlString = String(input[range])
+                guard let url = NeoDBURL.cleanItemUrl(urlString, post.account.username) else {
+                    continue
+                }
+                
+                postPreviews.imagesDictionary[post.id] = url
+                return url
+            }
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        return nil
+    }
+    
+    private static func cleanItemUrl(_ urlString: String, _ username: String? = nil) -> URL? {
+        var urlString = urlString.replacingOccurrences(of: "&amp;", with: "&")
+            .replacingOccurrences(of: "&lt;", with: "<")
+            .replacingOccurrences(of: "&gt;", with: ">")
+            .replacingOccurrences(of: "&quot;", with: "\"")
+            .replacingOccurrences(of: "&#39;", with: "'")
+        
+        if let url = URL(string: urlString),
+           let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+           let queryItems = components.queryItems {
+            
+            if let qParam = queryItems.first(where: { $0.name == "q" }),
+               let qValue = qParam.value,
+               (qValue.hasPrefix("http://") || qValue.hasPrefix("https://")) {
+                urlString = qValue
+            } else {
+                for item in queryItems {
+                    if let value = item.value,
+                       (value.hasPrefix("http://") || value.hasPrefix("https://")) {
+                        urlString = value
+                        break
+                    }
+                }
+            }
+        }
+        
+        if let username,
+           urlString.contains(username) {
+            return nil
+        }
+        
+        if urlString.contains("/tags/") {
+            return nil
+        }
+        
+        guard let url = URL(string: urlString) else {
+            return nil
+        }
+        
+        return url
+    }
+    
+    static func parseItemURL(_ url: URL) async -> (any ItemProtocol)? {
+        guard let url = NeoDBURL.cleanItemUrl(url.absoluteString),
             let components = URLComponents(
                 url: url, resolvingAgainstBaseURL: true)
         else {
@@ -124,10 +202,15 @@ class NeoDBURL {
 
         log("Processing NeoDB URL - type: \(type), id: \(id)")
         
-        return await fetchCatalog(uuid: id, category: category)
+        if let baseUrlString = UserSettings.shared.instanceURL?.trimmingCharacters(in:.whitespacesAndNewlines),
+           url.absoluteString.contains(baseUrlString) {
+            return await fetchCatalog(uuid: id, category: category)
+        } else {
+            return await fetchByURL(url: url, category: category)
+        }
     }
     
-    static func fetchCatalog(uuid: String, category: ItemCategory) async -> ItemSchema? {
+    static func fetchCatalog(uuid: String, category: ItemCategory) async -> (any ItemProtocol)? {
         do {
             return try await withCheckedThrowingContinuation { continuation in
                 let request = CatalogTypeModel.Load.Request(category: category, uuid: uuid)
@@ -137,6 +220,26 @@ class NeoDBURL {
                     switch result {
                     case .success(let response):
                         continuation.resume(returning: response.catalogItem)
+                    case .failure:
+                        continuation.resume(throwing: ChihuError.canNotConvertURLtoItem)
+                    }
+                }
+            }
+        } catch {
+            return nil
+        }
+    }
+    
+    static func fetchByURL(url: URL, category: ItemCategory) async -> (any ItemProtocol)? {
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                let request = SearchByURL.Load.Request(url: url, itemClass: category.itemClass)
+                let worker = CatalogNetworkingWorker()
+
+                worker.fetchByURL(request: request) { result in
+                    switch result {
+                    case .success(let response):
+                        continuation.resume(returning: response.shelfItemDetails)
                     case .failure:
                         continuation.resume(throwing: ChihuError.canNotConvertURLtoItem)
                     }
