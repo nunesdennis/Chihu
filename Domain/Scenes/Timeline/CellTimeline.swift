@@ -123,7 +123,7 @@ struct CellTimeline: View {
         }
         .listRowBackground(Color.timelineCellBackgroundColor)
         .task {
-            if let itemUrl = getItemURL(), shouldShowPreview {
+            if let itemUrl = NeoDBURL.getItemURL(from: post), shouldShowPreview {
                 neoDBurlReady = true
                 if let cachedImage = ImageCache[itemUrl] {
                     self.image = cachedImage
@@ -404,49 +404,5 @@ struct CellTimeline: View {
         let markdown = html.toMarkdown(options: .unorderedListBullets)
         
         return Markdown(markdown)
-    }
-    
-    private func getItemURL() -> URL? {
-        do {
-            if let url = postPreviews.imagesDictionary[post.id] {
-                return url
-            }
-            
-            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            
-            guard let content = post.content, NeoDBURL.hasNeoDBlink(content) else {
-                return nil
-            }
-            
-            let input = content.replacingOccurrences(of: "~neodb~/", with: String())
-            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
-            
-            for match in matches {
-                guard let range = Range(match.range, in: input) else {
-                    return nil
-                }
-                let urlString = String(input[range])
-                
-                if let username = post.account.username,
-                   urlString.contains(username) {
-                    continue
-                }
-                
-                if urlString.contains("/tags/") {
-                    continue
-                }
-                
-                guard let url = URL(string: urlString) else {
-                    continue
-                }
-                
-                postPreviews.imagesDictionary[post.id] = url
-                return url
-            }
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        
-        return nil
     }
 }
