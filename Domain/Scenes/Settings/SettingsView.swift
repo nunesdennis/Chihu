@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TootSDK
 
 protocol ProfileDisplayLogic {
     func display(viewModel: Profile.Load.ViewModel)
@@ -74,11 +75,10 @@ struct SettingsView: View {
             List {
                 if let viewModel = dataStore.profileViewModel {
                     Section {
-                        ProfileCell(viewModel: viewModel, interactor: interactor, dataStore: dataStore)
+                        ProfileCell(delegate: self, viewModel: viewModel, interactor: interactor, dataStore: dataStore)
                     }
                     .listRowBackground(Color.settingsRowBackgroundColor)
                 }
-                
                 Section {
                     ForEach(settings, id: \.self) { setting in
                         if isWebLink(from: setting.option) {
@@ -127,6 +127,14 @@ struct SettingsView: View {
             .onChange(of: dataStore.showError) {
                 showToast(.failure(nil, dataStore.errorMessage))
             }
+            .fullScreenCover(isPresented: $dataStore.openUserDetails, onDismiss: {
+                // TODO: Update post with changes from thread
+                dataStore.accountClicked = nil
+            }, content: {
+                if let accountClicked = dataStore.accountClicked {
+                    UserDetailsView(dataStore: dataStore.createNewUserDetailsDataStore(with: accountClicked)).configureView()
+                }
+            })
         }
     }
     
@@ -163,6 +171,13 @@ struct SettingsView: View {
     func logout() {
         dataStore.profileViewModel = nil
         try? UserSettings.shared.logout()
+    }
+}
+
+extension SettingsView: ProfileCellDelegate {
+    func didClick(on account: Account) {
+        dataStore.openUserDetails = true
+        dataStore.accountClicked = account
     }
 }
 

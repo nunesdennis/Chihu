@@ -35,6 +35,7 @@ final class ReviewDataStore: ObservableObject {
     var seasonSelected: ItemViewModel?
     var noteList: [NoteSchema]
     var postClicked: Post?
+    var accountClicked: Account?
     var replyPostClicked: Post?
     var noteListNeedsToUpdate: Bool
     
@@ -46,6 +47,7 @@ final class ReviewDataStore: ObservableObject {
     @Published var shouldShowToast: Bool
     @Published var showFullReviewMarkdownPreview: Bool
     @Published var openThread: Bool = false
+    @Published var openUserDetails: Bool = false
     @Published var state: ReviewState
     @Published var rating: Double?
     @Published var inputText: String
@@ -63,6 +65,7 @@ final class ReviewDataStore: ObservableObject {
     
     private var reviewDataStore: ReviewDataStore?
     private var threadDataStore: ThreadDataStore?
+    private var userDetailsDataStore: UserDetailsDataStore?
     
     init(
         alertType: ReviewAlertType? = nil,
@@ -145,6 +148,22 @@ final class ReviewDataStore: ObservableObject {
         
         let dataStore = ThreadDataStore(referencePost: post)
         self.threadDataStore = dataStore
+        return dataStore
+    }
+    
+    func createNewUserDetailsDataStore(with account: Account) -> UserDetailsDataStore {
+        guard let userDetailsDataStore else {
+            let dataStore = UserDetailsDataStore(user: account)
+            self.userDetailsDataStore = dataStore
+            return dataStore
+        }
+        
+        if account.id == userDetailsDataStore.user.id {
+            return userDetailsDataStore
+        }
+        
+        let dataStore = UserDetailsDataStore(user: account)
+        self.userDetailsDataStore = dataStore
         return dataStore
     }
 }

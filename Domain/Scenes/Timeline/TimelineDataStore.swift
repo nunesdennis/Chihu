@@ -35,13 +35,16 @@ final class TimelineDataStore: ObservableObject {
     @Published var shouldShowToast: Bool = false
     @Published var posts: [Post] = []
     @Published var openThread: Bool = false
+    @Published var openUserDetails: Bool = false
     var alertType: TimelineAlertType?
+    var accountClicked: Account?
     var postClicked: Post?
     var replyPostClicked: Post?
     var alertMessage: LocalizedStringKey?
     var lastError: Error?
     
     var threadDataStore: ThreadDataStore?
+    var userDetailsDataStore: UserDetailsDataStore?
     
     func createNewThreadDataStore(with post: Post) -> ThreadDataStore {
         guard let threadDataStore else {
@@ -56,6 +59,22 @@ final class TimelineDataStore: ObservableObject {
         
         let dataStore = ThreadDataStore(referencePost: post)
         self.threadDataStore = dataStore
+        return dataStore
+    }
+    
+    func createNewUserDetailsDataStore(with account: Account) -> UserDetailsDataStore {
+        guard let userDetailsDataStore else {
+            let dataStore = UserDetailsDataStore(user: account)
+            self.userDetailsDataStore = dataStore
+            return dataStore
+        }
+        
+        if account.id == userDetailsDataStore.user.id {
+            return userDetailsDataStore
+        }
+        
+        let dataStore = UserDetailsDataStore(user: account)
+        self.userDetailsDataStore = dataStore
         return dataStore
     }
 }

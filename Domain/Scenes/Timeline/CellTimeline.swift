@@ -14,6 +14,7 @@ import Translation
 
 protocol CellTimelineDelegate {
     func handleURL(_ url: URL)
+    func didClick(on account: Account)
     func didClick(on post: Post)
     func didPressLike(on post: Post)
     func didPressReply(on post: Post)
@@ -88,8 +89,9 @@ struct CellTimeline: View {
                 if neoDBurlReady {
                     Spacer()
                     loadablePostImage
+                } else {
+                    Spacer()
                 }
-                Spacer()
                 if showThreadButton {
                     VStack(alignment: .center) {
                         Image(systemName: "chevron.up")
@@ -283,6 +285,9 @@ struct CellTimeline: View {
                 .stroke(.primary.opacity(0.25), lineWidth: 1)
         )
         .frame(width: 40, height: 40)
+        .onTapGesture {
+            delegate.didClick(on: post.account)
+        }
     }
     
     func heartEmoji(isHighlighted: Bool) -> String {
