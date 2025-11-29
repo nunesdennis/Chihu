@@ -1,14 +1,14 @@
 //
-//  ThreadView.swift
+//  UserDetailsView.swift
 //  Chihu
-//
-//  Created by Angela Rosanne Santos de Oliveira on 16/11/25.
 //
 
 import SwiftUI
 import TootSDK
+import HTML2Markdown
+import MarkdownUI
 
-extension ThreadView: PostInteractionsDisplayLogic {
+extension UserDetailsView: PostInteractionsDisplayLogic {
     func display(post: Post) {
         DispatchQueue.main.async {
             let index = posts.firstIndex {
@@ -48,9 +48,9 @@ extension ThreadView: PostInteractionsDisplayLogic {
     }
 }
 
-struct ThreadView: View {
+struct UserDetailsView: View {
     
-    var dataStore: ThreadDataStore
+    var dataStore: UserDetailsDataStore
     
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) var dismiss
@@ -63,36 +63,15 @@ struct ThreadView: View {
     @State var shouldShowAlert = false
     @State var showReplyView: Bool = false
     @State var shouldShowToast: Bool = false
-    @State var posts: [Post] = [] {
-        didSet {
-            var dict: [String: [Post]] = [:]
-            for post in posts {
-                if let key = post.inReplyToId {
-                    if dict[key] != nil {
-                        dict[key]?.append(post)
-                    } else {
-                        dict[key] = [post]
-                    }
-                } else {
-                    if dict["main"] != nil {
-                        dict["main"]?.append(post)
-                    } else {
-                        dict["main"] = [post]
-                    }
-                }
-            }
-            self.postsDict = dict
-        }
-    }
-    @State var postsDict: [String: [Post]] = [:]
-    
+    @State var posts: [Post] = []
     @State var postClicked: Post?
     @State var replyPostClicked: Post?
+    @State var fetchingMore: Bool = false
     
     var postInteractionInteractor: PostInteractionsBusinessLogic?
     var wasPushed: Bool
     
-    init(wasPushed: Bool = false, dataStore: ThreadDataStore) {
+    init(wasPushed: Bool = false, dataStore: UserDetailsDataStore) {
         self.dataStore = dataStore
         self.wasPushed = wasPushed
     }
@@ -127,7 +106,7 @@ struct ThreadView: View {
                 }
             }
         }
-        .navigationBarTitle("Thread", displayMode: .inline)
+        .navigationBarTitle("User details", displayMode: .inline)
         .background(Color.timelineBackgroundColor)
         .toolbar {
             if !wasPushed {
@@ -184,23 +163,88 @@ struct ThreadView: View {
         }
     }
     
+    var loadableAvatarImage: some View {
+        Group {
+            if let url = URL(string: dataStore.user.avatar) {
+                CachedAsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                    default:
+                        Image("ProfileAvatar").resizable()
+                    }
+                }
+            } else {
+                Image("ProfileAvatar").resizable()
+            }
+        }
+        .scaledToFit()
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(.primary.opacity(0.25), lineWidth: 1)
+        )
+        .frame(width: 40, height: 40)
+    }
+    
+    var userCell: some View {
+        HStack {
+            VStack {
+                loadableAvatarImage
+                Spacer()
+            }
+            VStack(alignment: .leading, spacing: 5) {
+                if let displayName = dataStore.user.displayName {
+                    Text(displayName)
+                        .bold()
+                        .font(.headline)
+                        .foregroundColor(.profileDisplayNameColor)
+                }
+                if let username = dataStore.user.username {
+                    Text(username)
+                        .font(.subheadline)
+                        .foregroundColor(.profileUsernameColor)
+                }
+                if !dataStore.user.acct.description.isEmpty {
+                    parseHTML(from: dataStore.user.note)
+                }
+            }
+        }
+        .padding(5)
+    }
+    
     var thread: some View {
         List {
-            ForEach(postsDict["main"] ?? [], id: \.self) { post in
+            userCell
+                .listRowBackground(Color.chihuClear)
+            ForEach(posts, id: \.self) { post in
                 NavigationLink(destination: ThreadView(wasPushed: true, dataStore: ThreadDataStore(referencePost: post)).configureView()) {
                     CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, delegate: self)
                         .id(post.id)
                 }
-                .listRowBackground(rowColor(on: post.id))
+                .listRowBackground(Color.chihuClear)
                 .onDisappear {
                     Task {
                         posts = await getPosts()
                     }
                 }
-                if postsDict[post.id] != nil {
-                    subThread(for: post.id, deepcount: 1)
-                }
             }
+            // TODO: infinity loading
+//            if posts.count >= 20 {
+//                ProgressView()
+//                    .progressViewStyle(CircularProgressViewStyle())
+//                    .scaleEffect(1)
+//                    .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: 40, alignment: .center)
+//                    .onAppear {
+//                        Task {
+//                            let newPosts = await fetchMore()
+//                            posts = posts + newPosts
+//                        }
+//                    }
+//                    .listRowBackground(Color.chihuClear)
+//                    .id(UUID())
+//            }
         }
         .refreshable {
             Task {
@@ -222,39 +266,14 @@ struct ThreadView: View {
             }
     }
     
-    func subThread(for parentId: String, deepcount: Int) -> some View {
-        ForEach(postsDict[parentId] ?? [], id: \.self) { post in
-            NavigationLink(destination: ThreadView(wasPushed: true, dataStore: ThreadDataStore(referencePost: post)).configureView()) {
-                HStack {
-                    ForEach(0..<deepcount, id: \.self) { _ in
-                        Divider()
-                    }
-                    CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, delegate: self)
-                        .id(post.id)
-                }
-            }
-            .listRowBackground(rowColor(on: post.id))
-            .onDisappear {
-                Task {
-                    posts = await getPosts()
-                }
-            }
-            if postsDict[post.id] != nil {
-                AnyView(subThread(for: post.id, deepcount: deepcount+1))
-            }
+    func parseHTML(from content: String) -> some View {
+        guard let html = try? HTMLParser().parse(html: content) else {
+            return Markdown("")
         }
-    }
-    
-    func rowColor(on postId: String) -> Color {
-        if needsHighlightColor(on: postId) {
-            return .halfDutchWhite.opacity(0.3)
-        } else {
-            return .chihuClear
-        }
-    }
-    
-    func needsHighlightColor(on postId: String) -> Bool {
-        postId == dataStore.referencePost.id
+        
+        let markdown = html.toMarkdown(options: .unorderedListBullets)
+        
+        return Markdown(markdown)
     }
     
     func getPosts() async -> [Post] {
@@ -263,32 +282,74 @@ struct ThreadView: View {
               let baseUrl = URL(string: baseUrlString) else {
             dataStore.lastError = ChihuError.codeError
             state = .error
-            return [dataStore.referencePost]
+            return []
         }
         
         guard let accessToken = UserSettings.shared.accessToken else {
             dataStore.lastError = ChihuError.accessTokenMissing
             state = .error
-            return [dataStore.referencePost]
+            return []
         }
         
         do {
             let client = try await TootClient(connect: baseUrl, accessToken: accessToken)
-            let context = try await client.getContext(id: dataStore.referencePost.id)
-            let posts = context.ancestors + [dataStore.referencePost] + context.descendants
+            let response = try await client.getTimeline(.user(userID: dataStore.user.id))
+            
+            if let user = response.result.first?.account {
+                dataStore.user = user
+            }
             
             state = .loaded
-            return posts
+            return response.result
         } catch {
             dataStore.lastError = error
             state = .error
         }
         
-        return [dataStore.referencePost]
+        return []
+    }
+    
+    func fetchMore() async -> [Post] {
+        defer { fetchingMore = false }
+        guard !fetchingMore else {
+            return []
+        }
+        
+        fetchingMore = true
+        // TODO: Add to interactor.
+        guard let baseUrlString = UserSettings.shared.instanceURL,
+              let baseUrl = URL(string: baseUrlString) else {
+            dataStore.lastError = ChihuError.codeError
+            state = .error
+            return []
+        }
+        
+        guard let accessToken = UserSettings.shared.accessToken else {
+            dataStore.lastError = ChihuError.accessTokenMissing
+            state = .error
+            return []
+        }
+        
+        guard let lastPostId = posts.last?.id else {
+            return await getPosts()
+        }
+        
+        let pageInfo = PagedInfo(maxId: lastPostId)
+        
+        do {
+            let client = try await TootClient(connect: baseUrl, accessToken: accessToken)
+            let response = try await client.getTimeline(.user(userID: dataStore.user.id), pageInfo: pageInfo)
+            
+            state = .loaded
+            return response.result
+        } catch {
+            // no-op
+            return []
+        }
     }
 }
 
-extension ThreadView: CellTimelineDelegate {
+extension UserDetailsView: CellTimelineDelegate {
     func didClick(on account: TootSDK.Account) {
         // no-op
     }
@@ -351,7 +412,7 @@ extension ThreadView: CellTimelineDelegate {
     }
 }
 
-extension ThreadView: ReplyDelegate {
+extension UserDetailsView: ReplyDelegate {
     func didEndReply(with post: Post) {
         showReplyView = false
 //            let index = posts.firstIndex {

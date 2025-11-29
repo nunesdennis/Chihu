@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import PhotosUI
+import TootSDK
 
 enum SettingsState {
     case loading
@@ -27,4 +28,24 @@ final class SettingsDataStore: ObservableObject {
     @Published var showError = false
     @Published var errorMessage: LocalizedStringKey = ""
     @Published var alertMessage: LocalizedStringKey = ""
+    @Published var openUserDetails: Bool = false
+    
+    var userDetailsDataStore: UserDetailsDataStore?
+    var accountClicked: Account?
+    
+    func createNewUserDetailsDataStore(with account: Account) -> UserDetailsDataStore {
+        guard let userDetailsDataStore else {
+            let dataStore = UserDetailsDataStore(user: account)
+            self.userDetailsDataStore = dataStore
+            return dataStore
+        }
+        
+        if account.id == userDetailsDataStore.user.id {
+            return userDetailsDataStore
+        }
+        
+        let dataStore = UserDetailsDataStore(user: account)
+        self.userDetailsDataStore = dataStore
+        return dataStore
+    }
 }

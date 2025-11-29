@@ -676,10 +676,19 @@ struct ReviewView: View {
                 }
             }
             .fullScreenCover(isPresented: $dataStore.openThread, onDismiss: {
+                // TODO: Update post with changes from thread
                 dataStore.postClicked = nil
             }, content: {
                 if let postClicked = dataStore.postClicked {
                     ThreadView(dataStore: dataStore.createNewThreadDataStore(with: postClicked)).configureView()
+                }
+            })
+            .fullScreenCover(isPresented: $dataStore.openUserDetails, onDismiss: {
+                // TODO: Update post with changes from thread
+                dataStore.accountClicked = nil
+            }, content: {
+                if let accountClicked = dataStore.accountClicked {
+                    UserDetailsView(dataStore: dataStore.createNewUserDetailsDataStore(with: accountClicked)).configureView()
                 }
             })
             .sheet(isPresented: $dataStore.showReplyView, onDismiss: {
@@ -1214,6 +1223,13 @@ extension ReviewView {
 }
 
 extension ReviewView: CellTimelineDelegate {
+    func didClick(on account: Account) {
+        DispatchQueue.main.async {
+            dataStore.openUserDetails = true
+            dataStore.accountClicked = account
+        }
+    }
+    
     func didClick(on post: TootSDK.Post) {
         DispatchQueue.main.async {
             dataStore.openThread = true

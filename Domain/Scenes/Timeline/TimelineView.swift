@@ -233,6 +233,14 @@ struct TimelineView: View {
                     ThreadView(dataStore: dataStore.createNewThreadDataStore(with: postClicked)).configureView()
                 }
             })
+            .fullScreenCover(isPresented: $dataStore.openUserDetails, onDismiss: {
+                // TODO: Update post with changes from thread
+                dataStore.accountClicked = nil
+            }, content: {
+                if let accountClicked = dataStore.accountClicked {
+                    UserDetailsView(dataStore: dataStore.createNewUserDetailsDataStore(with: accountClicked)).configureView()
+                }
+            })
             .sheet(isPresented: $dataStore.showReplyView, onDismiss: {
                 dataStore.postClicked = nil
                 dataStore.replyPostClicked = nil
@@ -346,6 +354,13 @@ struct TimelineView: View {
 }
 
 extension TimelineView: CellTimelineDelegate {
+    func didClick(on account: Account) {
+        DispatchQueue.main.async {
+            dataStore.openUserDetails = true
+            dataStore.accountClicked = account
+        }
+    }
+    
     func didClick(on post: Post) {
         DispatchQueue.main.async {
             dataStore.openThread = true

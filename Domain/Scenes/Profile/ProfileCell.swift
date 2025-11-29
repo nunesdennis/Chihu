@@ -7,8 +7,14 @@
 
 import SwiftUI
 import PhotosUI
+import TootSDK
+
+protocol ProfileCellDelegate {
+    func didClick(on account: Account)
+}
 
 struct ProfileCell: View {
+    let delegate: ProfileCellDelegate
     
     let viewModel: Profile.Load.ViewModel
     var interactor: ProfileBusinessLogic?
@@ -56,6 +62,13 @@ struct ProfileCell: View {
                 .disabled(dataStore.isUpdatingAvatar)
             }
             ProfileText(viewModel: viewModel)
+                .onTapGesture {
+                    Task {
+                        if let user = await getUser() {
+                            delegate.didClick(on: user)
+                        }
+                    }
+                }
         }
         .padding(5)
         .photosPicker(
@@ -72,6 +85,33 @@ struct ProfileCell: View {
                 }
             }
         }
+    }
+    
+    func getUser() async -> Account? {
+        // TODO: Add to interactor.
+        guard let baseUrlString = UserSettings.shared.instanceURL,
+              let baseUrl = URL(string: baseUrlString) else {
+            showError(.codeError)
+            return nil
+        }
+        
+        guard let accessToken = UserSettings.shared.accessToken else {
+            showError(.accessTokenMissing)
+            return nil
+        }
+        
+        do {
+            let client = try await TootClient(connect: baseUrl, accessToken: accessToken)
+            let account = try await client.verifyCredentials()
+            
+            dataStore.state = .loaded
+            return account
+        } catch {
+            dataStore.state = .error
+            showError(.codeError)
+        }
+        
+        return nil
     }
     
     private func handleImageSelection(_ item: PhotosPickerItem) async {
