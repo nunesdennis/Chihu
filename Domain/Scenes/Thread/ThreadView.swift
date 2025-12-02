@@ -192,11 +192,6 @@ struct ThreadView: View {
                         .id(post.id)
                 }
                 .listRowBackground(rowColor(on: post.id))
-                .onDisappear {
-                    Task {
-                        posts = await getPosts()
-                    }
-                }
                 if postsDict[post.id] != nil {
                     subThread(for: post.id, deepcount: 1)
                 }
@@ -234,11 +229,6 @@ struct ThreadView: View {
                 }
             }
             .listRowBackground(rowColor(on: post.id))
-            .onDisappear {
-                Task {
-                    posts = await getPosts()
-                }
-            }
             if postsDict[post.id] != nil {
                 AnyView(subThread(for: post.id, deepcount: deepcount+1))
             }

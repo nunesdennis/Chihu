@@ -47,6 +47,7 @@ struct CellTimeline: View {
     private var postPreviews = PostPreviewSingleton.shared
     private var avatarImage: Image?
     private var shouldShowPreview: Bool
+    private var showUserInfo: Bool
     private var showThreadButton: Bool
     private var isMyPost: Bool {
         isMyUsername(postUsername: post.account.acct)
@@ -56,10 +57,17 @@ struct CellTimeline: View {
     private let delegate: CellTimelineDelegate
 
     // MARK: - Init
-    init(post: Post, image: ImageState?, avatarImage: ImageState?, itemURL: String? = nil, showThreadButton: Bool = false, delegate: CellTimelineDelegate) {
+    init(post: Post,
+         image: ImageState?,
+         avatarImage: ImageState?,
+         itemURL: String? = nil,
+         showThreadButton: Bool = false,
+         showUserInfo: Bool = true,
+         delegate: CellTimelineDelegate) {
         self._sensitive = State(initialValue: post.sensitive)
         self._showSpoilerEffect = State(initialValue: post.sensitive)
         
+        self.showUserInfo = showUserInfo
         self.shouldShowPreview = (image ?? .needsLoading) != .none
         self.delegate = delegate
         self.post = post
@@ -326,18 +334,20 @@ struct CellTimeline: View {
     
     func account(from post: Post) -> some View {
         VStack(alignment: .leading) {
-            HStack {
-                loadableAvatarImage
-                VStack(alignment: .leading) {
-                    if let displayName = post.account.displayName {
-                        Text(displayName)
-                            .font(.headline)
+            if showUserInfo {
+                HStack {
+                    loadableAvatarImage
+                    VStack(alignment: .leading) {
+                        if let displayName = post.account.displayName {
+                            Text(displayName)
+                                .font(.headline)
+                        }
+                        Text(post.account.acct + " " + (post.application?.name ?? ""))
+                            .font(.body)
+                            .foregroundColor(.chihuGray)
                     }
-                    Text(post.account.acct + " " + (post.application?.name ?? ""))
-                        .font(.body)
-                        .foregroundColor(.chihuGray)
+                    .padding(5)
                 }
-                .padding(5)
             }
             if !post.spoilerText.isEmpty {
                 Text(post.spoilerText)

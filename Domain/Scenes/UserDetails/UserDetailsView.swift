@@ -9,6 +9,24 @@ import HTML2Markdown
 import MarkdownUI
 
 extension UserDetailsView: PostInteractionsDisplayLogic {
+    func display(posts: [Post]) {
+        DispatchQueue.main.async {
+            postLock.lock()
+            self.posts = posts
+            postLock.unlock()
+            state = .loaded
+        }
+    }
+    
+    func displayMore(posts: [Post]) {
+        DispatchQueue.main.async {
+            postLock.lock()
+            self.posts += posts
+            postLock.unlock()
+            state = .loaded
+        }
+    }
+    
     func display(post: Post) {
         DispatchQueue.main.async {
             let index = posts.firstIndex {
@@ -68,6 +86,7 @@ struct UserDetailsView: View {
     @State var replyPostClicked: Post?
     @State var fetchingMore: Bool = false
     
+    private var postLock = NSLock()
     var postInteractionInteractor: PostInteractionsBusinessLogic?
     var wasPushed: Bool
     
@@ -101,12 +120,11 @@ struct UserDetailsView: View {
                   }
                 }
                 .refreshable {
-                    let posts = await getPosts()
-                    self.posts = posts
+                    getPosts()
                 }
             }
         }
-        .navigationBarTitle("User details", displayMode: .inline)
+        .navigationBarTitle(dataStore.user.displayName ?? dataStore.user.acct, displayMode: .inline)
         .background(Color.timelineBackgroundColor)
         .toolbar {
             if !wasPushed {
@@ -201,11 +219,9 @@ struct UserDetailsView: View {
                         .font(.headline)
                         .foregroundColor(.profileDisplayNameColor)
                 }
-                if let username = dataStore.user.username {
-                    Text(username)
-                        .font(.subheadline)
-                        .foregroundColor(.profileUsernameColor)
-                }
+                Text(dataStore.user.acct)
+                    .font(.subheadline)
+                    .foregroundColor(.profileUsernameColor)
                 if !dataStore.user.acct.description.isEmpty {
                     parseHTML(from: dataStore.user.note)
                 }
@@ -220,35 +236,26 @@ struct UserDetailsView: View {
                 .listRowBackground(Color.chihuClear)
             ForEach(posts, id: \.self) { post in
                 NavigationLink(destination: ThreadView(wasPushed: true, dataStore: ThreadDataStore(referencePost: post)).configureView()) {
-                    CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, delegate: self)
+                    CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, showUserInfo: false, delegate: self)
                         .id(post.id)
                 }
                 .listRowBackground(Color.chihuClear)
-                .onDisappear {
-                    Task {
-                        posts = await getPosts()
-                    }
-                }
             }
-            // TODO: infinity loading
-//            if posts.count >= 20 {
-//                ProgressView()
-//                    .progressViewStyle(CircularProgressViewStyle())
-//                    .scaleEffect(1)
-//                    .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: 40, alignment: .center)
-//                    .onAppear {
-//                        Task {
-//                            let newPosts = await fetchMore()
-//                            posts = posts + newPosts
-//                        }
-//                    }
-//                    .listRowBackground(Color.chihuClear)
-//                    .id(UUID())
-//            }
+            if posts.count >= 20 {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(1)
+                    .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: 40, alignment: .center)
+                    .onAppear {
+                        guard !fetchingMore else { return }
+                        fetchMore()
+                    }
+                    .listRowBackground(Color.chihuClear)
+            }
         }
         .refreshable {
             Task {
-                posts = await getPosts()
+                getPosts()
             }
         }
         .listStyle(.plain)
@@ -261,8 +268,7 @@ struct UserDetailsView: View {
             .scaleEffect(2)
             .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: .infinity)
             .task {
-                let posts = await getPosts()
-                self.posts = posts
+                getPosts()
             }
     }
     
@@ -276,43 +282,44 @@ struct UserDetailsView: View {
         return Markdown(markdown)
     }
     
-    func getPosts() async -> [Post] {
+    func getPosts() {
         // TODO: Add to interactor.
         guard let baseUrlString = UserSettings.shared.instanceURL,
               let baseUrl = URL(string: baseUrlString) else {
             dataStore.lastError = ChihuError.codeError
             state = .error
-            return []
+            return
         }
         
         guard let accessToken = UserSettings.shared.accessToken else {
             dataStore.lastError = ChihuError.accessTokenMissing
             state = .error
-            return []
+            return
         }
         
-        do {
-            let client = try await TootClient(connect: baseUrl, accessToken: accessToken)
-            let response = try await client.getTimeline(.user(userID: dataStore.user.id))
-            
-            if let user = response.result.first?.account {
-                dataStore.user = user
+        Task {
+            do {
+                let client = try await TootClient(connect: baseUrl, accessToken: accessToken)
+                let response = try await client.getTimeline(.user(userID: dataStore.user.id))
+                
+                if let user = response.result.first?.account {
+                    dataStore.user = user
+                }
+                
+                display(posts: response.result)
+            } catch {
+                dataStore.lastError = error
+                state = .error
             }
-            
-            state = .loaded
-            return response.result
-        } catch {
-            dataStore.lastError = error
-            state = .error
         }
         
-        return []
+        return
     }
     
-    func fetchMore() async -> [Post] {
+    func fetchMore() {
         defer { fetchingMore = false }
         guard !fetchingMore else {
-            return []
+            return
         }
         
         fetchingMore = true
@@ -321,30 +328,31 @@ struct UserDetailsView: View {
               let baseUrl = URL(string: baseUrlString) else {
             dataStore.lastError = ChihuError.codeError
             state = .error
-            return []
+            return
         }
         
         guard let accessToken = UserSettings.shared.accessToken else {
             dataStore.lastError = ChihuError.accessTokenMissing
             state = .error
-            return []
+            return
         }
         
-        guard let lastPostId = posts.last?.id else {
-            return await getPosts()
-        }
-        
-        let pageInfo = PagedInfo(maxId: lastPostId)
-        
-        do {
-            let client = try await TootClient(connect: baseUrl, accessToken: accessToken)
-            let response = try await client.getTimeline(.user(userID: dataStore.user.id), pageInfo: pageInfo)
+        Task {
+            guard let lastPostId = posts.last?.id else {
+                return getPosts()
+            }
             
-            state = .loaded
-            return response.result
-        } catch {
-            // no-op
-            return []
+            let pageInfo = PagedInfo(maxId: lastPostId)
+            
+            do {
+                let client = try await TootClient(connect: baseUrl, accessToken: accessToken)
+                let response = try await client.getTimeline(.user(userID: dataStore.user.id), pageInfo: pageInfo)
+                
+                displayMore(posts: response.result)
+            } catch {
+                // no-op
+                return
+            }
         }
     }
 }
@@ -426,7 +434,7 @@ extension UserDetailsView: ReplyDelegate {
 //                dataStore.posts.insert(post, at: 0)
 //            }
         Task {
-            posts = await getPosts()
+            await getPosts()
         }
     }
 }
