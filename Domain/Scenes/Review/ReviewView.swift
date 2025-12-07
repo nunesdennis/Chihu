@@ -11,6 +11,14 @@ import Combine
 import TootSDK
 
 extension ReviewView: PostInteractionsDisplayLogic {
+    func remove(post: Post) async {
+        DispatchQueue.main.async {
+            dataStore.posts.removeAll {
+                $0.id == post.id
+            }
+        }
+    }
+    
     func display(post: Post) {
         DispatchQueue.main.async {
             let index = dataStore.posts.firstIndex {
@@ -292,6 +300,21 @@ extension ReviewView: ReviewDisplayLogic {
     }
     
     func delete() {
+        if let post = dataStore.postClicked {
+            guard let postInteractionInteractor else {
+                dataStore.alertType = .actionFailed
+                dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
+                dataStore.shouldShowToast = true
+                return
+            }
+            
+            let deleteRequest = PostInteraction.Delete.Request(postId: post.id)
+            postInteractionInteractor.delete(request: deleteRequest)
+            dataStore.postClicked = nil
+            
+            return
+        }
+        
         guard let itemUUID = dataStore.item?.uuid else {
             dataStore.alertType = .actionFailed
             dataStore.alertMessage = LocalizedStringKey("Item not found")
@@ -517,7 +540,9 @@ struct ReviewView: View {
             return "Delete review"
         case .collection:
             return "Remove from collection"
-        case .progressNote, .posts:
+        case .posts:
+            return "Delete post"
+        case .progressNote:
             return ""
         }
     }
@@ -825,6 +850,8 @@ struct ReviewView: View {
         dataStore.alertType = .delete
         if reviewTypeSelected == .collection {
             dataStore.alertMessage = "Are you sure you want to remove your item from the collection?"
+        } else if reviewTypeSelected == .posts {
+            dataStore.alertMessage = "Are you sure you want to delete your post?"
         } else {
             dataStore.alertMessage = "Are you sure you want to delete your review?"
         }
@@ -1223,6 +1250,11 @@ extension ReviewView {
 }
 
 extension ReviewView: CellTimelineDelegate {
+    func didPressDelete(on post: Post) {
+        dataStore.postClicked = post
+        deleteAlert()
+    }
+    
     func didClick(on account: Account) {
         DispatchQueue.main.async {
             dataStore.openUserDetails = true

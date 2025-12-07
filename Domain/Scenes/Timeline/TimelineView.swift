@@ -18,15 +18,15 @@ protocol TimelineDisplayLogic {
 }
 
 extension TimelineView: PostInteractionsDisplayLogic {
+    func remove(post: Post) async {
+        DispatchQueue.main.async {
+            dataStore.removePost(post)
+        }
+    }
+    
     func display(post: Post) {
         DispatchQueue.main.async {
-            let index = dataStore.posts.firstIndex {
-                $0.id == post.id
-            }
-            
-            if let index {
-                dataStore.posts[index] = post
-            } else {
+            if !dataStore.updatePost(post) {
                 dataStore.alertType = .actionFailed
                 dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
                 dataStore.shouldShowToast = true
@@ -59,13 +59,11 @@ extension TimelineView: TimelineDisplayLogic {
     }
     
     func display(viewModel: Timeline.Load.ViewModel) async {
-        dataStore.posts = viewModel.posts
-        if dataStore.posts.isEmpty {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            dataStore.posts = viewModel.posts
+            if dataStore.posts.isEmpty {
                 dataStore.state = .empty
-            }
-        } else {
-            DispatchQueue.main.async {
+            } else {
                 dataStore.state = .textLoaded
             }
         }
@@ -80,15 +78,26 @@ extension TimelineView: TimelineDisplayLogic {
     }
     
     func displayMore(viewModel: Timeline.Load.ViewModel) async {
-        dataStore.posts = dataStore.posts + viewModel.posts
-        if dataStore.posts.isEmpty {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            dataStore.appendToCurrentPosts(viewModel.posts)
+            if dataStore.posts.isEmpty {
                 dataStore.state = .empty
-            }
-        } else {
-            DispatchQueue.main.async {
+            } else {
                 dataStore.state = .textLoaded
             }
+        }
+    }
+    
+    func getTimelineType() -> TootSDK.Timeline {
+        switch dataStore.segmentedControlSelection {
+        case 0:
+            return .home
+        case 1:
+            return .local
+        case 2:
+            return .federated
+        default:
+            return .home
         }
     }
     
@@ -99,7 +108,7 @@ extension TimelineView: TimelineDisplayLogic {
             return
         }
         
-        let requestPosts = Timeline.Load.Request(timelineType: .home, pageInfo: nil)
+        let requestPosts = Timeline.Load.Request(timelineType: getTimelineType(), pageInfo: nil)
         interactor.load(request: requestPosts)
     }
     
@@ -115,7 +124,7 @@ extension TimelineView: TimelineDisplayLogic {
         }
         
         let pageInfo = PagedInfo(maxId: lastId)
-        let requestPost = Timeline.Load.Request(timelineType: .home, pageInfo: pageInfo)
+        let requestPost = Timeline.Load.Request(timelineType: getTimelineType(), pageInfo: pageInfo)
         interactor.loadMore(request: requestPost)
     }
     
@@ -150,43 +159,68 @@ struct TimelineView: View {
     init(tabTapped: Binding<Bool>, dataStore: TimelineDataStore = TimelineDataStore()) {
         _tabTapped = tabTapped
         self.dataStore = dataStore
+        UISegmentedControl.appearance().selectedSegmentTintColor = .chihuGreen
+        UIRefreshControl.appearance().tintColor = UIColor(Color.chihuGreen)
     }
     
     var body: some View {
         NavigationStack {
-            VStack {
-                switch dataStore.state {
-                case .firstLoad:
-                    progressView
-                case .textLoaded, .loaded:
-                    timelineView
-                case .empty:
-                    GeometryReader { geometry in
-                      ScrollView(.vertical) {
-                          EmptyView()
-                          .frame(minHeight: geometry.size.height)
-                      }
-                    }
-                    .refreshable {
-                        fetch()
-                    }
-                default:
-                    GeometryReader { geometry in
-                      ScrollView(.vertical) {
-                          ErrorView(error: dataStore.lastError)
-                          .frame(minHeight: geometry.size.height)
-                      }
-                    }
-                    .refreshable {
-                        fetch()
+            ZStack {
+                VStack {
+                    switch dataStore.state {
+                    case .firstLoad:
+                        progressView
+                    case .textLoaded, .loaded:
+                        timelineView
+                    case .empty:
+                        GeometryReader { geometry in
+                            ScrollView(.vertical) {
+                                EmptyView()
+                                    .frame(minHeight: geometry.size.height)
+                            }
+                        }
+                        .refreshable {
+                            fetch()
+                        }
+                    default:
+                        GeometryReader { geometry in
+                            ScrollView(.vertical) {
+                                ErrorView(error: dataStore.lastError)
+                                    .frame(minHeight: geometry.size.height)
+                            }
+                        }
+                        .refreshable {
+                            fetch()
+                        }
                     }
                 }
+                segmentedControl
             }
             .navigationTitle("Feed")
-            .onAppear {
-                UIRefreshControl.appearance().tintColor = UIColor(Color.chihuGreen)
-            }
             .background(Color.timelineBackgroundColor)
+        }
+    }
+    
+    var segmentedControl: some View {
+        VStack {
+            Spacer()
+            Picker(selection: $dataStore.segmentedControlSelection, label: Text("Picker")) {
+                Text("Following")
+                    .tag(0)
+                Text("Local")
+                    .tag(1)
+                Text("Global")
+                    .tag(2)
+            }
+            .pickerStyle(.segmented)
+            .padding(EdgeInsets(top: 0, leading: 25, bottom: 14, trailing: 25))
+            .onChange(of: dataStore.segmentedControlSelection) {
+                // Fetch posts for the newly selected timeline if empty
+                if dataStore.posts.isEmpty {
+                    dataStore.state = .firstLoad
+                    fetch()
+                }
+            }
         }
     }
     
@@ -262,12 +296,14 @@ struct TimelineView: View {
                 }
             }
             .alert("Alert", isPresented: $dataStore.shouldShowAlert) {
-                Button("OK", role: .cancel) {}
+                alertButtons()
             } message: {
                 Text(dataStore.alertMessage ?? "Error")
             }
             .onAppear {
-                tabTapped = false
+                if tabTapped {
+                    tabTapped = false
+                }
             }
             .onChange(of: tabTapped) {
                 if tabTapped {
@@ -314,9 +350,49 @@ struct TimelineView: View {
           
         return url.absoluteString.components(separatedBy: "/").last
     }
+    
+    private func deleteAlert() {
+        dataStore.alertType = .delete
+        dataStore.alertMessage = "Are you sure you want to delete your post?"
+        dataStore.shouldShowAlert = true
+    }
+    
+    private func alertButtons() -> some View {
+        VStack {
+            if dataStore.alertType == .delete {
+                Button("Cancel", role: .cancel) {}
+                Button("OK", role: .destructive) {
+                    DispatchQueue.main.async {
+                        delete()
+                    }
+                }
+            } else {
+                Button("OK", role: .cancel) {}
+            }
+        }
+    }
+    
+    private func delete() {
+        guard let postInteractionInteractor,
+              let postId = dataStore.postClicked?.id else {
+            dataStore.alertType = .actionFailed
+            dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
+            dataStore.shouldShowToast = true
+            return
+        }
+        
+        let deleteRequest = PostInteraction.Delete.Request(postId: postId)
+        postInteractionInteractor.delete(request: deleteRequest)
+        dataStore.postClicked = nil
+    }
 }
 
 extension TimelineView: CellTimelineDelegate {
+    func didPressDelete(on post: Post) {
+        dataStore.postClicked = post
+        deleteAlert()
+    }
+    
     func didClick(on account: Account) {
         DispatchQueue.main.async {
             dataStore.openUserDetails = true
@@ -395,14 +471,10 @@ extension TimelineView: ReplyDelegate {
     func didEndReply(with post: Post) {
         DispatchQueue.main.async {
             dataStore.showReplyView = false
-            let index = dataStore.posts.firstIndex {
-                $0.id == post.id
-            }
-            
-            if let index {
-                dataStore.posts[index] = post
+            if dataStore.findPostIndex(post.id) != nil {
+                dataStore.updatePost(post)
             } else {
-                dataStore.posts.insert(post, at: 0)
+                dataStore.insertPostAtBeginning(post)
             }
         }
     }

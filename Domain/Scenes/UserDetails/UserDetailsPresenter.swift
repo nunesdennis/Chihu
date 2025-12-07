@@ -10,6 +10,13 @@ final class UserDetailsPresenter {
 }
 
 extension UserDetailsPresenter: PostInteractionsPresentationLogic {
+    func present(response: PostInteraction.Delete.Response) {
+        let viewModel = PostInteraction.Delete.ViewModel(post: response.post)
+        Task {
+            await view?.remove(post: viewModel.post)
+        }
+    }
+    
     func present(error: any Error) {
         view?.displayError(error)
     }
