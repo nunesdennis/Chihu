@@ -17,6 +17,7 @@ protocol CellTimelineDelegate {
     func didClick(on account: Account)
     func didClick(on post: Post)
     func didPressLike(on post: Post)
+    func didPressDelete(on post: Post)
     func didPressReply(on post: Post)
     func didPressRepost(on post: Post)
     func didPressUpdate(on post: Post)
@@ -55,7 +56,7 @@ struct CellTimeline: View {
     
     private let post: Post
     private let delegate: CellTimelineDelegate
-
+    
     // MARK: - Init
     init(post: Post,
          image: ImageState?,
@@ -75,7 +76,7 @@ struct CellTimeline: View {
         self.image = get(image, of: .poster)
         self.avatarImage = get(avatarImage ?? ImageState.none, of: .avatar)
     }
-
+    
     // MARK: - Body
     var body: some View {
         if #available(iOS 18.0, *) {
@@ -115,21 +116,7 @@ struct CellTimeline: View {
                     }
                 }
             }
-            HStack(alignment: .center) {
-                likeButton
-                replyButton
-                repostButton
-                if isMyPost {
-                    editButton
-                }
-                if #available(iOS 18.0, *) {
-                    translateButton
-                }
-                if post.url != nil {
-                    externalLinkButton
-                }
-            }
-            .frame(height: 30)
+            menu
         }
         .listRowBackground(Color.timelineCellBackgroundColor)
         .task {
@@ -147,6 +134,56 @@ struct CellTimeline: View {
                     }
                 }
             }
+        }
+    }
+    
+    var menu: some View {
+        HStack(alignment: .center) {
+            likeButton
+            replyButton
+            repostButton
+            if isMyPost {
+                editButton
+            }
+            if isMyPost {
+                deleteButton
+            }
+            if #available(iOS 18.0, *) {
+                translateButton
+            }
+            if post.url != nil {
+                externalLinkButton
+            }
+            //            Menu {
+            //
+            //            } label: {
+            //              Label("", systemImage: "ellipsis")
+            //                .padding(.vertical, 6)
+            //            }
+            //            .menuStyle(.button)
+            //            .buttonStyle(.borderless)
+            //            .foregroundStyle(.secondary)
+            //            .contentShape(Rectangle())
+        }
+        .frame(height: 30)
+    }
+    
+    var deleteButton: some View {
+        HStack {
+            Image(systemName: "trash")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 20, height: 20)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            if post.favouritesCount > 0 {
+                Spacer().frame(width: 1)
+                Text("\(post.favouritesCount)")
+                Spacer()
+            }
+        }
+        .foregroundColor(buttonColor(isHighlighted: false))
+        .onTapGesture {
+            delegate.didPressDelete(on: post)
         }
     }
     
@@ -213,29 +250,29 @@ struct CellTimeline: View {
             .scaledToFit()
             .foregroundColor(buttonColor(isHighlighted: false))
             .frame(width: 20, height: 20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onTapGesture {
-            if let urlString = post.url,
-               let url = URL(string: urlString) {
-                openURL(url)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onTapGesture {
+                if let urlString = post.url,
+                   let url = URL(string: urlString) {
+                    openURL(url)
+                }
             }
-        }
     }
     
     var editButton: some View {
-        Image(systemName: "pencil")
+        Image(systemName: "pencil.circle")
             .resizable()
             .scaledToFit()
             .foregroundColor(buttonColor(isHighlighted: false))
             .frame(width: 20, height: 20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onTapGesture {
-            if let url = itemUrl {
-                delegate.handleURL(url)
-            } else {
-                delegate.didPressUpdate(on: post)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onTapGesture {
+                if let url = itemUrl {
+                    delegate.handleURL(url)
+                } else {
+                    delegate.didPressUpdate(on: post)
+                }
             }
-        }
     }
     
     @available(iOS 18.0, *)
@@ -245,10 +282,10 @@ struct CellTimeline: View {
             .scaledToFit()
             .foregroundColor(buttonColor(isHighlighted: false))
             .frame(width: 22, height: 22)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onTapGesture {
-            showTranslation.toggle()
-        }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onTapGesture {
+                showTranslation.toggle()
+            }
     }
     
     var loadablePostImage: some View {
@@ -272,7 +309,7 @@ struct CellTimeline: View {
     }
     
     var loadableAvatarImage: some View {
-        CachedAsyncImage(url: getAvatarUrl(from: post)) { phase in
+        CachedAsyncImage(url: getAvatarUrl(from: post.repost ?? post)) { phase in
             switch phase {
             case .success(let image):
                 image

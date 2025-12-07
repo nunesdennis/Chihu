@@ -11,6 +11,10 @@ import Combine
 import TootSDK
 
 extension LightReviewView: PostInteractionsDisplayLogic {
+    func remove(post: TootSDK.Post) async {
+        //no-op
+    }
+    
     func display(post: Post) async {
         //no-op
     }

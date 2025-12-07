@@ -15,6 +15,29 @@ protocol PostInteractionsNetworkingProtocol {
 final class PostInteractionsNetworkingWorker: PostInteractionsNetworkingProtocol {
     
     // MARK: - Public Methods
+    func deletePost(request: PostInteraction.Delete.Request,completion: @escaping (Result<PostInteraction.Delete.Response, Error>) -> Void) async {
+        let endpoint = PostInteractionEndpoint(request)
+        
+        guard let url = endpoint.url else {
+            completion(.failure(ChihuError.invalidURL))
+            return
+        }
+        
+        guard let accessToken = UserSettings.shared.accessToken else {
+            completion(.failure(ChihuError.accessTokenMissing))
+            return
+        }
+        
+        do {
+            let client = try await TootClient(connect: url, accessToken: accessToken)
+            let deletedPost = try await client.deletePost(id: request.postId)
+            let response = PostInteraction.Delete.Response(post: deletedPost)
+            completion(.success(response))
+        } catch let error {
+            completion(.failure(error))
+        }
+    }
+    
     func likeDislikePost(request: PostInteraction.LikeDislike.Request,completion: @escaping (Result<PostInteraction.LikeDislike.Response, Error>) -> Void) async {
         let endpoint = PostInteractionEndpoint(request)
         

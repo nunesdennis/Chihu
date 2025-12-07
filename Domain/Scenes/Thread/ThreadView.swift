@@ -9,6 +9,14 @@ import SwiftUI
 import TootSDK
 
 extension ThreadView: PostInteractionsDisplayLogic {
+    func remove(post: Post) async {
+        DispatchQueue.main.async {
+            posts.removeAll {
+                $0.id == post.id
+            }
+        }
+    }
+    
     func display(post: Post) {
         DispatchQueue.main.async {
             let index = posts.firstIndex {
@@ -167,7 +175,7 @@ struct ThreadView: View {
             }
         }
         .alert("Alert", isPresented: $shouldShowAlert) {
-            Button("OK", role: .cancel) {}
+            alertButtons()
         } message: {
             Text(dataStore.alertMessage ?? "Error")
         }
@@ -276,9 +284,49 @@ struct ThreadView: View {
         
         return [dataStore.referencePost]
     }
+    
+    private func deleteAlert() {
+        dataStore.alertType = .delete
+        dataStore.alertMessage = "Are you sure you want to delete your post?"
+        shouldShowAlert = true
+    }
+    
+    private func alertButtons() -> some View {
+        VStack {
+            if dataStore.alertType == .delete {
+                Button("Cancel", role: .cancel) {}
+                Button("OK", role: .destructive) {
+                    DispatchQueue.main.async {
+                        delete()
+                    }
+                }
+            } else {
+                Button("OK", role: .cancel) {}
+            }
+        }
+    }
+    
+    private func delete() {
+        guard let postInteractionInteractor,
+              let postId = postClicked?.id else {
+            dataStore.alertType = .actionFailed
+            dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
+            shouldShowToast = true
+            return
+        }
+        
+        let deleteRequest = PostInteraction.Delete.Request(postId: postId)
+        postInteractionInteractor.delete(request: deleteRequest)
+        postClicked = nil
+    }
 }
 
 extension ThreadView: CellTimelineDelegate {
+    func didPressDelete(on post: Post) {
+        postClicked = post
+        deleteAlert()
+    }
+    
     func didClick(on account: TootSDK.Account) {
         // no-op
     }
