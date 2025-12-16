@@ -30,10 +30,15 @@ struct TipView: View {
                     .fill(Color.searchViewColor)
                 VStack {
                     Markdown(text)
+                        .markdownTextStyle(\.text) {
+                            ForegroundColor(.chihuBlack)
+                            BackgroundColor(.chihuClear)
+                        }
+                        .markdownTheme(.gitHub)
                         .padding(20)
                 }
                 .frame(width: geometry.size.width - 40, height: 300)
-                .background(Color.white)
+                .background(Color.chihuWhite)
                 .cornerRadius(25)
                 .padding()
                 VStack {

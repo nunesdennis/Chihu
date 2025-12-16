@@ -112,7 +112,7 @@ struct CellTimeline: View {
                     }
                     .frame(width: 30)
                     .onTapGesture {
-                        delegate.didClick(on: post)
+                        delegate.didClick(on: post.repost ?? post)
                     }
                 }
             }
@@ -175,11 +175,6 @@ struct CellTimeline: View {
                 .scaledToFit()
                 .frame(width: 20, height: 20)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            if post.favouritesCount > 0 {
-                Spacer().frame(width: 1)
-                Text("\(post.favouritesCount)")
-                Spacer()
-            }
         }
         .foregroundColor(buttonColor(isHighlighted: false))
         .onTapGesture {

@@ -93,6 +93,9 @@ extension ReviewView: ReviewDisplayLogic {
     
     func displaySilentError(_ error: any Error) {
         print(error.localizedDescription)
+        DispatchQueue.main.async {
+            dataStore.state = .full
+        }
     }
     
     func displayLoadingError(_ error: any Error) {
