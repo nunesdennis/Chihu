@@ -159,6 +159,19 @@
 		7FE791D02E30DE6700931B93 /* ReviewView+Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE791CE2E30DE4E00931B93 /* ReviewView+Modal.swift */; };
 		7FE793812E35545900931B93 /* UrlCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE793802E35545000931B93 /* UrlCleaner.swift */; };
 		7FE793822E35545900931B93 /* UrlCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE793802E35545000931B93 /* UrlCleaner.swift */; };
+		7FF4687E2EF316AE008256D1 /* NotificationsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF468792EF316AE008256D1 /* NotificationsInteractor.swift */; };
+		7FF468802EF316AE008256D1 /* NotificationsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF468772EF316AE008256D1 /* NotificationsConfigurator.swift */; };
+		7FF468812EF316AE008256D1 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4687C2EF316AE008256D1 /* NotificationsView.swift */; };
+		7FF468842EF316AE008256D1 /* NotificationsDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF468782EF316AE008256D1 /* NotificationsDataStore.swift */; };
+		7FF468852EF316AE008256D1 /* NotificationsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4687B2EF316AE008256D1 /* NotificationsPresenter.swift */; };
+		7FF468862EF316AE008256D1 /* NotificationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4687A2EF316AE008256D1 /* NotificationsModel.swift */; };
+		7FF468892EF31C3E008256D1 /* NotificationsNetworkingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF468872EF31C3C008256D1 /* NotificationsNetworkingWorker.swift */; };
+		7FF4688B2EF31D1F008256D1 /* NotificationsEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4688A2EF31D17008256D1 /* NotificationsEndpoint.swift */; };
+		7FF4688C2EF31D1F008256D1 /* NotificationsEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4688A2EF31D17008256D1 /* NotificationsEndpoint.swift */; };
+		7FF4688E2EF32812008256D1 /* RepostCellNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4688D2EF32809008256D1 /* RepostCellNotification.swift */; };
+		7FF468902EF332C0008256D1 /* FavouriteCellNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4688F2EF332B0008256D1 /* FavouriteCellNotification.swift */; };
+		7FF468922EF33474008256D1 /* FollowCellNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF468912EF3346E008256D1 /* FollowCellNotification.swift */; };
+		7FF468952EF45806008256D1 /* GenericCellNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF468942EF457FA008256D1 /* GenericCellNotification.swift */; };
 		B30DDB482CDFC981000F9F08 /* DataScannerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30DDB472CDFC972000F9F08 /* DataScannerRepresentable.swift */; };
 		B30DDB4A2CDFFD7B000F9F08 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30DDB492CDFFD7B000F9F08 /* ScannerView.swift */; };
 		B30EC1492D46785700A8DAE9 /* CatalogNetworkingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B354B8DD2D44840800B7FF82 /* CatalogNetworkingWorker.swift */; };
@@ -485,6 +498,18 @@
 		7FD0FC6F2ED2490B00BEA7F1 /* View+ColorSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ColorSchema.swift"; sourceTree = "<group>"; };
 		7FE791CE2E30DE4E00931B93 /* ReviewView+Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewView+Modal.swift"; sourceTree = "<group>"; };
 		7FE793802E35545000931B93 /* UrlCleaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlCleaner.swift; sourceTree = "<group>"; };
+		7FF468772EF316AE008256D1 /* NotificationsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsConfigurator.swift; sourceTree = "<group>"; };
+		7FF468782EF316AE008256D1 /* NotificationsDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsDataStore.swift; sourceTree = "<group>"; };
+		7FF468792EF316AE008256D1 /* NotificationsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsInteractor.swift; sourceTree = "<group>"; };
+		7FF4687A2EF316AE008256D1 /* NotificationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsModel.swift; sourceTree = "<group>"; };
+		7FF4687B2EF316AE008256D1 /* NotificationsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPresenter.swift; sourceTree = "<group>"; };
+		7FF4687C2EF316AE008256D1 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
+		7FF468872EF31C3C008256D1 /* NotificationsNetworkingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsNetworkingWorker.swift; sourceTree = "<group>"; };
+		7FF4688A2EF31D17008256D1 /* NotificationsEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsEndpoint.swift; sourceTree = "<group>"; };
+		7FF4688D2EF32809008256D1 /* RepostCellNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepostCellNotification.swift; sourceTree = "<group>"; };
+		7FF4688F2EF332B0008256D1 /* FavouriteCellNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCellNotification.swift; sourceTree = "<group>"; };
+		7FF468912EF3346E008256D1 /* FollowCellNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCellNotification.swift; sourceTree = "<group>"; };
+		7FF468942EF457FA008256D1 /* GenericCellNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCellNotification.swift; sourceTree = "<group>"; };
 		B30DDB472CDFC972000F9F08 /* DataScannerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataScannerRepresentable.swift; sourceTree = "<group>"; };
 		B30DDB492CDFFD7B000F9F08 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		B311BCFF2CDEE2DF000F36E5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -824,6 +849,7 @@
 		21EFAC5E2C7A7413001DD16D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				7FF468742EF3167B008256D1 /* Notifications */,
 				7F2AADDB2EDAFE390014D1BA /* UserDetails */,
 				7FD0FC662EC9D93D00BEA7F1 /* Thread */,
 				7F2E749D2E899F150084A650 /* Reply */,
@@ -874,6 +900,7 @@
 		21EFAC6C2C7A9755001DD16D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7FF468932EF457E2008256D1 /* cells */,
 				B30DDB492CDFFD7B000F9F08 /* ScannerView.swift */,
 				B30DDB472CDFC972000F9F08 /* DataScannerRepresentable.swift */,
 				21EFAC6A2C7A95E2001DD16D /* CardView.swift */,
@@ -978,6 +1005,31 @@
 			path = Thread;
 			sourceTree = "<group>";
 		};
+		7FF468742EF3167B008256D1 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				7FF468772EF316AE008256D1 /* NotificationsConfigurator.swift */,
+				7FF468782EF316AE008256D1 /* NotificationsDataStore.swift */,
+				7FF468792EF316AE008256D1 /* NotificationsInteractor.swift */,
+				7FF4687A2EF316AE008256D1 /* NotificationsModel.swift */,
+				7FF4687B2EF316AE008256D1 /* NotificationsPresenter.swift */,
+				7FF4687C2EF316AE008256D1 /* NotificationsView.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		7FF468932EF457E2008256D1 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				7FF468942EF457FA008256D1 /* GenericCellNotification.swift */,
+				B3736AE72CE444AE00014FF2 /* CellTimeline.swift */,
+				7FF468912EF3346E008256D1 /* FollowCellNotification.swift */,
+				7FF4688F2EF332B0008256D1 /* FavouriteCellNotification.swift */,
+				7FF4688D2EF32809008256D1 /* RepostCellNotification.swift */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
 		B30E18662C90EA7A00A3DDB5 /* Review */ = {
 			isa = PBXGroup;
 			children = (
@@ -999,6 +1051,7 @@
 		B30EC1462D46765800A8DAE9 /* Endpoints */ = {
 			isa = PBXGroup;
 			children = (
+				7FF4688A2EF31D17008256D1 /* NotificationsEndpoint.swift */,
 				7F202CA32EA3B61800B5F8F3 /* PostInteractionEndpoint.swift */,
 				7F2E74AA2E89A5150084A650 /* ReplyEndpoint.swift */,
 				B3E420612DAF134200FA1599 /* CatalogPostEndpoint.swift */,
@@ -1028,6 +1081,7 @@
 		B30EC1472D46766000A8DAE9 /* Workers */ = {
 			isa = PBXGroup;
 			children = (
+				7FF468872EF31C3C008256D1 /* NotificationsNetworkingWorker.swift */,
 				7F202CA02EA3B56B00B5F8F3 /* PostInteractionNetworkingWorker.swift */,
 				7F18DA402E521BBD001B1D3F /* UpdateAvatarNetworkingWorker.swift */,
 				215D05772D32ADBE00B85307 /* CollectionsNetworkingWorker.swift */,
@@ -1137,7 +1191,6 @@
 			isa = PBXGroup;
 			children = (
 				B3736AED2CE57AC200014FF2 /* LPLoader.swift */,
-				B3736AE72CE444AE00014FF2 /* CellTimeline.swift */,
 				B3A0B4452CE2A54E0046DEA5 /* TimelineConfigurator.swift */,
 				B3A0B4462CE2A54E0046DEA5 /* TimelineDataStore.swift */,
 				B3A0B4472CE2A54E0046DEA5 /* TimelineInteractor.swift */,
@@ -1418,6 +1471,8 @@
 				7F18DA452E524DA5001B1D3F /* ImageFileTransferable.swift in Sources */,
 				21ECB6052D244429006CBE85 /* PIerror.swift in Sources */,
 				B3980A602D8AD1DA003780D5 /* SpoilerModifier.swift in Sources */,
+				7FF468922EF33474008256D1 /* FollowCellNotification.swift in Sources */,
+				7FF4688E2EF32812008256D1 /* RepostCellNotification.swift in Sources */,
 				216D93BF2C834EC2006252A6 /* ShelfListInteractor.swift in Sources */,
 				212048A82C99EF84007F8D3B /* LoginPresenter.swift in Sources */,
 				21D741AF2DFDEDF800A95C13 /* SettingsConfigurator.swift in Sources */,
@@ -1499,6 +1554,7 @@
 				214A3A332C98A891006F7CC6 /* MessageResponse.swift in Sources */,
 				B3E420632DAF134E00FA1599 /* CatalogPostEndpoint.swift in Sources */,
 				B3E420692DAF1A2D00FA1599 /* CatalogPostsModel.swift in Sources */,
+				7FF468892EF31C3E008256D1 /* NotificationsNetworkingWorker.swift in Sources */,
 				215D05802D32BE8D00B85307 /* ReviewType.swift in Sources */,
 				215D056A2D32A54000B85307 /* CollectionList.swift in Sources */,
 				216D93DD2C84A36E006252A6 /* SearchConfigurator.swift in Sources */,
@@ -1506,10 +1562,17 @@
 				21007C172C7D55970082689B /* ShelfListEndpoint.swift in Sources */,
 				B3FF3D322CC3FF23001B1B2B /* SupportTheDev.swift in Sources */,
 				B3736AEA2CE575C700014FF2 /* TimelineNetworkingWorker.swift in Sources */,
+				7FF4687E2EF316AE008256D1 /* NotificationsInteractor.swift in Sources */,
+				7FF468802EF316AE008256D1 /* NotificationsConfigurator.swift in Sources */,
+				7FF468812EF316AE008256D1 /* NotificationsView.swift in Sources */,
+				7FF468842EF316AE008256D1 /* NotificationsDataStore.swift in Sources */,
+				7FF468852EF316AE008256D1 /* NotificationsPresenter.swift in Sources */,
+				7FF468862EF316AE008256D1 /* NotificationsModel.swift in Sources */,
 				21EFAC5A2C7A7289001DD16D /* ProfileModel.swift in Sources */,
 				B3EF26CF2CD9685800946836 /* ShelfGoogleBooks.swift in Sources */,
 				7FE793812E35545900931B93 /* UrlCleaner.swift in Sources */,
 				21EFAC642C7A7C88001DD16D /* Color+Extension.swift in Sources */,
+				7FF468952EF45806008256D1 /* GenericCellNotification.swift in Sources */,
 				21EFAC6E2C7A9767001DD16D /* RowView.swift in Sources */,
 				B33EDC8E2D1AB8100042CF8C /* TipView.swift in Sources */,
 				212BA5562CA4CB2700DAB79E /* SettingImage.swift in Sources */,
@@ -1542,6 +1605,7 @@
 				B3A0B4502CE2A54E0046DEA5 /* TimelineView.swift in Sources */,
 				7F4911A72E2D9B3E00F6F5F0 /* AppPreferencesView.swift in Sources */,
 				216D93E32C84ACED006252A6 /* ItemViewModel.swift in Sources */,
+				7FF4688C2EF31D1F008256D1 /* NotificationsEndpoint.swift in Sources */,
 				21ECB6012D243D06006CBE85 /* PodcastIndexAPIClient.swift in Sources */,
 				212048B12C99FEF9007F8D3B /* URLRequest+cURL.swift in Sources */,
 				216D93E52C84AD8D006252A6 /* SearchNetworkingWorker.swift in Sources */,
@@ -1566,6 +1630,7 @@
 				21ECB6032D244297006CBE85 /* ShelfPodcastIndexList.swift in Sources */,
 				B354B8DF2D44840800B7FF82 /* CatalogNetworkingWorker.swift in Sources */,
 				B3B2E6402C90EE4400FBA272 /* ReviewPresenter.swift in Sources */,
+				7FF468902EF332C0008256D1 /* FavouriteCellNotification.swift in Sources */,
 				B3B2E6412C90EE4400FBA272 /* ReviewDataStore.swift in Sources */,
 				214A3A352C98A93A006F7CC6 /* ReviewEndpoint.swift in Sources */,
 				B36E2FE82CEA442A00C743BE /* EmptyView.swift in Sources */,
@@ -1696,6 +1761,7 @@
 				B3E420662DAF162C00FA1599 /* PostSchema.swift in Sources */,
 				7F202CB32EA3BA5900B5F8F3 /* PostInteractionsDisplayLogic.swift in Sources */,
 				21ECB6072D244835006CBE85 /* PodcastIndexAPIClient.swift in Sources */,
+				7FF4688B2EF31D1F008256D1 /* NotificationsEndpoint.swift in Sources */,
 				B3BE89652D60D36300EEA9AD /* ProgressNoteListModel.swift in Sources */,
 				215D057E2D32BE3100B85307 /* ReviewDisplayLogic.swift in Sources */,
 				7FD0FC6D2ECBBA1E00BEA7F1 /* ThreadDataStore.swift in Sources */,
@@ -1893,7 +1959,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.16.1;
+				MARKETING_VERSION = 1.17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1936,7 +2002,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.16.1;
+				MARKETING_VERSION = 1.17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2035,7 +2101,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.16.1;
+				MARKETING_VERSION = 1.17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2066,7 +2132,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.16.1;
+				MARKETING_VERSION = 1.17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

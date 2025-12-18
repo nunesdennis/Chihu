@@ -160,6 +160,20 @@ struct ShelfListFilterView: View {
             }
             .background(Color.searchViewColor)
             .navigationTitle("Shelf")
+            .toolbar {
+                Button {
+                    dataStore.showCollectionsView = true
+                } label: {
+                    Image(systemName: "square.stack.3d.down.right")
+                        .resizable()
+                        .frame(width: 25, height:  25)
+                }
+            }
+        }
+        .fullScreenCover(isPresented: $dataStore.showCollectionsView, onDismiss: {
+            dataStore.showCollectionsView = false
+        }) {
+            CollectionsView(dataStore: dataStore.collectionDataStore).configureView()
         }
         .task {
             fetch()
