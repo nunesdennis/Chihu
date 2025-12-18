@@ -21,8 +21,12 @@ final class ShelfListDataStore: ObservableObject {
     @Published var state: ShelfState = .firstLoad
     @Published var shelfItemsViewModel: [ItemViewModel] = []
     @Published var showSelection: Bool = false
+    @Published var showCollectionsView: Bool = false
     @Published var selectedCategory: Int = 0
     @Published var selectedShelfType: Int = 0
+    
+    var collectionDataStore = CollectionsDataStore()
+    
     var lastError: Error?
     var selectedItem: ItemViewModel?
     var pages: Int = 1

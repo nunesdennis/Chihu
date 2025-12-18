@@ -128,6 +128,8 @@ struct CollectionsView: View {
     @Environment(\.reviewItem) private var reviewItem
     @Environment(\.defaultMinListRowHeight) var minRowHeight
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     
     @ObservedObject var dataStore: CollectionsDataStore
     
@@ -217,12 +219,26 @@ struct CollectionsView: View {
             .background(Color.collectionViewBackgroundColor)
             .toolbarBackground(Color.collectionViewBackgroundColor, for: .navigationBar)
             .toolbar {
-                Button {
-                    dataStore.showNewCollection = true
-                } label: {
-                    Image(systemName: "plus")
-                        .resizable()
-                        .frame(width: 25, height:  25)
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .foregroundColor(Color(white: colorScheme == .dark ? 0.62 : 0.51))
+                            .frame(width: 20, height: 20)
+                    }
+                    .frame(width: 30, height: 30)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        dataStore.showNewCollection = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 25, height:  25)
+                    }
+                    .frame(width: 30, height: 30)
                 }
             }
             .sheet(isPresented: $dataStore.showNewCollection, onDismiss: {

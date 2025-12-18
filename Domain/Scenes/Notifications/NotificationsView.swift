@@ -1,32 +1,38 @@
 //
-//  TimelineView.swift
+//  NotificationsView.swift
 //  Chihu
 //
 //  Created by Dennis Nunes on 11/11/24.
 //  
 //
+
 import SwiftUI
 import TootSDK
 import UIKit
 
-protocol TimelineDisplayLogic {
-    func display(viewModel: Review.Send.ViewModel)
-    func display(viewModel: Timeline.Load.ViewModel) async
-    func displayMore(viewModel: Timeline.Load.ViewModel) async
+protocol NotificationsDisplayLogic {
+    func display(viewModel: Notifications.Load.ViewModel) async
+    func displayMore(viewModel: Notifications.Load.ViewModel) async
     func displayError(_ error: Error)
     func displayAlertError(_ error: any Error)
 }
 
-extension TimelineView: PostInteractionsDisplayLogic {
+extension NotificationsView: PostInteractionsDisplayLogic {
     func remove(post: Post) async {
         DispatchQueue.main.async {
-            dataStore.removePost(post)
+            dataStore.notifications.removeAll(where: {
+                $0.post?.id == post.id
+            })
         }
     }
     
     func display(post: Post) {
         DispatchQueue.main.async {
-            if !dataStore.updatePost(post) {
+            if let index = dataStore.notifications.firstIndex(where: {
+                $0.post?.id == post.id
+            }) {
+                dataStore.notifications[index].post = post
+            } else {
                 dataStore.alertType = .actionFailed
                 dataStore.alertMessage = LocalizedStringKey(ChihuError.codeError.localizedDescription)
                 dataStore.shouldShowToast = true
@@ -43,7 +49,7 @@ extension TimelineView: PostInteractionsDisplayLogic {
     }
 }
 
-extension TimelineView: TimelineDisplayLogic {
+extension NotificationsView: NotificationsDisplayLogic {
     func displayAlertError(_ error: any Error) {
         DispatchQueue.main.async {
             dataStore.alertMessage = LocalizedStringKey(error.localizedDescription)
@@ -58,10 +64,10 @@ extension TimelineView: TimelineDisplayLogic {
         }
     }
     
-    func display(viewModel: Timeline.Load.ViewModel) async {
+    func display(viewModel: Notifications.Load.ViewModel) async {
         DispatchQueue.main.async {
-            dataStore.posts = viewModel.posts
-            if dataStore.posts.isEmpty {
+            dataStore.notifications = viewModel.notifications
+            if dataStore.notifications.isEmpty {
                 dataStore.state = .empty
             } else {
                 dataStore.state = .textLoaded
@@ -69,35 +75,14 @@ extension TimelineView: TimelineDisplayLogic {
         }
     }
     
-    func display(viewModel: Review.Send.ViewModel) {
+    func displayMore(viewModel: Notifications.Load.ViewModel) async {
         DispatchQueue.main.async {
-            dataStore.alertMessage = LocalizedStringKey(viewModel.message)
-            dataStore.alertType = .success
-            dataStore.shouldShowToast = true
-        }
-    }
-    
-    func displayMore(viewModel: Timeline.Load.ViewModel) async {
-        DispatchQueue.main.async {
-            dataStore.appendToCurrentPosts(viewModel.posts)
-            if dataStore.posts.isEmpty {
+            dataStore.notifications += viewModel.notifications
+            if dataStore.notifications.isEmpty {
                 dataStore.state = .empty
             } else {
                 dataStore.state = .textLoaded
             }
-        }
-    }
-    
-    func getTimelineType() -> TootSDK.Timeline {
-        switch dataStore.segmentedControlSelection {
-        case 0:
-            return .home
-        case 1:
-            return .local
-        case 2:
-            return .federated
-        default:
-            return .home
         }
     }
     
@@ -108,12 +93,12 @@ extension TimelineView: TimelineDisplayLogic {
             return
         }
         
-        let requestPosts = Timeline.Load.Request(timelineType: getTimelineType(), pageInfo: nil)
+        let requestPosts = Notifications.Load.Request(pageInfo: nil)
         interactor.load(request: requestPosts)
     }
     
     func fetchMore() {
-        guard let lastId = dataStore.posts.last?.id else {
+        guard let lastId = dataStore.notifications.last?.id else {
             return
         }
         
@@ -124,126 +109,72 @@ extension TimelineView: TimelineDisplayLogic {
         }
         
         let pageInfo = PagedInfo(maxId: lastId)
-        let requestPost = Timeline.Load.Request(timelineType: getTimelineType(), pageInfo: pageInfo)
+        let requestPost = Notifications.Load.Request(pageInfo: pageInfo)
         interactor.loadMore(request: requestPost)
-    }
-    
-    func sendToWishlist(itemUUID: String?) {
-        guard let itemUUID else {
-            return
-        }
-        
-        guard let interactor else {
-            dataStore.lastError = ChihuError.codeError
-            dataStore.state = .error
-            return
-        }
-        
-        let requestPost = Review.Send.Request(body: Review.Send.Request.ReviewRequestBody.createDefaultWishlistBody(), itemUUID: itemUUID)
-        interactor.sendRate(request: requestPost)
     }
 }
 
-struct TimelineView: View {
+struct NotificationsView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.showToast) private var showToast
     @Environment(\.reviewItem) private var reviewItem
     @Environment(\.openURL) var openURL
-    var interactor: (TimelineBusinessLogic & ReviewBusinessLogic)?
+    var interactor: NotificationsBusinessLogic?
     var postInteractionInteractor: PostInteractionsBusinessLogic?
-    @ObservedObject var dataStore: TimelineDataStore
+    @ObservedObject var dataStore: NotificationsDataStore
     @Binding var tabTapped: Bool
     
     @State private var replyViewDetent = PresentationDetent.medium
     
-    init(tabTapped: Binding<Bool>, dataStore: TimelineDataStore = TimelineDataStore()) {
+    init(tabTapped: Binding<Bool>, dataStore: NotificationsDataStore = NotificationsDataStore()) {
         _tabTapped = tabTapped
         self.dataStore = dataStore
-        UISegmentedControl.appearance().selectedSegmentTintColor = .chihuGreen
         UIRefreshControl.appearance().tintColor = UIColor(Color.chihuGreen)
     }
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                VStack {
-                    switch dataStore.state {
-                    case .firstLoad:
-                        progressView
-                    case .textLoaded, .loaded:
-                        timelineView
-                    case .empty:
-                        GeometryReader { geometry in
-                            ScrollView(.vertical) {
-                                EmptyView()
-                                    .frame(minHeight: geometry.size.height)
-                            }
-                        }
-                        .refreshable {
-                            fetch()
-                        }
-                    default:
-                        GeometryReader { geometry in
-                            ScrollView(.vertical) {
-                                ErrorView(error: dataStore.lastError)
-                                    .frame(minHeight: geometry.size.height)
-                            }
-                        }
-                        .refreshable {
-                            fetch()
+            VStack {
+                switch dataStore.state {
+                case .firstLoad:
+                    progressView
+                case .textLoaded, .loaded:
+                    notificationsView
+                case .empty:
+                    GeometryReader { geometry in
+                        ScrollView(.vertical) {
+                            EmptyView()
+                                .frame(minHeight: geometry.size.height)
                         }
                     }
+                    .refreshable {
+                        fetch()
+                    }
+                default:
+                    GeometryReader { geometry in
+                        ScrollView(.vertical) {
+                            ErrorView(error: dataStore.lastError)
+                                .frame(minHeight: geometry.size.height)
+                        }
+                    }
+                    .refreshable {
+                        fetch()
+                    }
                 }
-                segmentedControl
             }
-            .navigationTitle("Feed")
+            .navigationTitle("Notifications")
             .background(Color.timelineBackgroundColor)
         }
     }
     
-    var segmentedControl: some View {
-        VStack {
-            Spacer()
-            Picker(selection: $dataStore.segmentedControlSelection, label: Text("")) {
-                Text("Following")
-                    .tag(0)
-                Text("Local")
-                    .tag(1)
-                Text("Global")
-                    .tag(2)
-            }
-            .pickerStyle(.segmented)
-            .padding(EdgeInsets(top: 0, leading: 25, bottom: 14, trailing: 25))
-            .onChange(of: dataStore.segmentedControlSelection) {
-                // Fetch posts for the newly selected timeline if empty
-                if dataStore.posts.isEmpty {
-                    dataStore.state = .firstLoad
-                    fetch()
-                }
-            }
-        }
-    }
-    
-    var timelineView: some View {
+    var notificationsView: some View {
         ScrollViewReader { proxy in
             List {
-                ForEach(dataStore.posts) { post in
-                    CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, showThreadButton: true, delegate: self)
-                        .swipeActions(edge: .leading) {
-                            Button("Add to wishlist") {
-                                sendToWishlist(itemUUID: getItemUUIDFrom(post: post))
-                            }
-                            .tint(.chihuGreen)
-                        }
-                        .swipeActions(edge: .trailing) {
-                            Button("Add to wishlist") {
-                                sendToWishlist(itemUUID: getItemUUIDFrom(post: post))
-                            }
-                            .tint(.chihuGreen)
-                        }
-                        .id(post.id)
+                ForEach(dataStore.notifications) { notification in
+                    createCell(from: notification)
+                        .id(notification.id)
                 }
-                if dataStore.posts.count >= 20 {
+                if dataStore.notifications.count >= 20 {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .scaleEffect(1)
@@ -308,7 +239,7 @@ struct TimelineView: View {
             .onChange(of: tabTapped) {
                 if tabTapped {
                     withAnimation {
-                        proxy.scrollTo(dataStore.posts.first?.id ?? "")
+                        proxy.scrollTo(dataStore.notifications.first?.id ?? "")
                     }
                     tabTapped = false
                 }
@@ -335,6 +266,32 @@ struct TimelineView: View {
             .task(id: UUID()) {
                 fetch()
             }
+    }
+    
+    private func createCell(from notification: TootNotification) -> some View {
+        Group {
+            switch notification.type {
+            case .follow:
+                FollowCellNotification(notification: notification,
+                                       delegate: self)
+            case .repost:
+                RepostCellNotification(notification: notification,
+                                       delegate: self)
+            case .favourite:
+                FavouriteCellNotification(notification: notification,
+                                       delegate: self)
+            case .post, .mention:
+                if let post = notification.post {
+                    CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, showThreadButton: true, delegate: self)
+                } else {
+                    GenericCellNotification(notification: notification,
+                                            delegate: self)
+                }
+            default:
+                GenericCellNotification(notification: notification,
+                                        delegate: self)
+            }
+        }
     }
     
     private func getItemUUIDFrom(post: Post) -> String? {
@@ -387,7 +344,11 @@ struct TimelineView: View {
     }
 }
 
-extension TimelineView: CellTimelineDelegate {
+extension NotificationsView: CellTimelineDelegate,
+                             RepostCellNotificationDelegate,
+                             FavouriteCellNotificationDelegate,
+                             FollowCellNotificationDelegate,
+                             GenericCellNotificationDelegate {
     func didPressDelete(on post: Post) {
         dataStore.postClicked = post
         deleteAlert()
@@ -467,15 +428,10 @@ extension TimelineView: CellTimelineDelegate {
     }
 }
 
-extension TimelineView: ReplyDelegate {
+extension NotificationsView: ReplyDelegate {
     func didEndReply(with post: Post) {
         DispatchQueue.main.async {
             dataStore.showReplyView = false
-            if dataStore.findPostIndex(post.id) != nil {
-                dataStore.updatePost(post)
-            } else {
-                dataStore.insertPostAtBeginning(post)
-            }
         }
     }
 }

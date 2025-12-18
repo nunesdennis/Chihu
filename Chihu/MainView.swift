@@ -34,7 +34,7 @@ struct MainView: View {
     let shelfListDataStore = ShelfListDataStore()
     let searchDataStore = SearchDataStore()
     let timelineDataStore = TimelineDataStore()
-    let collectionsDataStore = CollectionsDataStore()
+    let notificationsDataStore = NotificationsDataStore()
     let settingsDataStore = SettingsDataStore()
     
     var body: some View {
@@ -55,9 +55,9 @@ struct MainView: View {
                 }
                 .toolbarBackground(Color.tabbarBackgroundColor, for: .tabBar)
                 .tag(1)
-            CollectionsView(dataStore: collectionsDataStore).configureView()
+            NotificationsView(tabTapped: $tabTapped, dataStore: notificationsDataStore).configureView()
                 .tabItem {
-                    Label("Collections", systemImage: "square.stack.3d.down.right")
+                    Label("Notifications", systemImage: "bell.fill")
                 }
                 .toolbarBackground(Color.tabbarBackgroundColor, for: .tabBar)
                 .tag(2)
