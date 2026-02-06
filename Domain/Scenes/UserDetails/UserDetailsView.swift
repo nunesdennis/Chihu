@@ -89,6 +89,7 @@ struct UserDetailsView: View {
 
     @State private var replyViewDetent = PresentationDetent.medium
     @State var state: ThreadState = .firstLoad
+    @State var relationshipState: UserDetailsRelationshipState = .loading
     @State var shouldShowAlert = false
     @State var showReplyView: Bool = false
     @State var shouldShowToast: Bool = false
@@ -132,6 +133,7 @@ struct UserDetailsView: View {
                 }
                 .refreshable {
                     getPosts()
+                    getRelationships()
                 }
             }
         }
@@ -218,24 +220,36 @@ struct UserDetailsView: View {
     }
     
     var userCell: some View {
-        HStack {
-            VStack {
-                loadableAvatarImage
-                Spacer()
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .center, spacing: 14) {
+                VStack {
+                    loadableAvatarImage
+                    Spacer()
+                }
+                VStack(alignment: .leading, spacing: 5) {
+                    if let displayName = dataStore.user.displayName {
+                        Text(displayName)
+                            .bold()
+                            .font(.headline)
+                            .foregroundColor(.profileDisplayNameColor)
+                    }
+                    Text(dataStore.user.acct)
+                        .font(.subheadline)
+                        .foregroundColor(.profileUsernameColor)
+                }
+                VStack {
+                    Button {
+                        updateRelationships()
+                    } label: {
+                        followButtonView()
+                    }
+                    .chihuButtonStyle()
+                    .tint(followButtonColor())
+                    Spacer()
+                }
             }
-            VStack(alignment: .leading, spacing: 5) {
-                if let displayName = dataStore.user.displayName {
-                    Text(displayName)
-                        .bold()
-                        .font(.headline)
-                        .foregroundColor(.profileDisplayNameColor)
-                }
-                Text(dataStore.user.acct)
-                    .font(.subheadline)
-                    .foregroundColor(.profileUsernameColor)
-                if !dataStore.user.acct.description.isEmpty {
-                    parseHTML(from: dataStore.user.note)
-                }
+            if !dataStore.user.acct.description.isEmpty {
+                parseHTML(from: dataStore.user.note)
             }
         }
         .padding(5)
@@ -267,10 +281,40 @@ struct UserDetailsView: View {
         .refreshable {
             Task {
                 getPosts()
+                getRelationships()
             }
         }
         .listStyle(.plain)
         .toolbarBackground(Color.timelineNavBackgroundColor)
+    }
+    
+    func followButtonColor() -> Color {
+        switch relationshipState {
+        case .loading, .error:
+            return .followButtonNormalColor
+        case .followed:
+            return .followButtonNegativeColor
+        case .notFollowed:
+            return .followButtonPositiveColor
+        }
+    }
+    
+    func followButtonView() -> some View {
+        Group {
+            switch relationshipState {
+            case .loading:
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(1)
+                    .frame(width: 15, height: 15)
+            case .followed:
+                Text("Unfollow")
+            case .notFollowed:
+                Text("Follow")
+            case .error:
+                Text("Error")
+            }
+        }
     }
         
     var progressView: some View {
@@ -280,6 +324,7 @@ struct UserDetailsView: View {
             .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: .infinity)
             .task {
                 getPosts()
+                getRelationships()
             }
     }
     
@@ -321,6 +366,82 @@ struct UserDetailsView: View {
             } catch {
                 dataStore.lastError = error
                 state = .error
+            }
+        }
+        
+        return
+    }
+    
+    func getRelationships() {
+        // TODO: Add to interactor.
+        guard let baseUrlString = UserSettings.shared.instanceURL,
+              let baseUrl = URL(string: baseUrlString) else {
+            relationshipState = .error
+            return
+        }
+        
+        guard let accessToken = UserSettings.shared.accessToken else {
+            relationshipState = .error
+            return
+        }
+        
+        Task {
+            do {
+                let client = try await TootClient(connect: baseUrl, accessToken: accessToken)
+                let relationships = try await client.getRelationships(by: [dataStore.user.id])
+                let relationship = relationships.first
+                if relationship?.following == true {
+                    relationshipState = .followed
+                } else {
+                    relationshipState = .notFollowed
+                }
+            } catch {
+                relationshipState = .error
+            }
+        }
+        
+        return
+    }
+    
+    func updateRelationships() {
+        // TODO: Add to interactor.
+        guard let baseUrlString = UserSettings.shared.instanceURL,
+              let baseUrl = URL(string: baseUrlString) else {
+            relationshipState = .error
+            return
+        }
+        
+        guard let accessToken = UserSettings.shared.accessToken else {
+            relationshipState = .error
+            return
+        }
+        
+        Task {
+            do {
+                let client = try await TootClient(connect: baseUrl, accessToken: accessToken)
+                switch relationshipState {
+                case .loading:
+                    // wait
+                    return
+                case .followed:
+                    let relationship = try await client.unfollowAccount(by: dataStore.user.id)
+                    if relationship.following == true {
+                        relationshipState = .followed
+                    } else {
+                        relationshipState = .notFollowed
+                    }
+                case .notFollowed:
+                    let relationship = try await client.followAccount(by: dataStore.user.id)
+                    if relationship.following == true {
+                        relationshipState = .followed
+                    } else {
+                        relationshipState = .notFollowed
+                    }
+                case .error:
+                    getRelationships()
+                }
+            } catch {
+                relationshipState = .error
             }
         }
         
@@ -456,7 +577,7 @@ extension UserDetailsView: CellTimelineDelegate {
             return
         }
         
-        let repostRequest = PostInteraction.Repost.Request(postId: post.id, reposted: post.reposted ?? false)
+        let repostRequest = PostInteraction.Repost.Request(postId: post.id, reposted: (post.repost?.reposted ?? post.reposted ?? false), repostId: post.repost?.id)
         postInteractionInteractor.repost(request: repostRequest)
     }
     

@@ -376,7 +376,7 @@ extension NotificationsView: CellTimelineDelegate,
             return
         }
 
-        let repostRequest = PostInteraction.Repost.Request(postId: post.id, reposted: post.reposted ?? false)
+        let repostRequest = PostInteraction.Repost.Request(postId: post.id, reposted: (post.repost?.reposted ?? post.reposted ?? false), repostId: post.repost?.id)
         postInteractionInteractor.repost(request: repostRequest)
     }
     

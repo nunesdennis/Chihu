@@ -25,6 +25,13 @@ enum UserDetailsState {
     case error
 }
 
+enum UserDetailsRelationshipState {
+    case loading
+    case followed
+    case notFollowed
+    case error
+}
+
 final class UserDetailsDataStore {
     var user: Account
     var alertType: TimelineAlertType?

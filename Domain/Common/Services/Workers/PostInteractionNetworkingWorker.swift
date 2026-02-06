@@ -82,10 +82,11 @@ final class PostInteractionsNetworkingWorker: PostInteractionsNetworkingProtocol
         do {
             let client = try await TootClient(connect: url, accessToken: accessToken)
             let newPost: Post
+            let postId = request.repostId ?? request.postId
             if request.reposted {
-                newPost = try await client.unboostPost(id: request.postId)
+                newPost = try await client.unboostPost(id: postId)
             } else {
-                newPost = try await client.boostPost(id: request.postId)
+                newPost = try await client.boostPost(id: postId)
             }
             let response = PostInteraction.Repost.Response(post: newPost)
             completion(.success(response))

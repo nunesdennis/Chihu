@@ -45,6 +45,7 @@ enum PostInteraction {
             let method: HTTPMethod = .post
             let postId: String
             let reposted: Bool
+            let repostId: String?
         }
         
         struct Response {

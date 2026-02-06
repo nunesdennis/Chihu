@@ -284,4 +284,17 @@ extension Color {
     public static var replyViewBackgroundColor: Color {
         .halfDutchWhite
     }
+    
+    // User cell
+    public static var followButtonPositiveColor: Color {
+        .chihuGreen
+    }
+    
+    public static var followButtonNegativeColor: Color {
+        .chihuRed
+    }
+    
+    public static var followButtonNormalColor: Color {
+        .parisWhite
+    }
 }
