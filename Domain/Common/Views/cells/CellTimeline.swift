@@ -5,6 +5,7 @@
 //  Created by Dennis Nunes on 12/11/24.
 //
 
+import Foundation
 import SwiftUI
 import UIKit
 import TootSDK
@@ -30,7 +31,7 @@ struct CellTimeline: View {
     @State var showSpoilerEffect: Bool
     @State var showTranslation: Bool = false
     @State var neoDBurlReady: Bool = false
-    
+    @State var markDownCache: Markdown?
     @State var image: Image?
     
     @Environment(\.openURL) var openURL
@@ -208,13 +209,13 @@ struct CellTimeline: View {
                 .scaledToFit()
                 .frame(width: 23, height: 23)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            if post.repostsCount > 0 {
+            if (post.repost?.repostsCount ?? post.repostsCount) > 0 {
                 Spacer().frame(width: 1)
-                Text("\(post.repostsCount)")
+                Text("\(post.repost?.repostsCount ?? post.repostsCount)")
                 Spacer()
             }
         }
-        .foregroundColor(buttonColor(isHighlighted: post.reposted ?? false))
+        .foregroundColor(buttonColor(isHighlighted: post.repost?.reposted ?? post.reposted ?? false))
         .onTapGesture {
             delegate.didPressRepost(on: post)
         }
@@ -326,7 +327,7 @@ struct CellTimeline: View {
         )
         .frame(width: 40, height: 40)
         .onTapGesture {
-            delegate.didClick(on: post.account)
+            delegate.didClick(on: post.repost?.account ?? post.account)
         }
     }
     
@@ -359,6 +360,9 @@ struct CellTimeline: View {
                     .foregroundStyle(Color.timelineCellRepostIconColor)
                     .frame(width: 15, height: 15)
                     .background(Color.chihuClear)
+            }
+            .onTapGesture {
+                delegate.didClick(on: post.account)
             }
             account(from: post.repost!)
         }
@@ -443,13 +447,18 @@ struct CellTimeline: View {
     }
     
     func parseHTML(from post: Post) -> some View {
+        if let markDownCache {
+            return markDownCache
+        }
+        
         guard let content = post.content,
               let html = try? HTMLParser().parse(html: content) else {
             return Markdown("")
         }
         
-        let markdown = html.toMarkdown(options: .unorderedListBullets)
-        
-        return Markdown(markdown)
+        let markdownString = html.toMarkdown(options: .unorderedListBullets)
+        let markdown = Markdown(markdownString)
+        markDownCache = markdown
+        return markdown
     }
 }

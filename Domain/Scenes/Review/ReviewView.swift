@@ -1280,8 +1280,8 @@ extension ReviewView: CellTimelineDelegate {
             return
         }
 
-        let likeRequest = PostInteraction.Repost.Request(postId: post.id, reposted: post.reposted ?? false)
-        postInteractionInteractor.repost(request: likeRequest)
+        let repostRequest = PostInteraction.Repost.Request(postId: post.id, reposted: (post.repost?.reposted ?? post.reposted ?? false), repostId: post.repost?.id)
+        postInteractionInteractor.repost(request: repostRequest)
     }
     
     func editError() {
