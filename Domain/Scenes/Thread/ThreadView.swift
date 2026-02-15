@@ -65,7 +65,7 @@ struct ThreadView: View {
     @Environment(\.showToast) private var showToast
     @Environment(\.reviewItem) private var reviewItem
     @Environment(\.openURL) var openURL
-
+    
     @State private var replyViewDetent = PresentationDetent.medium
     @State var state: ThreadState = .firstLoad
     @State var shouldShowAlert = false
@@ -93,10 +93,10 @@ struct ThreadView: View {
         }
     }
     @State var postsDict: [String: [Post]] = [:]
-    
     @State var postClicked: Post?
     @State var replyPostClicked: Post?
-    
+    @StateObject private var postUpdateNotifier = PostUpdateNotifier.shared
+
     var postInteractionInteractor: PostInteractionsBusinessLogic?
     var wasPushed: Bool
     
@@ -189,6 +189,17 @@ struct ThreadView: View {
                 showToast(.failure(nil, alertMessage))
             }
             shouldShowToast = false
+        }
+        .onChange(of: postUpdateNotifier.postUpdated) {
+            let id = postUpdateNotifier.postUpdated
+            guard !id.isEmpty else { return }
+            if let index = posts.firstIndex(where: { $0.id == id }) {
+                Task {
+                    if let newPost = await PostsManager.shared.post(withId: id) {
+                        posts[index] = newPost
+                    }
+                }
+            }
         }
     }
     

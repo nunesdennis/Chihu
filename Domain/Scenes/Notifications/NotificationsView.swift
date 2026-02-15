@@ -124,6 +124,7 @@ struct NotificationsView: View {
     @ObservedObject var dataStore: NotificationsDataStore
     @Binding var tabTapped: Bool
     
+    @StateObject private var postUpdateNotifier = PostUpdateNotifier.shared
     @State private var replyViewDetent = PresentationDetent.medium
     
     init(tabTapped: Binding<Bool>, dataStore: NotificationsDataStore = NotificationsDataStore()) {
@@ -254,6 +255,19 @@ struct NotificationsView: View {
                     showToast(.failure(nil, alertMessage))
                 }
                 dataStore.shouldShowToast = false
+            }
+            .onChange(of: postUpdateNotifier.postUpdated) {
+                let id = postUpdateNotifier.postUpdated
+                guard !id.isEmpty else { return }
+                if let index = dataStore.notifications.firstIndex(where: {
+                    $0.post?.id == id
+                }) {
+                    Task {
+                        if let newPost = await PostsManager.shared.post(withId: id) {
+                            dataStore.notifications[index].post = newPost
+                        }
+                    }
+                }
             }
         }
     }

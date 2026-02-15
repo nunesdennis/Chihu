@@ -154,6 +154,7 @@ struct TimelineView: View {
     @ObservedObject var dataStore: TimelineDataStore
     @Binding var tabTapped: Bool
     
+    @StateObject private var postUpdateNotifier = PostUpdateNotifier.shared
     @State private var replyViewDetent = PresentationDetent.medium
     
     init(tabTapped: Binding<Bool>, dataStore: TimelineDataStore = TimelineDataStore()) {
@@ -323,6 +324,17 @@ struct TimelineView: View {
                     showToast(.failure(nil, alertMessage))
                 }
                 dataStore.shouldShowToast = false
+            }
+            .onChange(of: postUpdateNotifier.postUpdated) {
+                let id = postUpdateNotifier.postUpdated
+                guard !id.isEmpty else { return }
+                if let index = dataStore.posts.firstIndex(where: { $0.id == id }) {
+                    Task {
+                        if let newPost = await PostsManager.shared.post(withId: id) {
+                            dataStore.posts[index] = newPost
+                        }
+                    }
+                }
             }
         }
     }
