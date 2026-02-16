@@ -74,6 +74,8 @@ struct ItemViewModel: Equatable, Hashable {
     var seasonNumber: Int?
     var seasonUuids: [String]?
     
+    var parentUuid: String?
+    
     var episodeCount: Int?
     var episodeNumber: Int?
     var episodeUuids: [String]?
@@ -96,6 +98,7 @@ struct ItemViewModel: Equatable, Hashable {
          seasonCount: Int? = nil,
          seasonNumber: Int? = nil,
          seasonUuids: [String]? = nil,
+         parentUuid:String? = nil,
          episodeCount: Int? = nil,
          episodeNumber: Int? = nil,
          episodeUuids: [String]? = nil,
@@ -118,6 +121,7 @@ struct ItemViewModel: Equatable, Hashable {
         self.seasonCount = seasonCount
         self.seasonNumber = seasonNumber
         self.seasonUuids = seasonUuids
+        self.parentUuid = parentUuid
         self.episodeCount = episodeCount
         self.episodeNumber = episodeNumber
         self.episodeUuids = episodeUuids
@@ -164,6 +168,7 @@ class ItemViewModelBuilder {
                      seasonCount: tvItem?.seasonCount,
                      seasonNumber: tvItem?.seasonNumber,
                      seasonUuids: tvItem?.seasonUuids ?? [],
+                     parentUuid: tvItem?.parentUuid,
                      episodeCount: tvItem?.episodeCount,
                      episodeNumber: tvItem?.episodeNumber,
                      episodeUuids: tvItem?.episodeUuids,
@@ -274,6 +279,7 @@ class ItemViewModelBuilder {
         newItem.seasonCount = item.seasonCount ?? newItem.seasonCount
         newItem.seasonNumber = item.seasonNumber ?? newItem.seasonNumber
         newItem.seasonUuids = item.seasonUuids ?? newItem.seasonUuids
+        newItem.parentUuid = item.parentUuid ?? newItem.parentUuid
         newItem.episodeCount = item.episodeCount ?? newItem.episodeCount
         newItem.episodeNumber = item.episodeNumber ?? newItem.episodeNumber
         newItem.episodeUuids = item.episodeUuids ?? newItem.episodeUuids

@@ -59,7 +59,8 @@ final class PostInteractionsNetworkingWorker: PostInteractionsNetworkingProtocol
             } else {
                 newPost = try await client.favouritePost(id: request.postId)
             }
-            let response = PostInteraction.LikeDislike.Response(post: newPost)
+            let updatedPost = await PostsManager.shared.set(newPost)
+            let response = PostInteraction.LikeDislike.Response(post: updatedPost)
             completion(.success(response))
         } catch let error {
             completion(.failure(error))
@@ -88,7 +89,8 @@ final class PostInteractionsNetworkingWorker: PostInteractionsNetworkingProtocol
             } else {
                 newPost = try await client.boostPost(id: postId)
             }
-            let response = PostInteraction.Repost.Response(post: newPost)
+            let updatedPost = await PostsManager.shared.set(newPost)
+            let response = PostInteraction.Repost.Response(post: updatedPost)
             completion(.success(response))
         } catch let error {
             completion(.failure(error))

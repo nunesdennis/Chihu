@@ -127,21 +127,6 @@ extension TimelineView: TimelineDisplayLogic {
         let requestPost = Timeline.Load.Request(timelineType: getTimelineType(), pageInfo: pageInfo)
         interactor.loadMore(request: requestPost)
     }
-    
-    func sendToWishlist(itemUUID: String?) {
-        guard let itemUUID else {
-            return
-        }
-        
-        guard let interactor else {
-            dataStore.lastError = ChihuError.codeError
-            dataStore.state = .error
-            return
-        }
-        
-        let requestPost = Review.Send.Request(body: Review.Send.Request.ReviewRequestBody.createDefaultWishlistBody(), itemUUID: itemUUID)
-        interactor.sendRate(request: requestPost)
-    }
 }
 
 struct TimelineView: View {
@@ -154,6 +139,7 @@ struct TimelineView: View {
     @ObservedObject var dataStore: TimelineDataStore
     @Binding var tabTapped: Bool
     
+    @StateObject private var postUpdateNotifier = PostUpdateNotifier.shared
     @State private var replyViewDetent = PresentationDetent.medium
     
     init(tabTapped: Binding<Bool>, dataStore: TimelineDataStore = TimelineDataStore()) {
@@ -226,36 +212,27 @@ struct TimelineView: View {
     
     var timelineView: some View {
         ScrollViewReader { proxy in
-            List {
-                ForEach(dataStore.posts) { post in
-                    CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, showThreadButton: true, delegate: self)
-                        .swipeActions(edge: .leading) {
-                            Button("Add to wishlist") {
-                                sendToWishlist(itemUUID: getItemUUIDFrom(post: post))
+            ScrollView(.vertical) {
+                LazyVStack {
+                    ForEach(dataStore.posts) { post in
+                        CellTimeline(post: post, image: .needsLoading, avatarImage: .needsLoading, showThreadButton: true, delegate: self)
+                            .padding(14)
+                            .background(Color.timelineCellBackgroundColor)
+                            .id(post.id)
+                        Divider()
+                    }
+                    if dataStore.posts.count >= 20 {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(1)
+                            .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: 40, alignment: .center)
+                            .onAppear {
+                                fetchMore()
                             }
-                            .tint(.chihuGreen)
-                        }
-                        .swipeActions(edge: .trailing) {
-                            Button("Add to wishlist") {
-                                sendToWishlist(itemUUID: getItemUUIDFrom(post: post))
-                            }
-                            .tint(.chihuGreen)
-                        }
-                        .id(post.id)
-                }
-                if dataStore.posts.count >= 20 {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1)
-                        .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: 40, alignment: .center)
-                        .onAppear {
-                            fetchMore()
-                        }
-                        .listRowBackground(Color.chihuClear)
-                        .id(UUID())
+                            .id(UUID())
+                    }
                 }
             }
-            .listStyle(.plain)
             .toolbarBackground(Color.timelineNavBackgroundColor)
             .refreshable {
                 fetch()
@@ -323,6 +300,17 @@ struct TimelineView: View {
                     showToast(.failure(nil, alertMessage))
                 }
                 dataStore.shouldShowToast = false
+            }
+            .onChange(of: postUpdateNotifier.postUpdated) {
+                let id = postUpdateNotifier.postUpdated
+                guard !id.isEmpty else { return }
+                if let index = dataStore.posts.firstIndex(where: { $0.id == id }) {
+                    Task {
+                        if let newPost = await PostsManager.shared.post(withId: id) {
+                            dataStore.posts[index] = newPost
+                        }
+                    }
+                }
             }
         }
     }

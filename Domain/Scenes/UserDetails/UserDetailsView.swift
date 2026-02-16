@@ -87,6 +87,7 @@ struct UserDetailsView: View {
     @Environment(\.reviewItem) private var reviewItem
     @Environment(\.openURL) var openURL
 
+    @StateObject private var postUpdateNotifier = PostUpdateNotifier.shared
     @State private var replyViewDetent = PresentationDetent.medium
     @State var state: ThreadState = .firstLoad
     @State var relationshipState: UserDetailsRelationshipState = .loading
@@ -286,6 +287,17 @@ struct UserDetailsView: View {
         }
         .listStyle(.plain)
         .toolbarBackground(Color.timelineNavBackgroundColor)
+        .onChange(of: postUpdateNotifier.postUpdated) {
+            let id = postUpdateNotifier.postUpdated
+            guard !id.isEmpty else { return }
+            if let index = posts.firstIndex(where: { $0.id == id }) {
+                Task {
+                    if let newPost = await PostsManager.shared.post(withId: id) {
+                        posts[index] = newPost
+                    }
+                }
+            }
+        }
     }
     
     func followButtonColor() -> Color {

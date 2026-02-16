@@ -281,6 +281,7 @@
     },
     "Add to wishlist" : {
       "comment" : "On the feed screen, when sliding a post we can add the item of the post to the wish list",
+      "extractionState" : "stale",
       "localizations" : {
         "it" : {
           "stringUnit" : {
@@ -1961,6 +1962,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ok"
+          }
+        }
+      }
+    },
+    "Open serie" : {
+      "comment" : "A button label in a season view, that when tapped, opens the whole show.",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir série"
           }
         }
       }

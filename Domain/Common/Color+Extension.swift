@@ -113,6 +113,10 @@ extension Color {
         .cornSilk
     }
     
+    public static var categoryNameColor: Color {
+        .chihuBlack.opacity(0.7)
+    }
+    
     // Login
     public static var loginNewServerUrlBackgroundColor: Color {
         .halfDutchWhite
