@@ -627,8 +627,11 @@ struct ReviewView: View {
                     switch reviewTypeSelected {
                     case .rate:
                         if !commentIsFocused {
+                            categoryName
                             if !(item.seasonUuids ?? []).isEmpty {
                                 seasonSelectionView()
+                            } else if item.parentUuid != nil {
+                                parentView()
                             }
                             if  dataStore.shelfType != .wishlist {
                                 ratingView()
@@ -762,6 +765,18 @@ struct ReviewView: View {
         .background(Color.reviewBackgroundColor)
     }
     
+    var categoryName: some View {
+        HStack {
+            Text(item.category.buttonName())
+                .foregroundColor(.categoryNameColor)
+                .font(.title3)
+                .bold()
+                .frame(alignment: .leading)
+            Spacer()
+        }
+        .padding(.horizontal, 20)
+    }
+    
     func alertButtons() -> some View {
         VStack {
             if dataStore.alertType == .delete {
@@ -786,6 +801,22 @@ struct ReviewView: View {
     
     var hasSpecials: Bool  {
         (item.seasonUuids?.count ?? .zero) > item.seasonCount ?? .zero
+    }
+    
+    func parentView() -> some View {
+        Button(action: {
+            fetch(itemUUID: item.parentUuid, andOpen: true)
+        }, label: {
+                Text("Open serie")
+                    .foregroundColor(.chihuGreen)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.chihuGreen, lineWidth: 1)
+                    )
+        })
+        .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
     }
     
     func seasonSelectionView() -> some View {
@@ -821,7 +852,8 @@ struct ReviewView: View {
     func shouldUpdateItem() -> Bool {
         switch item.category {
         case .tv, .tvSeason, .tvEpisode:
-            if item.seasonUuids == nil {
+            let seasonUuids = item.seasonUuids ?? []
+            if seasonUuids.isEmpty {
                 return true
             }
         default:
