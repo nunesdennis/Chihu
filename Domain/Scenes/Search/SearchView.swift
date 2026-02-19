@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 extension SearchView: SearchDisplayLogic {
     func displayResultFromGoogleBooksName(viewModel: SearchByNameGoogleBooks.Load.ViewModel) {
@@ -221,6 +222,9 @@ struct SearchView: View {
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.reviewItem) private var reviewItem
+    @Environment(\.reviewManager) private var reviewManager
+    @Environment(\.requestReview) private var requestReview
+    
     @ObservedObject var dataStore: SearchDataStore
     @StateObject var userSettings = UserSettings.shared
     @State private var searchText = ""
@@ -279,6 +283,11 @@ struct SearchView: View {
         .onChange(of: searchText.isEmpty, { searchCancelled() })
         .tint(.searchBarSearchViewButtonColor)
         .onAppear(perform: runSearch)
+        .onAppear(perform: {
+            reviewManager.requestReviewIfNeeded(criteria: .launch, requestReview: {
+                requestReview()
+            })
+        })
         .onSubmit(of: .search, runSearch)
         .onChange(of: dataStore.showSelection) {
             if let item = dataStore.selectedItem {

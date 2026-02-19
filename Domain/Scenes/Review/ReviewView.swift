@@ -9,6 +9,7 @@
 import SwiftUI
 import Combine
 import TootSDK
+import StoreKit
 
 extension ReviewView: PostInteractionsDisplayLogic {
     func remove(post: Post) async {
@@ -484,6 +485,8 @@ struct ReviewView: View {
     @FocusState private var progressNoteContentWarningIsFocused: Bool
     
     @Environment(\.showToast) private var showToast
+    @Environment(\.reviewManager) private var reviewManager
+    @Environment(\.requestReview) private var requestReview
     
     @State private var replyViewDetent = PresentationDetent.medium
     
@@ -756,6 +759,9 @@ struct ReviewView: View {
                 switch dataStore.alertType {
                 case .success:
                     showToast(.success(nil, alertMessage))
+                    reviewManager.requestReviewIfNeeded(criteria: .delay(seconds: 5), requestReview: {
+                        requestReview()
+                    })
                 default:
                     showToast(.failure(nil, alertMessage))
                 }
