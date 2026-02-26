@@ -1,0 +1,35 @@
+{
+  "id": "1",
+  "type": "type",
+  "uuid": "uuid-1",
+  "url": "/items/1",
+  "apiUrl": "https://api.example.com/items/1",
+  "category": "movie",
+  "parentUuid": null,
+  "displayTitle": null,
+  "externalResources": null,
+  "title": null,
+  "description": null,
+  "localizedTitle": [
+    {
+      "lang": "en-US",
+      "text": "English Title"
+    },
+    {
+      "lang": "es-ES",
+      "text": "Spanish Title"
+    }
+  ],
+  "localizedDescription": [
+    {
+      "lang": "en-US",
+      "text": "English Description"
+    }
+  ],
+  "coverImageUrl": "https://images.example.com/cover.jpg",
+  "rating": 4.5,
+  "ratingCount": 10,
+  "brief": "brief",
+  "origTitle": null,
+  "language": null
+}

@@ -2,7 +2,6 @@
 //  CollectionSection.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 16/01/25.
 //
 
 import Foundation

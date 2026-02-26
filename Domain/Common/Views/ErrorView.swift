@@ -2,7 +2,6 @@
 //  ErrorView.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 16/11/24.
 //
 
 import SwiftUI

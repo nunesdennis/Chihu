@@ -2,8 +2,6 @@
 //  NeoDBURL.swift
 //  Chihu
 //
-//  Created by citron on 1/19/25.
-//  Edited by Dennis Nunes on 24/01/25.
 //
 
 import Foundation

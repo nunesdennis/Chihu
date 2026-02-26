@@ -2,7 +2,6 @@
 //  UserPreferenceModel.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 05/04/25.
 //
 
 import Foundation

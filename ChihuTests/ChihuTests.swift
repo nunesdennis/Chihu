@@ -2,7 +2,6 @@
 //  ChihuTests.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 24/08/24.
 //
 
 import XCTest

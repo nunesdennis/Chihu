@@ -2,7 +2,6 @@
 //  TimelineNetworkingWorker.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 13/11/24.
 //
 
 import Foundation

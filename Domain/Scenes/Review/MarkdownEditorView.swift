@@ -2,7 +2,6 @@
 //  MarkdownEditorView.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 22/12/24.
 //
 
 import SwiftUI

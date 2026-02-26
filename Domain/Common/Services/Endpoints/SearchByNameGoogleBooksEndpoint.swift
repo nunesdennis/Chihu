@@ -2,7 +2,6 @@
 //  SearchByNameGoogleBooksEndpoint.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 04/11/24.
 //
 
 import Foundation

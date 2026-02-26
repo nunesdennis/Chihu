@@ -1,0 +1,8 @@
+{
+  "id": 10,
+  "url": "https://podcast.example.com/rss",
+  "title": "Podcast Title",
+  "description": "Podcast Description",
+  "image": "https://image.example.com/podcast.jpg",
+  "artwork": "https://artwork.example.com/podcast.jpg"
+}

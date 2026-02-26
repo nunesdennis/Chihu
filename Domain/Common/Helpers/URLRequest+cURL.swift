@@ -1,7 +1,6 @@
 //
 //  URLRequest+cURL.swift
 //
-//  Created by Dmitry Gulyagin on 19/02/2024.
 //
 
 import struct Foundation.URLRequest

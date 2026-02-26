@@ -2,7 +2,6 @@
 //  TimelineInteractor.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 11/11/24.
 //  
 //
 import Foundation

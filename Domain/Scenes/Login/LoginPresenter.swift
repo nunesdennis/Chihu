@@ -2,7 +2,6 @@
 //  LoginPresenter.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 17/09/24.
 //  
 //
 import Foundation

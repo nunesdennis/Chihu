@@ -2,7 +2,6 @@
 //  Button+Extension.swift
 //  Chihu
 //
-//  Created by Angela Rosanne Santos de Oliveira on 20/09/25.
 //
 
 import SwiftUI

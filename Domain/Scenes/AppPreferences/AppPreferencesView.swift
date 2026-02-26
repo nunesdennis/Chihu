@@ -2,7 +2,6 @@
 //  AppPreferencesView.swift
 //  Chihu
 //
-//  Created by Angela Rosanne Santos de Oliveira on 20/07/25.
 //
 
 import SwiftUI

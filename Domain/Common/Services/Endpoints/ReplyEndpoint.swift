@@ -2,7 +2,6 @@
 //  ReplyEndpoint.swift
 //  Chihu
 //
-//  Created by Angela Rosanne Santos de Oliveira on 28/09/25.
 //
 
 import Foundation

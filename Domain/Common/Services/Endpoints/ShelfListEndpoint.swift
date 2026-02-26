@@ -2,7 +2,6 @@
 //  ShelfListEndpoint.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 26/08/24.
 //
 
 import Foundation

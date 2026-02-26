@@ -2,7 +2,6 @@
 //  ImageCompressor.swift
 //  Chihu
 //
-//  Created by Assistant on 2024.
 //
 
 import Foundation

@@ -2,7 +2,6 @@
 //  Visibility.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 28/11/24.
 //
 
 import SwiftUI

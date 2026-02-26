@@ -2,7 +2,6 @@
 //  SafariWebView.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 08/12/24.
 //
 
 import SwiftUI

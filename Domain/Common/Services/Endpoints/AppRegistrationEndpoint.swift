@@ -2,7 +2,6 @@
 //  AppRegistrationEndpoint.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 06/04/25.
 //
 
 import Foundation

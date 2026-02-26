@@ -2,7 +2,6 @@
 //  TMDBError.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 23/10/24.
 //
 
 import Foundation

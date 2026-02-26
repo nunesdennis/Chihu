@@ -1,0 +1,43 @@
+{
+  "id": "tv1",
+  "type": "tv",
+  "uuid": "uuid-tv1",
+  "url": "/tv/1",
+  "apiUrl": "https://api.example.com/tv/1",
+  "category": "tv",
+  "parentUuid": "parent-uuid",
+  "displayTitle": null,
+  "externalResources": null,
+  "title": "Title",
+  "description": "Desc",
+  "localizedTitle": null,
+  "localizedDescription": null,
+  "coverImageUrl": null,
+  "rating": 8,
+  "ratingCount": 100,
+  "brief": "brief",
+  "seasonCount": 3,
+  "origTitle": null,
+  "otherTitle": null,
+  "director": null,
+  "playwright": null,
+  "actor": null,
+  "genre": null,
+  "language": null,
+  "area": null,
+  "year": null,
+  "site": null,
+  "episodeCount": 24,
+  "imdb": null,
+  "seasonNumber": 1,
+  "seasonUuids": [
+    "s1",
+    "s2",
+    "s3"
+  ],
+  "episodeUuids": [
+    "e1",
+    "e2"
+  ],
+  "episodeNumber": 2
+}

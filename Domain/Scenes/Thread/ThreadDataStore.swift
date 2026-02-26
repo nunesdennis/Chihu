@@ -2,7 +2,6 @@
 //  ThreadDataStore.swift
 //  Chihu
 //
-//  Created by Angela Rosanne Santos de Oliveira on 16/11/25.
 //
 
 import Foundation

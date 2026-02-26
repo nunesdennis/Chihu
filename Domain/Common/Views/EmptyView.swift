@@ -2,7 +2,6 @@
 //  EmptyView.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 17/11/24.
 //
 
 import SwiftUI

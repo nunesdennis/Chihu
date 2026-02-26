@@ -2,8 +2,6 @@
 //  Item.swift
 //  Chihu
 //
-//  Created by citron on 1/15/25.
-//  Updated by Dennis Nunes on 25/01/25.
 //
 
 import Foundation

@@ -2,7 +2,6 @@
 //  ToastView.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 23/05/25.
 //
 
 import SwiftUI

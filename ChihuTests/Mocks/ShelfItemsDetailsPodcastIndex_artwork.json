@@ -1,0 +1,8 @@
+{
+  "id": 11,
+  "url": "https://podcast.example.com/rss2",
+  "title": "Podcast Title 2",
+  "description": "Podcast Description 2",
+  "image": null,
+  "artwork": "https://artwork.example.com/podcast2.jpg"
+}

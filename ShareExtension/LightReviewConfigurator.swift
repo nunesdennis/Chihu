@@ -2,7 +2,6 @@
 //  LightReviewConfigurator.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 27/12/24.
 //
 
 import SwiftUI

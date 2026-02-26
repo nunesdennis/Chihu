@@ -2,7 +2,6 @@
 //  CellTimeline.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 12/11/24.
 //
 
 import Foundation

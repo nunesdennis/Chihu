@@ -2,7 +2,6 @@
 //  RatingRow.swift
 //  Chihu
 //
-//  Created by Angela Rosanne Santos de Oliveira on 24/06/25.
 //
 
 import SwiftUI

@@ -2,7 +2,6 @@
 //  FullReviewEndpoint.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 15/12/24.
 //
 
 import Foundation
