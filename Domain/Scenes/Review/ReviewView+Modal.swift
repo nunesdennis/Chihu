@@ -2,7 +2,6 @@
 //  ReviewView+Modal.swift
 //  Chihu
 //
-//  Created by Angela Rosanne Santos de Oliveira on 23/07/25.
 //
 
 

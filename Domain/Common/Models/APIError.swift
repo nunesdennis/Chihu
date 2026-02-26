@@ -2,7 +2,6 @@
 //  APIError.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 27/10/24.
 //
 
 import Foundation

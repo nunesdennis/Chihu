@@ -2,7 +2,6 @@
 //  CatalogNetworkingWorker.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 24/01/25.
 //
 
 import Foundation

@@ -2,7 +2,6 @@
 //  FavouriteCellNotification.swift
 //  Chihu
 //
-//  Created by Angela Rosanne Santos de Oliveira on 17/12/25.
 //
 
 import SwiftUI

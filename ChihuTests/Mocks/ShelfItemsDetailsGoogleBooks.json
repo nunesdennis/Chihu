@@ -1,0 +1,11 @@
+{
+  "id": "gb1",
+  "volumeInfo": {
+    "title": "GB Title",
+    "description": "GB Description",
+    "previewLink": "http://preview.link",
+    "imageLinks": {
+      "thumbnail": "http://image.link/thumb.jpg"
+    }
+  }
+}

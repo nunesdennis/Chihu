@@ -2,7 +2,6 @@
 //  Environment.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 29/10/24.
 //
 
 import Foundation

@@ -2,7 +2,6 @@
 //  PostInteractionsInteractor.swift
 //  Chihu
 //
-//  Created by Angela Rosanne Santos de Oliveira on 18/10/25.
 //
 
 import Foundation

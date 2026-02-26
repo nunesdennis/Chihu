@@ -2,7 +2,6 @@
 //  ThanksToView.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 29/11/24.
 //
 
 import SwiftUI

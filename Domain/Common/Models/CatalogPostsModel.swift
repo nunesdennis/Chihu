@@ -2,7 +2,6 @@
 //  CatalogPostsModel.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 15/04/25.
 //
 
 import Foundation

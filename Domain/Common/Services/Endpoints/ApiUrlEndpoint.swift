@@ -2,7 +2,6 @@
 //  ApiUrlEndpoint.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 01/03/25.
 //
 
 import Foundation

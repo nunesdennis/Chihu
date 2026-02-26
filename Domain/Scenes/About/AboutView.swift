@@ -2,7 +2,6 @@
 //  AboutView.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 19/10/24.
 //
 
 import SwiftUI

@@ -1,0 +1,28 @@
+{
+  "shelfType": "complete",
+  "item": {
+    "id": "4",
+    "type": "type",
+    "uuid": "uuid-4",
+    "url": "/items/4",
+    "apiUrl": "https://api.example.com/items/4",
+    "category": "book",
+    "parentUuid": null,
+    "displayTitle": null,
+    "externalResources": null,
+    "title": null,
+    "description": null,
+    "localizedTitle": null,
+    "localizedDescription": null,
+    "coverImageUrl": null,
+    "rating": 3,
+    "ratingCount": null,
+    "brief": "brief",
+    "origTitle": null,
+    "language": null
+  },
+  "ratingGrade": 5,
+  "commentText": "Great book",
+  "title": "Review Title",
+  "body": "Review Body"
+}

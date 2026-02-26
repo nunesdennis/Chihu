@@ -2,7 +2,6 @@
 //  SettingsDataStore.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 14/06/25.
 //
 
 import Foundation

@@ -2,7 +2,6 @@
 //  Setting.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 25/09/24.
 //
 
 import SwiftUI

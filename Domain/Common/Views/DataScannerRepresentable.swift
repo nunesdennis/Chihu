@@ -2,7 +2,6 @@
 //  DataScannerRepresentable.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 09/11/24.
 //
 
 import SwiftUI

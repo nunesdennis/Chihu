@@ -2,7 +2,6 @@
 //  ReviewNetworkingWorker.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 16/09/24.
 //
 
 import Foundation

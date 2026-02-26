@@ -2,7 +2,6 @@
 //  ReviewInteractor.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 10/09/24.
 //
 //
 

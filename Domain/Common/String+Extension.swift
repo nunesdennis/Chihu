@@ -2,7 +2,6 @@
 //  String+Extension.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 12/01/25.
 //
 
 import Foundation

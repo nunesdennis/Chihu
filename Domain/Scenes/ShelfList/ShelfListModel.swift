@@ -2,7 +2,6 @@
 //  ShelfListModel.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 31/08/24.
 //  
 //
 

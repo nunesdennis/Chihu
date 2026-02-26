@@ -2,7 +2,6 @@
 //  ProgressNoteListNetworkingWorker.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 14/02/25.
 //
 
 import Foundation

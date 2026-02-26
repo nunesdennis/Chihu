@@ -2,7 +2,6 @@
 //  NewCollectionModel.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 31/01/25.
 //  
 //
 import Foundation

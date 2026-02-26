@@ -2,7 +2,6 @@
 //  SearchPresenter.swift
 //  Chihu
 //
-//  Created by Dennis da Silva Nunes on 01/09/24.
 //  
 //
 

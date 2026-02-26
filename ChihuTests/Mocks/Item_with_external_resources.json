@@ -1,0 +1,28 @@
+{
+  "id": "2",
+  "type": "type",
+  "uuid": "uuid-2",
+  "url": "/items/2",
+  "apiUrl": "https://api.example.com/items/2",
+  "category": "movie",
+  "parentUuid": null,
+  "displayTitle": null,
+  "externalResources": [
+    {
+      "url": "https://example.com/other"
+    },
+    {
+      "url": "https://another.com/path"
+    }
+  ],
+  "title": null,
+  "description": null,
+  "localizedTitle": null,
+  "localizedDescription": null,
+  "coverImageUrl": null,
+  "rating": null,
+  "ratingCount": null,
+  "brief": "brief",
+  "origTitle": null,
+  "language": null
+}

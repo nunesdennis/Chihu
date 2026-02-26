@@ -2,7 +2,6 @@
 //  EmitterView.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 19/03/25.
 //
 
 import UIKit

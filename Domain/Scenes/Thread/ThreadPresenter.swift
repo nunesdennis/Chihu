@@ -2,7 +2,6 @@
 //  ThreadPresenter.swift
 //  Chihu
 //
-//  Created by Angela Rosanne Santos de Oliveira on 17/11/25.
 //
 
 import Foundation

@@ -2,7 +2,6 @@
 //  ShelfListFilterView.swift
 //  Chihu
 //
-//  Created by Dennis Nunes on 28/03/25.
 //
 
 import SwiftUI
