@@ -19,4 +19,4 @@ Whether you're a cinephile, bookworm, audiophile, or just someone who loves to d
 - The code is not very well made, I don't have a lot of time so I am always in a rush.
 
 Let me know if you need any help:
-https://social.nunesdennis.me
+https://nunesdennis.me
