@@ -22,16 +22,8 @@ struct ProfileCell: View {
     var body: some View {
         HStack {
             ZStack(alignment: .bottomTrailing) {
-                CachedAsyncImage(url: viewModel.avatar) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                    default:
-                        Image("ProfileAvatar")
-                            .resizable()
-                    }
-                }
+                CachedAsyncImage(viewModel.avatar,
+                                 placeHolderImage: Image("ProfileAvatar"))
                 .clipShape(Circle())
                 .frame(width: 60, height: 60)
                 .overlay {

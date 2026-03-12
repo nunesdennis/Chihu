@@ -36,15 +36,7 @@ struct FollowCellNotification: View {
     }
         
     var loadableAvatarImage: some View {
-        CachedAsyncImage(url: URL(string: notification.account.avatar)) { phase in
-            switch phase {
-            case .success(let image):
-                image
-                    .resizable()
-            default:
-                Image("ProfileAvatar").resizable()
-            }
-        }
+        CachedAsyncImage(URL(string: notification.account.avatar), placeHolderImage: Image("ProfileAvatar"))
         .scaledToFit()
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(

@@ -1172,22 +1172,10 @@ struct ReviewView: View {
                     Button {
                         dataStore.state = .poster
                     } label: {
-                        CachedAsyncImage(url: item.poster) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 140)
-                                    .cornerRadius(8)
-                            default:
-                                Image("ImagePlaceHolder")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 140)
-                                    .cornerRadius(8)
-                            }
-                        }
+                        CachedAsyncImage(item.poster, placeHolderImage: Image("ImagePlaceHolder"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 140)
+                        .cornerRadius(8)
                     }
                     if let description = item.localizedDescription {
                         Button {
@@ -1213,18 +1201,8 @@ struct ReviewView: View {
                     Button {
                         dataStore.state = .full
                     } label: {
-                        CachedAsyncImage(url: item.poster) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                            default:
-                                Image("ImagePlaceHolder")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                            }
-                        }
+                        CachedAsyncImage(item.poster, placeHolderImage: Image("ImagePlaceHolder"))
+                        .aspectRatio(contentMode: .fit)
                     }
                 }
             }

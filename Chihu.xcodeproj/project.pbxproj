@@ -202,7 +202,6 @@
 		B3736AE82CE444B300014FF2 /* CellTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3736AE72CE444AE00014FF2 /* CellTimeline.swift */; };
 		B3736AEA2CE575C700014FF2 /* TimelineNetworkingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3736AE92CE575B400014FF2 /* TimelineNetworkingWorker.swift */; };
 		B3736AEC2CE576AF00014FF2 /* TimelineEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3736AEB2CE576AD00014FF2 /* TimelineEndpoint.swift */; };
-		B3736AEE2CE57ACC00014FF2 /* LPLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3736AED2CE57AC200014FF2 /* LPLoader.swift */; };
 		B37A1EE12CE8D51F00906307 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37A1EE02CE8D51F00906307 /* ErrorView.swift */; };
 		B390A39F2D1AF3B200923AA4 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390A39D2D1AF3B200923AA4 /* ShareViewController.swift */; };
 		B390A3B82D1AF47B00923AA4 /* SearchUrlDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390A3B22D1AF47B00923AA4 /* SearchUrlDataStore.swift */; };
@@ -541,7 +540,6 @@
 		B3736AE72CE444AE00014FF2 /* CellTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellTimeline.swift; sourceTree = "<group>"; };
 		B3736AE92CE575B400014FF2 /* TimelineNetworkingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineNetworkingWorker.swift; sourceTree = "<group>"; };
 		B3736AEB2CE576AD00014FF2 /* TimelineEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineEndpoint.swift; sourceTree = "<group>"; };
-		B3736AED2CE57AC200014FF2 /* LPLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPLoader.swift; sourceTree = "<group>"; };
 		B37A1EE02CE8D51F00906307 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		B390A38A2D1AF38800923AA4 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B390A39A2D1AF3B200923AA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1204,7 +1202,6 @@
 		B3A0B4442CE2A53C0046DEA5 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
-				B3736AED2CE57AC200014FF2 /* LPLoader.swift */,
 				B3A0B4452CE2A54E0046DEA5 /* TimelineConfigurator.swift */,
 				B3A0B4462CE2A54E0046DEA5 /* TimelineDataStore.swift */,
 				B3A0B4472CE2A54E0046DEA5 /* TimelineInteractor.swift */,
@@ -1557,7 +1554,6 @@
 				7FFE9ADB2F42113900F7A2EE /* PostsManager.swift in Sources */,
 				216D93DB2C84A36E006252A6 /* SearchView.swift in Sources */,
 				215D05782D32ADBE00B85307 /* CollectionsNetworkingWorker.swift in Sources */,
-				B3736AEE2CE57ACC00014FF2 /* LPLoader.swift in Sources */,
 				B3BE89562D600DF500EEA9AD /* ProgressNoteListModel.swift in Sources */,
 				21D741AB2DFDEB9E00A95C13 /* ProfileCell.swift in Sources */,
 				B3BE89582D600DF500EEA9AD /* ProgressNoteListInteractor.swift in Sources */,
@@ -1961,6 +1957,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Chihu/Preview Content\"";
+				DEVELOPMENT_TEAM = CMB24R4HM6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Chihu/Info.plist;
@@ -2004,6 +2001,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Chihu/Preview Content\"";
+				DEVELOPMENT_TEAM = CMB24R4HM6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Chihu/Info.plist;
@@ -2040,13 +2038,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CMB24R4HM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.RateveTests;
+				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.ChihuTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2058,13 +2059,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CMB24R4HM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.RateveTests;
+				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.ChihuTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2075,12 +2079,15 @@
 		21EFAC4B2C7A7215001DD16D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CMB24R4HM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.RateveUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.ChihuUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2091,12 +2098,15 @@
 		21EFAC4C2C7A7215001DD16D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CMB24R4HM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.RateveUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.ChihuUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2111,6 +2121,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CMB24R4HM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
@@ -2124,6 +2135,7 @@
 				MARKETING_VERSION = 1.20.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -2142,6 +2154,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CMB24R4HM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
@@ -2155,6 +2168,7 @@
 				MARKETING_VERSION = 1.20.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

@@ -30,8 +30,8 @@ struct CellTimeline: View {
     @State var showSpoilerEffect: Bool
     @State var showTranslation: Bool = false
     @State var neoDBurlReady: Bool = false
+    @State var neoDBposterURL: URL?
     @State var markDownCache: Markdown?
-    @State var image: Image?
     
     @Environment(\.openURL) var openURL
     @Environment(\.colorScheme) private var colorScheme
@@ -68,12 +68,14 @@ struct CellTimeline: View {
         self._sensitive = State(initialValue: post.sensitive)
         self._showSpoilerEffect = State(initialValue: post.sensitive)
         
+        if let itemUrl = itemURL {
+            self.itemUrl = URL(string: itemUrl)
+        }
         self.showUserInfo = showUserInfo
         self.shouldShowPreview = (image ?? .needsLoading) != .none
         self.delegate = delegate
         self.post = post
         self.showThreadButton = showThreadButton
-        self.image = get(image, of: .poster)
         self.avatarImage = get(avatarImage ?? ImageState.none, of: .avatar)
     }
     
@@ -120,19 +122,11 @@ struct CellTimeline: View {
         }
         .listRowBackground(Color.timelineCellBackgroundColor)
         .task {
-            if let itemUrl = NeoDBURL.getItemURL(from: post), shouldShowPreview {
+            if shouldShowPreview,
+               let itemUrl = self.itemUrl ?? NeoDBURL.getItemURL(from: post) {
                 neoDBurlReady = true
-                if let cachedImage = ImageCache[itemUrl] {
-                    self.image = cachedImage
-                } else {
-                    do {
-                        let uiimage = try await LPLoader.createPoster(from: post.id, for: itemUrl)
-                        self.image = Image(uiImage: uiimage)
-                    } catch {
-                        print("error loading image")
-                        self.image = .none
-                    }
-                }
+                _ = try? await  LPLoader.createPoster(from: post.id, for: itemUrl)
+                neoDBposterURL = getPostPreviewUrl(from: post)
             }
         }
     }
@@ -264,6 +258,8 @@ struct CellTimeline: View {
             .onTapGesture {
                 if let url = itemUrl {
                     delegate.handleURL(url)
+                } else if let itemUrl = NeoDBURL.getItemURL(from: post) {
+                    delegate.handleURL(itemUrl)
                 } else {
                     delegate.didPressUpdate(on: post)
                 }
@@ -284,40 +280,15 @@ struct CellTimeline: View {
     }
     
     var loadablePostImage: some View {
-        CachedAsyncImage(url: getPostPreviewUrl(from: post)) { phase in
-            switch phase {
-            case .success(let image):
-                image
-                    .resizable()
-            default:
-                if let image {
-                    image
-                        .resizable()
-                } else {
-                    Image("ImagePlaceHolder").resizable()
-                }
-            }
-        }
+        CachedAsyncImage(neoDBposterURL)
         .aspectRatio(contentMode: .fit)
         .frame(width: 75, height: 150)
         .cornerRadius(2)
     }
     
     var loadableAvatarImage: some View {
-        CachedAsyncImage(url: getAvatarUrl(from: post.repost ?? post)) { phase in
-            switch phase {
-            case .success(let image):
-                image
-                    .resizable()
-            default:
-                if let avatarImage {
-                    avatarImage
-                        .resizable()
-                } else {
-                    Image("ProfileAvatar").resizable()
-                }
-            }
-        }
+        CachedAsyncImage(getAvatarUrl(from: post.repost ?? post),
+                         placeHolderImage: Image("ProfileAvatar"))
         .scaledToFit()
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(
