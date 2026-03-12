@@ -1,86 +1,232 @@
-
 import SwiftUI
+import Combine
+import LinkPresentation
+import UniformTypeIdentifiers
 
-class ImageCache {
-    static private var cache: [URL: Image] = [:]
-    static subscript(url: URL) -> Image? {
-        get {
-            ImageCache.cache[url]
+enum SharedImageCache {
+    private static let cache = URLCache(
+        memoryCapacity: 1024 * 1024 * 100,
+        diskCapacity: 1024 * 1024 * 100
+    )
+
+    static func cachedImage(for url: URL) -> UIImage? {
+        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+
+        guard let cachedResponse = cache.cachedResponse(for: request) else {
+            return nil
         }
-        set {
-            ImageCache.cache[url] = newValue
+
+        return UIImage(data: cachedResponse.data)
+    }
+
+    static func store(_ data: Data, for url: URL, mimeType: String = "image/jpeg") {
+        let response = URLResponse(
+            url: url,
+            mimeType: mimeType,
+            expectedContentLength: data.count,
+            textEncodingName: nil
+        )
+        let cachedResponse = CachedURLResponse(response: response, data: data)
+        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+
+        cache.storeCachedResponse(cachedResponse, for: request)
+    }
+
+    static func store(_ image: UIImage, for url: URL) {
+        if let pngData = image.pngData() {
+            store(pngData, for: url, mimeType: "image/png")
         }
+    }
+
+    static var sessionConfiguration: URLSessionConfiguration {
+        let configuration = URLSessionConfiguration.default
+        configuration.urlCache = cache
+        configuration.requestCachePolicy = .returnCacheDataElseLoad
+        return configuration
     }
 }
 
-/// Loads, displays and caches a modifiable image from the specified URL in phases.
-///
-/// If you set the asynchronous image's URL to `nil`, or after you set the
-/// URL to a value but before the load operation completes, the phase is
-/// ``AsyncImagePhase/empty``. After the operation completes, the phase
-/// becomes either ``AsyncImagePhase/failure(_:)`` or
-/// ``AsyncImagePhase/success(_:)``. In the first case, the phase's
-/// ``AsyncImagePhase/error`` value indicates the reason for failure.
-/// In the second case, the phase's ``AsyncImagePhase/image`` property
-/// contains the loaded image. Use the phase to drive the output of the
-/// `content` closure, which defines the view's appearance:
-///
-///     CachedAsyncImage(url: URL(string: "https://example.com/icon.png")) { phase in
-///         if let image = phase.image {
-///             image // Displays the loaded image.
-///         } else if phase.error != nil {
-///             Color.red // Indicates an error.
-///         } else {
-///             Color.blue // Acts as a placeholder.
-///         }
-///     }
-///
-/// To add transitions when you change the URL, apply an identifier to the
-/// ``CachedAsyncImage``.
-public struct CachedAsyncImage<Content>: View where Content: View{
-
-    private let url: URL?
-    private let scale: CGFloat
-    private let transaction: Transaction
-    private let content: (AsyncImagePhase) -> Content
-    
-    /// Loads, displays and caches a modifiable image from the specified URL in phases.
-    ///
-    /// - Parameters:
-    ///   - url: The URL of the image to display.
-    ///   - scale: The scale to use for the image. The default is `1`. Set a
-    ///     different value when loading images designed for higher resolution
-    ///     displays. For example, set a value of `2` for an image that you
-    ///     would name with the `@2x` suffix if stored in a file on disk.
-    ///   - transaction: The transaction to use when the phase changes.
-    ///   - content: A closure that takes the load phase as an input, and
-    ///     returns the view to display for the specified phase.
-    public init(url: URL?,
-                scale: CGFloat = 1.0,
-                transaction: Transaction = Transaction(),
-                @ViewBuilder content: @escaping (AsyncImagePhase) -> Content) {
-        self.url = url
-        self.scale = scale
-        self.transaction = transaction
-        self.content = content
+class LPLoader {
+    enum LPLoaderError: Error {
+     
+        /// Metadata loading failed
+        case metadataLoadingFailed(error: Error)
+     
+        /// Favicon loading failed
+        case faviconCouldNotBeLoaded
+     
+        /// Favicon data is invalid
+        case faviconDataInvalid
     }
-
-    public var body: some View {
-        if let url, let cached = ImageCache[url] {
-            content(.success(cached))
-        } else {
-            AsyncImage(url: url,
-                scale: scale,
-                transaction: transaction) { phase in
-                cacheAndRender(phase: phase)
+    
+    static func createPoster(from postId: String, for url: URL) async throws -> UIImage {
+        let metadataProvider = LPMetadataProvider()
+        
+        let metadata: LPLinkMetadata
+        do {
+            metadata = try await metadataProvider.startFetchingMetadata(for: url)
+        } catch {
+            throw LPLoaderError.metadataLoadingFailed(error: error)
+        }
+ 
+        guard let imageProvider = metadata.imageProvider else {
+            throw LPLoaderError.faviconCouldNotBeLoaded
+        }
+        
+        var image: UIImage?
+                
+        let type = String(describing: UTType.image)
+        
+        if imageProvider.hasItemConformingToTypeIdentifier(type) {
+            let item = try await imageProvider.loadItem(forTypeIdentifier: type)
+            
+            if item is UIImage {
+                image = item as? UIImage
+            }
+            
+            if item is URL {
+                guard let imageURL = item as? URL,
+                      let data = try? Data(contentsOf: imageURL) else {
+                    throw LPLoaderError.faviconDataInvalid
+                }
+                
+                PostPreviewSingleton.shared.imagesDictionary[postId] = url
+                SharedImageCache.store(data, for: url)
+                SharedImageCache.store(data, for: imageURL)
+                
+                if let uiImage = UIImage(data: data) {
+                    image = uiImage
+                }
+            }
+            
+            if item is Data {
+                guard let data = item as? Data else {
+                    throw LPLoaderError.faviconDataInvalid
+                }
+                
+                PostPreviewSingleton.shared.imagesDictionary[postId] = url
+                SharedImageCache.store(data, for: url)
+                image = UIImage(data: data)
             }
         }
+        
+        guard let imageResult = image else {
+            throw LPLoaderError.faviconCouldNotBeLoaded
+        }
+        
+        PostPreviewSingleton.shared.imagesDictionary[postId] = url
+        SharedImageCache.store(imageResult, for: url)
+        
+        return imageResult
+    }
+}
+
+fileprivate class ViewModel: ObservableObject {
+    enum imageState {
+        case loaded(UIImage)
+        case loading
+        case error
     }
     
-    private func cacheAndRender(phase: AsyncImagePhase) -> some View {
-        if case .success (let image) = phase, let url {
-            ImageCache[url] = image
+    @Published var resource: imageState = .loading
+    private var currentURL: URL?
+    
+    private var cancellable: Set<AnyCancellable> = .init()
+    
+    func load(url: URL?) {
+        guard let url else {
+            return
         }
-        return content(phase)
+        
+        guard currentURL != url else {
+            return
+        }
+        
+        if case let .loaded(image) = resource {
+            return
+        }
+        
+        currentURL = url
+        cancellable.removeAll()
+        
+        if let cachedImage = SharedImageCache.cachedImage(for: url) {
+            resource = .loaded(cachedImage)
+            return
+        }
+        
+        let session = URLSession(configuration: SharedImageCache.sessionConfiguration)
+        
+        var request = URLRequest(url: url)
+        request.cachePolicy = .returnCacheDataElseLoad
+        
+        session
+            .dataTaskPublisher(for: request)
+            .tryMap({ (data: Data, response: URLResponse) in
+                guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+                    return .error
+                }
+                
+                guard !data.isEmpty else {
+                    return .error
+                }
+                
+                SharedImageCache.store(data, for: url, mimeType: response.mimeType ?? "image/jpeg")
+                
+                guard let image = UIImage(data: data) else {
+                    return .error
+                }
+                
+                return .loaded(image)
+            })
+            .receive(on: RunLoop.main)
+            .sink { completion in
+                switch completion {
+                case .failure:
+                    print("image loading error")
+                default:
+                    break
+                }
+            } receiveValue: { resource in
+                self.resource = resource
+            }
+            .store(in: &cancellable)
+    }
+}
+
+struct CachedAsyncImage: View {
+    
+    @StateObject private var viewModel: ViewModel
+    
+    let url: URL?
+    var placeHolderImage: Image?
+    
+    init(_ url: URL?, placeHolderImage: Image? = nil) {
+        self.url = url
+        self.placeHolderImage = placeHolderImage
+        _viewModel = .init(wrappedValue: .init())
+    }
+    
+    var body: some View {
+        Group {
+            switch viewModel.resource {
+            case .loaded(let uiImage):
+                Image(uiImage: uiImage)
+                    .resizable()
+            case .loading:
+                if let placeHolderImage {
+                    placeHolderImage.resizable()
+                } else {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(1)
+                        .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: 40, alignment: .bottom)
+                }
+            case .error:
+                Spacer()
+            }
+        }
+        .task(id: url) {
+            viewModel.load(url: url)
+        }
     }
 }

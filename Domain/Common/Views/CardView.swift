@@ -15,20 +15,10 @@ struct CardView: View {
     
     var body: some View {
         VStack {
-            CachedAsyncImage(url: poster) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: .infinity)
-                default:
-                    Image("ImagePlaceHolder")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                            .frame(width: .infinity)
-                }
-            }
+            CachedAsyncImage(poster,
+                             placeHolderImage: Image("ImagePlaceHolder"))
+                .aspectRatio(contentMode: .fit)
+                .frame(width: .infinity)
             .cornerRadius(8)
             .layoutPriority(1)
             VStack {

@@ -196,21 +196,7 @@ struct UserDetailsView: View {
     }
     
     var loadableAvatarImage: some View {
-        Group {
-            if let url = URL(string: dataStore.user.avatar) {
-                CachedAsyncImage(url: url) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                    default:
-                        Image("ProfileAvatar").resizable()
-                    }
-                }
-            } else {
-                Image("ProfileAvatar").resizable()
-            }
-        }
+        CachedAsyncImage(URL(string: dataStore.user.avatar), placeHolderImage: Image("ProfileAvatar"))
         .scaledToFit()
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(
