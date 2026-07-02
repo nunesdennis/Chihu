@@ -44,6 +44,23 @@ extension SearchView: SearchDisplayLogic {
             }
         }
     }
+
+    func displayResultFromItunesName(viewModel: SearchByNameItunes.Load.ViewModel) {
+        DispatchQueue.main.async {
+            if !viewModel.shelfItemsViewModel.isEmpty {
+                for item in viewModel.shelfItemsViewModel {
+                    dataStore.shelfItemsViewModel.append(item)
+                }
+                dataStore.count += viewModel.count
+                dataStore.pages = viewModel.pages
+                dataStore.state = .noMorePages
+            } else if dataStore.pages == 0 {
+                dataStore.state = .tryByURL
+            } else {
+                dataStore.state = .noMorePages
+            }
+        }
+    }
     
     func displayResultFromTMDBname(viewModel: SearchByNameTMDB.Load.ViewModel) {
         DispatchQueue.main.async {
@@ -179,6 +196,9 @@ extension SearchView: SearchDisplayLogic {
             case .podcastIndex:
                 let requestShelfs = SearchByNamePI.Load.Request(query: searchText)
                 interactor.loadFromNamePI(request: requestShelfs)
+            case .itunes:
+                let requestShelfs = SearchByNameItunes.Load.Request(query: searchText)
+                interactor.loadFromItunes(request: requestShelfs)
             }
         }
     }
@@ -207,7 +227,7 @@ extension SearchView: GridContentViewDelegate {
         
         dataStore.lastItemTapped = card
         switch item.source {
-        case .googleBooks, .tmdb, .podcastIndex:
+        case .googleBooks, .tmdb, .podcastIndex, .itunes:
             dataStore.state = .loading
             fetchByURLandOpenItem(item)
         case .instance:

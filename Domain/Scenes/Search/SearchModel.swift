@@ -120,17 +120,43 @@ enum SearchByNamePI {
         struct Request: PodcastIndexRequestProtocol {
             let query: String
         }
-        
+
         struct Response {
             let shelf: ShelfPodcastIndexList
         }
-        
+
         struct ViewModel {
             let shelfItemsViewModel: [ItemViewModel]
             let pages: Int
             let count: Int
-            
+
             init(shelf: ShelfPodcastIndexList) {
+                self.shelfItemsViewModel = shelf.shelfItemsDetails.map {
+                    ItemViewModelBuilder.create(from: $0)
+                }
+                self.pages = 1
+                self.count = shelf.count
+            }
+        }
+    }
+}
+
+enum SearchByNameItunes {
+    enum Load {
+        struct Request: ItunesRequestProtocol {
+            let query: String
+        }
+
+        struct Response {
+            let shelf: ShelfItunes
+        }
+
+        struct ViewModel {
+            let shelfItemsViewModel: [ItemViewModel]
+            let pages: Int
+            let count: Int
+
+            init(shelf: ShelfItunes) {
                 self.shelfItemsViewModel = shelf.shelfItemsDetails.map {
                     ItemViewModelBuilder.create(from: $0)
                 }

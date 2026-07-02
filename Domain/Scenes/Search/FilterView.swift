@@ -146,7 +146,8 @@ enum ItemSource: LocalizedStringKey, Codable {
     case tmdb = "TMDB"
     case googleBooks = "Google Books"
     case podcastIndex = "Podcast Index"
-    
+    case itunes = "iTunes"
+
     static func from(string: String) -> ItemSource {
         switch string {
         case "Server":
@@ -157,6 +158,8 @@ enum ItemSource: LocalizedStringKey, Codable {
             return .googleBooks
         case "Podcast Index":
             return .podcastIndex
+        case "iTunes":
+            return .itunes
         default:
             return .instance
         }
@@ -201,7 +204,7 @@ struct FilterView: View {
             CategorySources(category: .movie, sourceList: [.tmdb, .instance]),
             CategorySources(category: .tv, sourceList: [.tmdb, .instance]),
             CategorySources(category: .book, sourceList: [.googleBooks, .instance]),
-            CategorySources(category: .music),
+            CategorySources(category: .music, sourceList: [.itunes, .instance]),
             CategorySources(category: .game),
             CategorySources(category: .podcast, sourceList: [.podcastIndex, .instance]),
             CategorySources(category: .performance)
