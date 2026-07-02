@@ -7,6 +7,10 @@
 import SwiftUI
 
 extension SearchUrlView: SearchDisplayLogic {
+    func displayResultFromItunesName(viewModel: SearchByNameItunes.Load.ViewModel) {
+        // no-op
+    }
+    
     func displayResultFromGoogleBooksName(viewModel: SearchByNameGoogleBooks.Load.ViewModel) {
         // no-op
     }

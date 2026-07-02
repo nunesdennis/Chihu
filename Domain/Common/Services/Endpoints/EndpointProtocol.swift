@@ -11,6 +11,7 @@ enum APItype {
     case tmdb
     case googleBooks
     case podcastIndex
+    case itunes
 }
 
 enum HTTPMethod: String {
@@ -47,6 +48,8 @@ extension EndpointProtocol {
             return "https://www.googleapis.com/books/v1"
         case .podcastIndex:
             return "https://api.podcastindex.org/api/1.0"
+        case .itunes:
+            return "https://itunes.apple.com"
         }
     }
     

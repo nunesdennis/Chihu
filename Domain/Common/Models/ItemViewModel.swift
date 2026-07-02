@@ -230,11 +230,29 @@ class ItemViewModelBuilder {
             poster = artwork
         }
         let instanceFetchId = shelfItemsDetailsPI.rssUrl
-        
+
         return .init(id: "\(shelfItemsDetailsPI.id)",
                      uuid: "\(shelfItemsDetailsPI.id)",
                      source: "Podcast Index",
                      category: ItemCategory.podcast.rawValue,
+                     localizedTitle: localizedTitle,
+                     localizedDescription: localizedDescription,
+                     poster: poster,
+                     shelfType: ShelfType.none.rawValue,
+                     instanceFetchId: instanceFetchId)
+    }
+
+    static func create(from itunesResult: ItunesResult) -> ItemViewModel {
+        let localizedTitle = itunesResult.collectionName ?? "Name not available"
+        let localizedDescription = itunesResult.artistName
+        let poster = itunesResult.artworkUrl100
+        let id = "\(itunesResult.collectionId ?? 0)"
+        let instanceFetchId = itunesResult.collectionViewUrl
+        
+        return .init(id: id,
+                     uuid: id,
+                     source: "iTunes",
+                     category: ItemCategory.music.rawValue,
                      localizedTitle: localizedTitle,
                      localizedDescription: localizedDescription,
                      poster: poster,
@@ -275,14 +293,37 @@ class ItemViewModelBuilder {
         newItem.apiUrl = item.apiUrl ?? newItem.apiUrl
         newItem.shelfTypeRawValue = item.shelfTypeRawValue ?? newItem.shelfTypeRawValue
         newItem.instanceFetchIdString = item.instanceFetchIdString ?? newItem.instanceFetchIdString
-        newItem.seasonCount = item.seasonCount ?? newItem.seasonCount
-        newItem.seasonNumber = item.seasonNumber ?? newItem.seasonNumber
-        newItem.seasonUuids = item.seasonUuids ?? newItem.seasonUuids
         newItem.parentUuid = item.parentUuid ?? newItem.parentUuid
-        newItem.episodeCount = item.episodeCount ?? newItem.episodeCount
+        
+        newItem.seasonCount = getBigger(newItemValue: newItem.seasonCount,
+                                        oldItemValue: item.seasonCount)
+        newItem.seasonNumber = getBigger(newItemValue: newItem.seasonNumber,
+                                         oldItemValue: item.seasonNumber)
+        newItem.seasonUuids = getBiggerArray(newItemArray: newItem.seasonUuids,
+                                             oldItemArray: item.seasonUuids)
+        
+        newItem.episodeCount = getBigger(newItemValue: newItem.episodeCount,
+                                         oldItemValue: item.episodeCount)
         newItem.episodeNumber = item.episodeNumber ?? newItem.episodeNumber
-        newItem.episodeUuids = item.episodeUuids ?? newItem.episodeUuids
+        newItem.episodeUuids = getBiggerArray(newItemArray: newItem.episodeUuids,
+                                              oldItemArray: item.episodeUuids)
         
         return newItem
+    }
+    
+    private static func getBigger(newItemValue: Int?, oldItemValue: Int?) -> Int? {
+        if (newItemValue ?? 0) > (oldItemValue ?? 0) {
+            return newItemValue
+        } else {
+            return oldItemValue
+        }
+    }
+    
+    private static func getBiggerArray(newItemArray: [String]?, oldItemArray: [String]?) -> [String]? {
+        if (newItemArray?.count ?? 0) > (oldItemArray?.count ?? 0) {
+            return newItemArray
+        } else {
+            return oldItemArray
+        }
     }
 }

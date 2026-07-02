@@ -149,6 +149,12 @@
 		7F3B73322F4787C40085F8C0 /* ReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B73302F4787BE0085F8C0 /* ReviewManager.swift */; };
 		7F3B73342F50C00C0085F8C0 /* ItemViewModelBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B73332F50C00C0085F8C0 /* ItemViewModelBuilderTests.swift */; };
 		7F4911A72E2D9B3E00F6F5F0 /* AppPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4911A62E2D9B3900F6F5F0 /* AppPreferencesView.swift */; };
+		7F9940D92FF6E7A700FB1799 /* ShelfItunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940D82FF6E7A700FB1799 /* ShelfItunes.swift */; };
+		7F9940DA2FF6E7A700FB1799 /* ShelfItunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940D82FF6E7A700FB1799 /* ShelfItunes.swift */; };
+		7F9940DC2FF6E7A900FB1799 /* ItunesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940DB2FF6E7A900FB1799 /* ItunesAPIClient.swift */; };
+		7F9940DD2FF6E7A900FB1799 /* ItunesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940DB2FF6E7A900FB1799 /* ItunesAPIClient.swift */; };
+		7F9940DF2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940DE2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift */; };
+		7F9940E02FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940DE2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift */; };
 		7FC2BAF32EC88FD300C3ED9F /* PostPreviewSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC2BAF22EC88FB800C3ED9F /* PostPreviewSingleton.swift */; };
 		7FC2BAF42EC88FD300C3ED9F /* PostPreviewSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC2BAF22EC88FB800C3ED9F /* PostPreviewSingleton.swift */; };
 		7FD0FC652EC9CDA800BEA7F1 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0FC642EC9CDA100BEA7F1 /* ThreadView.swift */; };
@@ -498,6 +504,9 @@
 		7F3B73302F4787BE0085F8C0 /* ReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewManager.swift; sourceTree = "<group>"; };
 		7F3B73332F50C00C0085F8C0 /* ItemViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		7F4911A62E2D9B3900F6F5F0 /* AppPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferencesView.swift; sourceTree = "<group>"; };
+		7F9940D82FF6E7A700FB1799 /* ShelfItunes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfItunes.swift; sourceTree = "<group>"; };
+		7F9940DB2FF6E7A900FB1799 /* ItunesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesAPIClient.swift; sourceTree = "<group>"; };
+		7F9940DE2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByNameItunesEndpoint.swift; sourceTree = "<group>"; };
 		7FC2BAF22EC88FB800C3ED9F /* PostPreviewSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewSingleton.swift; sourceTree = "<group>"; };
 		7FD0FC642EC9CDA100BEA7F1 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
 		7FD0FC672EC9D94A00BEA7F1 /* ThreadDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadDataStore.swift; sourceTree = "<group>"; };
@@ -852,6 +861,7 @@
 				B3BE895C2D60118200EEA9AD /* Note.swift */,
 				B3E420642DAF162C00FA1599 /* PostSchema.swift */,
 				B3E420672DAF1A2D00FA1599 /* CatalogPostsModel.swift */,
+				7F9940D82FF6E7A700FB1799 /* ShelfItunes.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1086,6 +1096,7 @@
 				21007C162C7D55970082689B /* ShelfListEndpoint.swift */,
 				21EFAC7A2C7B5B99001DD16D /* ProfileEndpoint.swift */,
 				B3BE89622D601BC700EEA9AD /* ProgressNoteListEndpoint.swift */,
+				7F9940DE2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -1118,6 +1129,7 @@
 				21EFAC852C7B5CA7001DD16D /* APIClient.swift */,
 				B3E512E92C8F4AC20071ED50 /* TMDBAPIClient.swift */,
 				21ECB6002D243D06006CBE85 /* PodcastIndexAPIClient.swift */,
+				7F9940DB2FF6E7A900FB1799 /* ItunesAPIClient.swift */,
 			);
 			path = ApiClient;
 			sourceTree = "<group>";
@@ -1506,6 +1518,7 @@
 				B354B8D82D44809E00B7FF82 /* CatalogTypeEndpoint.swift in Sources */,
 				216D93C12C834EC2006252A6 /* ShelfListModel.swift in Sources */,
 				216D93C22C834EC2006252A6 /* ShelfListConfigurator.swift in Sources */,
+				7F9940D92FF6E7A700FB1799 /* ShelfItunes.swift in Sources */,
 				212048AF2C99F726007F8D3B /* LoginNetworkingWorker.swift in Sources */,
 				B354B7A02D44645600B7FF82 /* NeoDBURL.swift in Sources */,
 				B3B00BB12D4D775E007C6D43 /* NewCollectionInteractor.swift in Sources */,
@@ -1535,6 +1548,7 @@
 				B3EF26C92CD9649C00946836 /* GoogleBooksAPIClient.swift in Sources */,
 				21007C192C7D59640082689B /* Shelf.swift in Sources */,
 				212BA5542CA4CAD300DAB79E /* Setting.swift in Sources */,
+				7F9940E02FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift in Sources */,
 				211135502DE1552D00AF5640 /* ToastView.swift in Sources */,
 				214A3A2F2C989408006F7CC6 /* ReviewFilterView.swift in Sources */,
 				B37A1EE12CE8D51F00906307 /* ErrorView.swift in Sources */,
@@ -1566,6 +1580,7 @@
 				216D93DC2C84A36E006252A6 /* SearchModel.swift in Sources */,
 				214A3A332C98A891006F7CC6 /* MessageResponse.swift in Sources */,
 				B3E420632DAF134E00FA1599 /* CatalogPostEndpoint.swift in Sources */,
+				7F9940DD2FF6E7A900FB1799 /* ItunesAPIClient.swift in Sources */,
 				B3E420692DAF1A2D00FA1599 /* CatalogPostsModel.swift in Sources */,
 				7FF468892EF31C3E008256D1 /* NotificationsNetworkingWorker.swift in Sources */,
 				215D05802D32BE8D00B85307 /* ReviewType.swift in Sources */,
@@ -1744,11 +1759,13 @@
 				B390A3C82D1AFD5600923AA4 /* UserSettings.swift in Sources */,
 				B390A3BB2D1AF47B00923AA4 /* SearchUrlView.swift in Sources */,
 				7F202CA82EA3B7B300B5F8F3 /* PostInteractionsInteractor.swift in Sources */,
+				7F9940DA2FF6E7A700FB1799 /* ShelfItunes.swift in Sources */,
 				211135512DE1649000AF5640 /* ToastView.swift in Sources */,
 				212EA8482DEBDE5E002B8A49 /* CachedAsyncImage.swift in Sources */,
 				B390A3C22D1AFCB400923AA4 /* ErrorView.swift in Sources */,
 				B390A3EF2D1B227600923AA4 /* RatingView.swift in Sources */,
 				B390A3D62D1AFEB100923AA4 /* SearchByNameTMDBendpoint.swift in Sources */,
+				7F9940DC2FF6E7A900FB1799 /* ItunesAPIClient.swift in Sources */,
 				B390A3D82D1AFF3C00923AA4 /* Color+Extension.swift in Sources */,
 				7F202CAF2EA3B8BF00B5F8F3 /* PostInteractionsPresenterLogic.swift in Sources */,
 				B390A3BE2D1AF6C200923AA4 /* ItemViewModel.swift in Sources */,
@@ -1757,6 +1774,7 @@
 				B390A3C92D1AFD6500923AA4 /* ShelfTMDB.swift in Sources */,
 				B390A3C62D1AFD4000923AA4 /* Catalog.swift in Sources */,
 				B390A3C42D1AFD0C00923AA4 /* FilterView.swift in Sources */,
+				7F9940DF2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift in Sources */,
 				B390A3C52D1AFD1E00923AA4 /* ShelfListModel.swift in Sources */,
 				B30EC1492D46785700A8DAE9 /* CatalogNetworkingWorker.swift in Sources */,
 				B390A3E12D1B20F100923AA4 /* ReviewNetworkingWorker.swift in Sources */,
