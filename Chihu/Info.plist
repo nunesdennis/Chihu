@@ -61,5 +61,9 @@
 	</array>
 	<key>TMDB_API_KEY</key>
 	<string>$(TMDB_API_KEY)</string>
+	<key>IGDB_API_KEY</key>
+	<string>$(IGDB_API_KEY)</string>
+	<key>IGDB_API_SECRET</key>
+	<string>$(IGDB_API_SECRET)</string>
 </dict>
 </plist>

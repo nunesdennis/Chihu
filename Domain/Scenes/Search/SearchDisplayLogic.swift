@@ -8,6 +8,7 @@ protocol SearchDisplayLogic {
     func displayResultFromGoogleBooksName(viewModel: SearchByNameGoogleBooks.Load.ViewModel)
     func displayResultFromPIname(viewModel: SearchByNamePI.Load.ViewModel)
     func displayResultFromItunesName(viewModel: SearchByNameItunes.Load.ViewModel)
+    func displayResultFromIGDBName(viewModel: SearchByNameIGDB.Load.ViewModel)
     func displayResultFromTMDBname(viewModel: SearchByNameTMDB.Load.ViewModel)
     func displayResultFromName(viewModel: SearchByName.Load.ViewModel)
     func displayResultFromURL(viewModel: SearchByURL.Load.ViewModel)

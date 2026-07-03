@@ -11,6 +11,7 @@ protocol SearchNetworkingProtocol {
     func fetchByNamePI(request: SearchByNamePI.Load.Request, completion: @escaping (Result<SearchByNamePI.Load.Response, Error>) -> Void)
     func fetchByNameGoogleBooks(request: SearchByNameGoogleBooks.Load.Request, completion: @escaping (Result<SearchByNameGoogleBooks.Load.Response, Error>) -> Void)
     func fetchByNameItunes(request: SearchByNameItunes.Load.Request, completion: @escaping (Result<SearchByNameItunes.Load.Response, Error>) -> Void)
+    func fetchByNameIGDB(request: SearchByNameIGDB.Load.Request, completion: @escaping (Result<SearchByNameIGDB.Load.Response, Error>) -> Void)
 }
 
 final class SearchNetworkingWorker: SearchNetworkingProtocol {
@@ -19,16 +20,19 @@ final class SearchNetworkingWorker: SearchNetworkingProtocol {
     var googleBooksApiClient: APIClientProtocol
     var podcastIndexApiClient: APIClientProtocol
     var itunesApiClient: APIClientProtocol
+    var igdbApiClient: APIClientProtocol
 
     // MARK: - Initialization
     init(tmdbApiClient: APIClientProtocol = TMDBAPIClient(),
          googleBooksApiClient: APIClientProtocol = GoogleBooksAPIClient(),
          podcastIndexApiClient: APIClientProtocol = PodcastIndexAPIClient(),
-         itunesApiClient: APIClientProtocol = ItunesAPIClient()) {
+         itunesApiClient: APIClientProtocol = ItunesAPIClient(),
+         igdbApiClient: APIClientProtocol = IGDBAPIClient()) {
         self.tmdbApiClient = tmdbApiClient
         self.googleBooksApiClient = googleBooksApiClient
         self.podcastIndexApiClient = podcastIndexApiClient
         self.itunesApiClient = itunesApiClient
+        self.igdbApiClient = igdbApiClient
     }
     
     func fetchByNameTMDB(request: SearchByNameTMDB.Load.Request, completion: @escaping (Result<SearchByNameTMDB.Load.Response, Error>) -> Void) {
@@ -102,6 +106,27 @@ final class SearchNetworkingWorker: SearchNetworkingProtocol {
 //                    print(String(decoding: data, as: UTF8.self))
                     let shelfResponse = try decoder.decode(ShelfItunes.self, from: data)
                     completion(.success(SearchByNameItunes.Load.Response.init(shelf: shelfResponse)))
+                } catch let error {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func fetchByNameIGDB(request: SearchByNameIGDB.Load.Request, completion: @escaping (Result<SearchByNameIGDB.Load.Response, Error>) -> Void) {
+        let endpoint = SearchByNameIGDBEndpoint(request)
+
+        igdbApiClient.request(endpoint: endpoint) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+//                    print(String(decoding: data, as: UTF8.self))
+                    let games = try decoder.decode([IGDBGame].self, from: data)
+                    let shelf = ShelfIGDB(games: games)
+                    completion(.success(SearchByNameIGDB.Load.Response(shelf: shelf)))
                 } catch let error {
                     completion(.failure(error))
                 }

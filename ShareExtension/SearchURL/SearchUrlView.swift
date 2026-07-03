@@ -7,6 +7,10 @@
 import SwiftUI
 
 extension SearchUrlView: SearchDisplayLogic {
+    func displayResultFromIGDBName(viewModel: SearchByNameIGDB.Load.ViewModel) {
+        // no-op
+    }
+    
     func displayResultFromItunesName(viewModel: SearchByNameItunes.Load.ViewModel) {
         // no-op
     }

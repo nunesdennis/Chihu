@@ -10,6 +10,7 @@ import Foundation
 protocol SearchPresentationLogic {
     func presentResultFromPIname(response: SearchByNamePI.Load.Response)
     func presentResultFromItunesName(response: SearchByNameItunes.Load.Response)
+    func presentResultFromIGDBName(response: SearchByNameIGDB.Load.Response)
     func presentResultFromGoogleBooksName(response: SearchByNameGoogleBooks.Load.Response, category: String)
     func presentResultFromTMDBname(response: SearchByNameTMDB.Load.Response, category: String)
     func presentResultFromName(response: SearchByName.Load.Response)
@@ -41,6 +42,11 @@ extension SearchPresenter: SearchPresentationLogic {
     func presentResultFromItunesName(response: SearchByNameItunes.Load.Response) {
         let viewModel = SearchByNameItunes.Load.ViewModel(shelf: response.shelf)
         view?.displayResultFromItunesName(viewModel: viewModel)
+    }
+
+    func presentResultFromIGDBName(response: SearchByNameIGDB.Load.Response) {
+        let viewModel = SearchByNameIGDB.Load.ViewModel(shelf: response.shelf)
+        view?.displayResultFromIGDBName(viewModel: viewModel)
     }
     
     func presentResultFromName(response: SearchByName.Load.Response) {

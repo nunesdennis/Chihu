@@ -155,6 +155,12 @@
 		7F9940DD2FF6E7A900FB1799 /* ItunesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940DB2FF6E7A900FB1799 /* ItunesAPIClient.swift */; };
 		7F9940DF2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940DE2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift */; };
 		7F9940E02FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940DE2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift */; };
+		7F9940E22FF8294800FB1799 /* ShelfIGDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940E12FF8294800FB1799 /* ShelfIGDB.swift */; };
+		7F9940E32FF8294800FB1799 /* ShelfIGDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940E12FF8294800FB1799 /* ShelfIGDB.swift */; };
+		7F9940E52FF8294A00FB1799 /* IGDBAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940E42FF8294A00FB1799 /* IGDBAPIClient.swift */; };
+		7F9940E62FF8294A00FB1799 /* IGDBAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940E42FF8294A00FB1799 /* IGDBAPIClient.swift */; };
+		7F9940E82FF8294B00FB1799 /* SearchByNameIGDBEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940E72FF8294B00FB1799 /* SearchByNameIGDBEndpoint.swift */; };
+		7F9940E92FF8294B00FB1799 /* SearchByNameIGDBEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940E72FF8294B00FB1799 /* SearchByNameIGDBEndpoint.swift */; };
 		7FC2BAF32EC88FD300C3ED9F /* PostPreviewSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC2BAF22EC88FB800C3ED9F /* PostPreviewSingleton.swift */; };
 		7FC2BAF42EC88FD300C3ED9F /* PostPreviewSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC2BAF22EC88FB800C3ED9F /* PostPreviewSingleton.swift */; };
 		7FD0FC652EC9CDA800BEA7F1 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD0FC642EC9CDA100BEA7F1 /* ThreadView.swift */; };
@@ -507,6 +513,9 @@
 		7F9940D82FF6E7A700FB1799 /* ShelfItunes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfItunes.swift; sourceTree = "<group>"; };
 		7F9940DB2FF6E7A900FB1799 /* ItunesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesAPIClient.swift; sourceTree = "<group>"; };
 		7F9940DE2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByNameItunesEndpoint.swift; sourceTree = "<group>"; };
+		7F9940E12FF8294800FB1799 /* ShelfIGDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfIGDB.swift; sourceTree = "<group>"; };
+		7F9940E42FF8294A00FB1799 /* IGDBAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGDBAPIClient.swift; sourceTree = "<group>"; };
+		7F9940E72FF8294B00FB1799 /* SearchByNameIGDBEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByNameIGDBEndpoint.swift; sourceTree = "<group>"; };
 		7FC2BAF22EC88FB800C3ED9F /* PostPreviewSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewSingleton.swift; sourceTree = "<group>"; };
 		7FD0FC642EC9CDA100BEA7F1 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
 		7FD0FC672EC9D94A00BEA7F1 /* ThreadDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadDataStore.swift; sourceTree = "<group>"; };
@@ -862,6 +871,7 @@
 				B3E420642DAF162C00FA1599 /* PostSchema.swift */,
 				B3E420672DAF1A2D00FA1599 /* CatalogPostsModel.swift */,
 				7F9940D82FF6E7A700FB1799 /* ShelfItunes.swift */,
+				7F9940E12FF8294800FB1799 /* ShelfIGDB.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1097,6 +1107,7 @@
 				21EFAC7A2C7B5B99001DD16D /* ProfileEndpoint.swift */,
 				B3BE89622D601BC700EEA9AD /* ProgressNoteListEndpoint.swift */,
 				7F9940DE2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift */,
+				7F9940E72FF8294B00FB1799 /* SearchByNameIGDBEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -1130,6 +1141,7 @@
 				B3E512E92C8F4AC20071ED50 /* TMDBAPIClient.swift */,
 				21ECB6002D243D06006CBE85 /* PodcastIndexAPIClient.swift */,
 				7F9940DB2FF6E7A900FB1799 /* ItunesAPIClient.swift */,
+				7F9940E42FF8294A00FB1799 /* IGDBAPIClient.swift */,
 			);
 			path = ApiClient;
 			sourceTree = "<group>";
@@ -1552,6 +1564,7 @@
 				211135502DE1552D00AF5640 /* ToastView.swift in Sources */,
 				214A3A2F2C989408006F7CC6 /* ReviewFilterView.swift in Sources */,
 				B37A1EE12CE8D51F00906307 /* ErrorView.swift in Sources */,
+				7F9940E82FF8294B00FB1799 /* SearchByNameIGDBEndpoint.swift in Sources */,
 				21D741AD2DFDECF500A95C13 /* SettingsDataStore.swift in Sources */,
 				216D93D82C84A36E006252A6 /* SearchPresenter.swift in Sources */,
 				216D93E72C84BDEC006252A6 /* MainView.swift in Sources */,
@@ -1621,6 +1634,7 @@
 				B354B8DC2D44815100B7FF82 /* CatalogTypeModel.swift in Sources */,
 				215D05742D32A62F00B85307 /* CollectionsView.swift in Sources */,
 				B3E420652DAF162C00FA1599 /* PostSchema.swift in Sources */,
+				7F9940E62FF8294A00FB1799 /* IGDBAPIClient.swift in Sources */,
 				215D05752D32A62F00B85307 /* CollectionsModel.swift in Sources */,
 				215D05762D32A62F00B85307 /* CollectionsConfigurator.swift in Sources */,
 				7FE791D02E30DE6700931B93 /* ReviewView+Modal.swift in Sources */,
@@ -1628,6 +1642,7 @@
 				B3A0B44C2CE2A54E0046DEA5 /* TimelineInteractor.swift in Sources */,
 				B3E420722DAF3E4900FA1599 /* ImageState.swift in Sources */,
 				B3A0B44D2CE2A54E0046DEA5 /* TimelineModel.swift in Sources */,
+				7F9940E22FF8294800FB1799 /* ShelfIGDB.swift in Sources */,
 				B3A0B44E2CE2A54E0046DEA5 /* TimelineDataStore.swift in Sources */,
 				B3A0B44F2CE2A54E0046DEA5 /* TimelinePresenter.swift in Sources */,
 				B3A0B4502CE2A54E0046DEA5 /* TimelineView.swift in Sources */,
@@ -1700,6 +1715,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F9940E92FF8294B00FB1799 /* SearchByNameIGDBEndpoint.swift in Sources */,
 				7FD0FC6E2ECBBB0000BEA7F1 /* TimelineDataStore.swift in Sources */,
 				21EE06B92D37283C00DF30A1 /* CollectionItemList.swift in Sources */,
 				B3C8231A2D73B67C00524CF0 /* ApiUrlEndpoint.swift in Sources */,
@@ -1750,6 +1766,7 @@
 				B3980A5C2D8AD160003780D5 /* SpoilerView.swift in Sources */,
 				B390A3DB2D1AFF9100923AA4 /* SearchDisplayLogic.swift in Sources */,
 				B390A3D52D1AFE9400923AA4 /* SearchByNameEndpoint.swift in Sources */,
+				7F9940E52FF8294A00FB1799 /* IGDBAPIClient.swift in Sources */,
 				B390A3C02D1AF78C00923AA4 /* SearchInteractor.swift in Sources */,
 				B390A3D42D1AFE8800923AA4 /* SearchByURLEndpoint.swift in Sources */,
 				B3980A582D8AD123003780D5 /* EmitterView.swift in Sources */,
@@ -1798,6 +1815,7 @@
 				7FF4688B2EF31D1F008256D1 /* NotificationsEndpoint.swift in Sources */,
 				B3BE89652D60D36300EEA9AD /* ProgressNoteListModel.swift in Sources */,
 				215D057E2D32BE3100B85307 /* ReviewDisplayLogic.swift in Sources */,
+				7F9940E32FF8294800FB1799 /* ShelfIGDB.swift in Sources */,
 				7FD0FC6D2ECBBA1E00BEA7F1 /* ThreadDataStore.swift in Sources */,
 				7F2E74AC2E89A5190084A650 /* ReplyEndpoint.swift in Sources */,
 				7F202CA42EA3B61F00B5F8F3 /* PostInteractionEndpoint.swift in Sources */,
@@ -1994,7 +2012,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.21.1;
+				MARKETING_VERSION = 1.22.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2038,7 +2056,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.21.1;
+				MARKETING_VERSION = 1.22.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2150,7 +2168,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.21.1;
+				MARKETING_VERSION = 1.22.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2183,7 +2201,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.21.1;
+				MARKETING_VERSION = 1.22.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

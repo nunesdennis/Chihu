@@ -12,6 +12,7 @@ protocol SearchBusinessLogic {
     func loadFromNameTMDB(request: SearchByNameTMDB.Load.Request)
     func loadFromNamePI(request: SearchByNamePI.Load.Request)
     func loadFromItunes(request: SearchByNameItunes.Load.Request)
+    func loadFromIGDB(request: SearchByNameIGDB.Load.Request)
     func loadFromName(request: SearchByName.Load.Request)
     func loadFromURL(request: SearchByURL.Load.Request)
     func loadFromURLAndOpen(request: SearchByURL.Load.Request)
@@ -52,6 +53,18 @@ extension SearchInteractor: SearchBusinessLogic {
             switch result {
             case .success(let response):
                 presenter?.presentResultFromItunesName(response: response)
+            case .failure(let error):
+                presenter?.present(error: error)
+            }
+        }
+    }
+
+    func loadFromIGDB(request: SearchByNameIGDB.Load.Request) {
+        let worker = SearchNetworkingWorker()
+        worker.fetchByNameIGDB(request: request) { [unowned self] result in
+            switch result {
+            case .success(let response):
+                presenter?.presentResultFromIGDBName(response: response)
             case .failure(let error):
                 presenter?.present(error: error)
             }

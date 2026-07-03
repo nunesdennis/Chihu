@@ -248,11 +248,29 @@ class ItemViewModelBuilder {
         let poster = itunesResult.artworkUrl100
         let id = "\(itunesResult.collectionId ?? 0)"
         let instanceFetchId = itunesResult.collectionViewUrl
-        
+
         return .init(id: id,
                      uuid: id,
                      source: "iTunes",
                      category: ItemCategory.music.rawValue,
+                     localizedTitle: localizedTitle,
+                     localizedDescription: localizedDescription,
+                     poster: poster,
+                     shelfType: ShelfType.none.rawValue,
+                     instanceFetchId: instanceFetchId)
+    }
+
+    static func create(from igdbGame: IGDBGame) -> ItemViewModel {
+        let localizedTitle = igdbGame.name ?? "Name not available"
+        let localizedDescription = igdbGame.summary
+        let poster = igdbGame.cover?.url.map { "https:" + $0 }
+        let id = "\(igdbGame.id)"
+        let instanceFetchId = igdbGame.slug.map { "https://www.igdb.com/games/\($0)" }
+
+        return .init(id: id,
+                     uuid: id,
+                     source: "IGDB",
+                     category: ItemCategory.game.rawValue,
                      localizedTitle: localizedTitle,
                      localizedDescription: localizedDescription,
                      poster: poster,

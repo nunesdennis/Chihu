@@ -141,6 +141,32 @@ enum SearchByNamePI {
     }
 }
 
+enum SearchByNameIGDB {
+    enum Load {
+        struct Request: IGDBRequestProtocol {
+            let query: String
+        }
+
+        struct Response {
+            let shelf: ShelfIGDB
+        }
+
+        struct ViewModel {
+            let shelfItemsViewModel: [ItemViewModel]
+            let pages: Int
+            let count: Int
+
+            init(shelf: ShelfIGDB) {
+                self.shelfItemsViewModel = shelf.shelfItemsDetails.map {
+                    ItemViewModelBuilder.create(from: $0)
+                }
+                self.pages = 1
+                self.count = shelf.count
+            }
+        }
+    }
+}
+
 enum SearchByNameItunes {
     enum Load {
         struct Request: ItunesRequestProtocol {

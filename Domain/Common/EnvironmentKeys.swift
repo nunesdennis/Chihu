@@ -17,6 +17,8 @@ public enum EnvironmentKeys {
         case teamId = "TEAM_ID"
         case podcastIndexApiKey = "PODCAST_INDEX_KEY"
         case podcastIndexApiClientSecret = "PODCAST_INDEX_SECRET"
+        case igdbApiKey = "IGDB_API_KEY"
+        case igdbApiSecret = "IGDB_API_SECRET"
         
         case apiKey = "API_KEY"
         case apiClientId = "API_CLIENT_ID"
