@@ -34,8 +34,8 @@ extension SearchState: Equatable {
 
 final class SearchDataStore: ObservableObject {
     @Published var state: SearchState = .firstLoad
-    @Published var category: ItemCategory = .movie
-    @Published var source: ItemSource = .tmdb
+    @Published var category: ItemCategory
+    @Published var source: ItemSource
     @Published var shelfItemsViewModel: [ItemViewModel] = []
     @Published var showSelection: Bool = false
     @Published var showScanner: Bool = false
@@ -47,4 +47,12 @@ final class SearchDataStore: ObservableObject {
     var selectedItem: ItemViewModel?
     var pages: Int = 0
     var count: Int = 0
+    
+    init() {
+        let defaultCategory = ItemCategory(rawValue: UserSettings.shared.defaultSearchCategory) ?? .movie
+        self.category = defaultCategory
+        self.source = FilterView.makeCategorySourceList()
+            .first { $0.category.itemCategory == defaultCategory }?
+            .sourceList[0] ?? .instance
+    }
 }
