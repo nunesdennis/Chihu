@@ -30,7 +30,9 @@ struct SearchByNameGoogleBooksEndpoint: EndpointProtocol {
     var queryItems: [URLQueryItem] {
         var query: [URLQueryItem] = []
         query.append(URLQueryItem(name: "q", value: request.query))
-        
+        if let apiKey = EnvironmentKeys.getValueFor(.googleApiKey) {
+            query.append(URLQueryItem(name: "key", value: apiKey))
+        }
         return query
     }
     

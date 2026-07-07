@@ -31,6 +31,7 @@ enum ChihuError: Error {
     case codeError
     case loadImageError
     case processImageError
+    case quotaReached
 }
 
 extension ChihuError: LocalizedError {
@@ -97,6 +98,8 @@ extension ChihuError: LocalizedError {
             title = "Did not find anything"
         case .keychain:
             title = "Access keys problem"
+        case .quotaReached:
+            title = "Too many requests"
         default:
             title = "¯\\_(ツ)_/¯"
         }
@@ -136,6 +139,8 @@ extension ChihuError: LocalizedError {
             description = "Unauthorized"
         case .codeError:
             description = "My bad, I have something to fix here"
+        case .quotaReached:
+            description = "Quota reached, try again later"
         case .loadImageError:
             description = "Failed to load image"
         case .processImageError:

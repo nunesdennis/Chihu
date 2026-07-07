@@ -19,6 +19,7 @@ public enum EnvironmentKeys {
         case podcastIndexApiClientSecret = "PODCAST_INDEX_SECRET"
         case igdbApiKey = "IGDB_API_KEY"
         case igdbApiSecret = "IGDB_API_SECRET"
+        case googleApiKey = "GOOGLE_API_KEY"
         
         case apiKey = "API_KEY"
         case apiClientId = "API_CLIENT_ID"

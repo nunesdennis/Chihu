@@ -28,6 +28,9 @@ final class GoogleBooksAPIClient: APIClientProtocol {
                                  timeoutInterval: 10.0)
         request.httpMethod = endpoint.method
         request.timeoutInterval = 10
+        if let bundleId = Bundle.main.bundleIdentifier {
+            request.setValue(bundleId, forHTTPHeaderField: "X-Ios-Bundle-Identifier")
+        }
         
         #if DEBUG
                 print("//////////////////")
@@ -69,7 +72,11 @@ final class GoogleBooksAPIClient: APIClientProtocol {
                 
                 let code = urlResponse.statusCode
                 if code != 200 && code != 201 {
-                    completion(.failure(ChihuError.unknown))
+                    if code == 429 {
+                        completion(.failure(ChihuError.quotaReached))
+                    } else {
+                        completion(.failure(ChihuError.unknown))
+                    }
                     return
                 }
                 
