@@ -74,6 +74,15 @@
       }
     },
     {
+      "identity" : "swift-http-structured-headers",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-http-structured-headers.git",
+      "state" : {
+        "revision" : "933538faa42c432d385f02e07df0ace7c5ecfc47",
+        "version" : "1.7.0"
+      }
+    },
+    {
       "identity" : "swift-markdown-ui",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
@@ -123,8 +132,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/TootSDK/TootSDK",
       "state" : {
-        "revision" : "3e090a30f3cb3ae4e0a863135842a01bd2e38c91",
-        "version" : "18.2.0"
+        "revision" : "584147b3d9f751920f2f1bf54746e1631267fafe",
+        "version" : "23.0.0"
+      }
+    },
+    {
+      "identity" : "version",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mxcl/Version.git",
+      "state" : {
+        "revision" : "3043fcd2a50375db76d89ff206a612471833d1c2",
+        "version" : "2.2.1"
       }
     }
   ],
