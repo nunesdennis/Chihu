@@ -142,7 +142,6 @@ struct ShelfListFilterView: View {
     
     init(dataStore: ShelfListDataStore = ShelfListDataStore()) {
         self.dataStore = dataStore
-        self.dataStore.selectedShelfType = ShelfType(rawValue: UserSettings.shared.defaultShelfType)?.rawValueInt() ?? 0
     }
     
     var body: some View {

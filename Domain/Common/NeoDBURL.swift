@@ -29,6 +29,7 @@ class NeoDBURL {
         static let neodbKevga = "neodb.kevga.de"
         static let fantastika = "fantastika.social"
         static let neodbDeadvey = "neodb.deadvey.com"
+        static let neoDBbridge = "bridge.neodb.net"
     }
     
     private static let neodbItemIdentifier = "~neodb~"
@@ -55,7 +56,8 @@ class NeoDBURL {
             knownServersUrl.dbCasually,
             knownServersUrl.neodbKevga,
             knownServersUrl.fantastika,
-            knownServersUrl.neodbDeadvey
+            knownServersUrl.neodbDeadvey,
+            knownServersUrl.neoDBbridge
         ]
         
         if let baseUrlString = UserSettings.shared.instanceURL?.trimmingCharacters(in:.whitespacesAndNewlines) {
@@ -68,38 +70,66 @@ class NeoDBURL {
     }
     
     static func getItemURL(from post: Post) -> URL? {
-        do {
-            let postPreviews = PostPreviewSingleton.shared
-            if let url = postPreviews.imagesDictionary[post.id] {
-                return url
-            }
-            
-            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            
-            guard let content = post.content, NeoDBURL.hasNeoDBlink(content) else {
-                return nil
-            }
-            
-            let input = content.replacingOccurrences(of: "~neodb~/", with: String())
-            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
-            
-            for match in matches {
-                guard let range = Range(match.range, in: input) else {
-                    return nil
-                }
-                var urlString = String(input[range])
-                guard let url = NeoDBURL.cleanItemUrl(urlString, post.account.username) else {
-                    continue
-                }
-                
-                postPreviews.imagesDictionary[post.id] = url
-                return url
-            }
-        } catch let error {
-            print(error.localizedDescription)
+        let postPreviews = PostPreviewSingleton.shared
+        if let url = postPreviews.imagesDictionary[post.id] {
+            return url
         }
-        
+
+        guard let content = post.content, NeoDBURL.hasNeoDBlink(content) else {
+            return nil
+        }
+
+        let username = post.account.username
+
+        // Primary: extract hrefs from anchor tags via SwiftSoup.
+        // Mastodon clients often split URLs across invisible/ellipsis spans, so
+        // NSDataDetector on raw HTML text misses them. Parsing <a href> is reliable.
+        var candidates: [String] = []
+        if let doc = try? SwiftSoup.parse(content),
+           let anchors = try? doc.select("a[href]") {
+            for anchor in anchors {
+                if let href = try? anchor.attr("href"), !href.isEmpty {
+                    candidates.append(href)
+                }
+            }
+        }
+
+        // Fallback: NSDataDetector on raw HTML when no anchors are found.
+        if candidates.isEmpty,
+           let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) {
+            let matches = detector.matches(in: content, options: [], range: NSRange(location: 0, length: content.utf16.count))
+            for match in matches {
+                guard let range = Range(match.range, in: content) else { continue }
+                candidates.append(String(content[range]))
+            }
+        }
+
+        for candidate in candidates {
+            guard let url = NeoDBURL.cleanItemUrl(candidate, username) else { continue }
+            guard NeoDBURL.isNeoDBURL(url.absoluteString) else { continue }
+            postPreviews.imagesDictionary[post.id] = url
+            return url
+        }
+
         return nil
+    }
+
+    private static func isNeoDBURL(_ urlString: String) -> Bool {
+        var knownHosts = [
+            knownServersUrl.eggplantUrl,
+            knownServersUrl.neodbUrl,
+            knownServersUrl.reviewDB,
+            knownServersUrl.minreol,
+            knownServersUrl.dbCasually,
+            knownServersUrl.neodbKevga,
+            knownServersUrl.fantastika,
+            knownServersUrl.neodbDeadvey,
+            knownServersUrl.neoDBbridge
+        ]
+        if let instanceHost = UserSettings.shared.instanceURL?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            knownHosts.append(instanceHost)
+        }
+        return knownHosts.contains(where: urlString.contains)
     }
     
     private static func cleanItemUrl(_ urlString: String, _ username: String? = nil) -> URL? {
@@ -152,45 +182,40 @@ class NeoDBURL {
             return nil
         }
 
-        // Remove leading slash and split path
+        // Remove leading slash and split path, then strip ~neodb~ prefix so
+        // indices are consistent regardless of URL format.
         let path = components.path.dropFirst()
-        let pathComponents = path.split(separator: "/").map(String.init)
-
-        var type: String
-        var id: String
-        
-        // Verify we have ~neodb~/type/id format
-        if components.path.contains(neodbItemIdentifier),
-           pathComponents.count >= 3,
-           pathComponents[0] == neodbItemIdentifier {
-            type = pathComponents[1]
-            id = pathComponents[2]
-        } else if pathComponents.count >= 2 {
-            type = pathComponents[0]
-            id = pathComponents[1]
-        } else {
-            return nil
+        var pathComponents = path.split(separator: "/").map(String.init)
+        if pathComponents.first == neodbItemIdentifier {
+            pathComponents = Array(pathComponents.dropFirst())
         }
 
-        // Handle special cases for tv seasons and episodes
+        guard pathComponents.count >= 2 else { return nil }
+
+        let type = pathComponents[0]
+        var id = pathComponents[1]
+
+        // Handle compound path types where the id is at index 2.
         let category: ItemCategory
-        if type == "podcast" {
-            category = .podcast
-        } else if type == "tv" && pathComponents.count >= 4 {
-            switch pathComponents[2] {
+        if type == "tv" && pathComponents.count >= 3 {
+            switch pathComponents[1] {
             case "season":
                 category = .tvSeason
+                id = pathComponents[2]
             case "episode":
                 category = .tvEpisode
+                id = pathComponents[2]
             default:
                 category = .tv
             }
-            id = pathComponents[3]
+        } else if type == "podcast" && pathComponents.count >= 3 && pathComponents[1] == "episode" {
+            category = .podcast
+            id = pathComponents[2]
         } else if type == "album" {
             category = .music
-        } else if type == "performance" && pathComponents[2] == "production" {
+        } else if type == "performance" && pathComponents.count >= 3 && pathComponents[1] == "production" {
             category = .performanceProduction
-            id = pathComponents[3]
+            id = pathComponents[2]
         } else if let itemCategory = ItemCategory(rawValue: type) {
             category = itemCategory
         } else {

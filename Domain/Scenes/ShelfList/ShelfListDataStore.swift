@@ -30,4 +30,9 @@ final class ShelfListDataStore: ObservableObject {
     var selectedItem: ItemViewModel?
     var pages: Int = 1
     var count: Int = 0
+    
+    init() {
+        let defaultType = ShelfType(rawValue: UserSettings.shared.defaultShelfType)?.rawValueInt() ?? 0
+        self.selectedShelfType = defaultType
+    }
 }
