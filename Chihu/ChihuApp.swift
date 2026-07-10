@@ -11,6 +11,7 @@ import SwiftData
 struct ChihuApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
+            ShelfItemCache.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

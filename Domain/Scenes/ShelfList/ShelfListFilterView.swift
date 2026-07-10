@@ -5,6 +5,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 protocol ShelfListDisplayLogic {
     func display(viewModel: ShelfList.Load.ViewModel)
@@ -22,10 +23,21 @@ extension ShelfListFilterView: ShelfListDisplayLogic {
     func display(viewModel: ShelfList.Load.ViewModel) {
         DispatchQueue.main.async {
             if !viewModel.shelfItemsViewModel.isEmpty {
-                for item in viewModel.shelfItemsViewModel {
-                    dataStore.shelfItemsViewModel.append(item)
+                let isFirstPage = dataStore.pages == 1
+                if isFirstPage {
+                    dataStore.shelfItemsViewModel = viewModel.shelfItemsViewModel
+                    dataStore.count = viewModel.count
+                } else {
+                    for item in viewModel.shelfItemsViewModel {
+                        dataStore.shelfItemsViewModel.append(item)
+                    }
+                    dataStore.count += viewModel.count
                 }
-                dataStore.count += viewModel.count
+                dataStore.saveToCache(
+                    items: viewModel.shelfItemsViewModel,
+                    cacheKey: dataStore.currentCacheKey,
+                    replacing: isFirstPage
+                )
                 dataStore.pages += 1
                 if viewModel.pages < dataStore.pages {
                     dataStore.state = .noMorePages
@@ -107,6 +119,7 @@ extension ShelfListFilterView: GridContentViewDelegate {
 struct ShelfListFilterView: View {
     @Environment(\.reviewItem) private var reviewItem
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.modelContext) private var modelContext
     @ObservedObject var dataStore: ShelfListDataStore
     
     var nextPage: Int {
@@ -151,7 +164,8 @@ struct ShelfListFilterView: View {
                     .frame(alignment: .top)
                 switch dataStore.state {
                 case .error:
-                    ErrorView(error: dataStore.lastError)
+                    CompactErrorView(error: dataStore.lastError)
+                    GridContentView(delegate: self, cards: dataStore.shelfItemsViewModel.asCards())
                 default:
                     GridContentView(delegate: self, cards: dataStore.shelfItemsViewModel.asCards())
                 }
@@ -174,6 +188,7 @@ struct ShelfListFilterView: View {
             CollectionsView(dataStore: dataStore.collectionDataStore).configureView()
         }
         .task {
+            dataStore.modelContext = modelContext
             fetch()
         }
         .onChange(of: dataStore.showSelection) {
@@ -261,8 +276,19 @@ struct ShelfListFilterView: View {
         dataStore.selectedItem = item
     }
     
+    var cacheKey: String {
+        "\(shelfTypeList[selectedShelfType].rawValue)_\(categoryList[selectedCategory].rawValue)"
+    }
+
     func fetch() {
+        let key = cacheKey
         cleanResult()
+        dataStore.currentCacheKey = key
+        let cached = dataStore.loadFromCache(cacheKey: key)
+        if !cached.isEmpty {
+            dataStore.shelfItemsViewModel = cached
+            dataStore.state = .canLoad
+        }
         Task {
             fetch(type: shelfTypeList[selectedShelfType],
                   category: categoryList[selectedCategory],

@@ -142,13 +142,16 @@
 		7F2E74AB2E89A5190084A650 /* ReplyEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2E74AA2E89A5150084A650 /* ReplyEndpoint.swift */; };
 		7F2E74AC2E89A5190084A650 /* ReplyEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2E74AA2E89A5150084A650 /* ReplyEndpoint.swift */; };
 		7F2E74AD2E89B1E70084A650 /* Visibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EEA3F72CF8CD86006D9AA5 /* Visibility.swift */; };
-		7F2E74AF2E89B2090084A650 /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 7F2E74AE2E89B2090084A650 /* TootSDK */; };
 		7F364E8A2E08918600BDFF01 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7F364E892E08918600BDFF01 /* Localizable.xcstrings */; };
 		7F364E8B2E08918600BDFF01 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7F364E892E08918600BDFF01 /* Localizable.xcstrings */; };
 		7F3B73312F4787C40085F8C0 /* ReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B73302F4787BE0085F8C0 /* ReviewManager.swift */; };
 		7F3B73322F4787C40085F8C0 /* ReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B73302F4787BE0085F8C0 /* ReviewManager.swift */; };
 		7F3B73342F50C00C0085F8C0 /* ItemViewModelBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B73332F50C00C0085F8C0 /* ItemViewModelBuilderTests.swift */; };
 		7F4911A72E2D9B3E00F6F5F0 /* AppPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4911A62E2D9B3900F6F5F0 /* AppPreferencesView.swift */; };
+		7F6714FA300169320059E9E2 /* ShelfItemCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6714F9300169310059E9E2 /* ShelfItemCache.swift */; };
+		7F6714FB300169320059E9E2 /* ShelfItemCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6714F9300169310059E9E2 /* ShelfItemCache.swift */; };
+		7F6714FD300171830059E9E2 /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 7F6714FC300171830059E9E2 /* TootSDK */; };
+		7F6714FF3001718A0059E9E2 /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 7F6714FE3001718A0059E9E2 /* TootSDK */; };
 		7F9940D92FF6E7A700FB1799 /* ShelfItunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940D82FF6E7A700FB1799 /* ShelfItunes.swift */; };
 		7F9940DA2FF6E7A700FB1799 /* ShelfItunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940D82FF6E7A700FB1799 /* ShelfItunes.swift */; };
 		7F9940DC2FF6E7A900FB1799 /* ItunesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9940DB2FF6E7A900FB1799 /* ItunesAPIClient.swift */; };
@@ -281,7 +284,6 @@
 		B39BFB242DA2DDAD00D774E1 /* AppRegistrationNetworkingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39BFB1E2DA2B6BB00D774E1 /* AppRegistrationNetworkingWorker.swift */; };
 		B39BFB252DA2E3A200D774E1 /* AppRegistrationEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39BFB212DA2B83E00D774E1 /* AppRegistrationEndpoint.swift */; };
 		B3A0B4412CE2A5250046DEA5 /* MultipartKitTootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B3A0B4402CE2A5250046DEA5 /* MultipartKitTootSDK */; };
-		B3A0B4432CE2A5250046DEA5 /* TootSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B3A0B4422CE2A5250046DEA5 /* TootSDK */; };
 		B3A0B44B2CE2A54E0046DEA5 /* TimelineConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A0B4452CE2A54E0046DEA5 /* TimelineConfigurator.swift */; };
 		B3A0B44C2CE2A54E0046DEA5 /* TimelineInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A0B4472CE2A54E0046DEA5 /* TimelineInteractor.swift */; };
 		B3A0B44D2CE2A54E0046DEA5 /* TimelineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A0B4482CE2A54E0046DEA5 /* TimelineModel.swift */; };
@@ -510,6 +512,7 @@
 		7F3B73302F4787BE0085F8C0 /* ReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewManager.swift; sourceTree = "<group>"; };
 		7F3B73332F50C00C0085F8C0 /* ItemViewModelBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModelBuilderTests.swift; sourceTree = "<group>"; };
 		7F4911A62E2D9B3900F6F5F0 /* AppPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferencesView.swift; sourceTree = "<group>"; };
+		7F6714F9300169310059E9E2 /* ShelfItemCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfItemCache.swift; sourceTree = "<group>"; };
 		7F9940D82FF6E7A700FB1799 /* ShelfItunes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfItunes.swift; sourceTree = "<group>"; };
 		7F9940DB2FF6E7A900FB1799 /* ItunesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesAPIClient.swift; sourceTree = "<group>"; };
 		7F9940DE2FF6E7AA00FB1799 /* SearchByNameItunesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByNameItunesEndpoint.swift; sourceTree = "<group>"; };
@@ -637,10 +640,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F6714FD300171830059E9E2 /* TootSDK in Frameworks */,
 				B3A0B4412CE2A5250046DEA5 /* MultipartKitTootSDK in Frameworks */,
 				B3F645CF2D216DBC002EFB5C /* HTML2Markdown in Frameworks */,
 				B3EE08B62DADC0F500630084 /* StoreKit.framework in Frameworks */,
-				B3A0B4432CE2A5250046DEA5 /* TootSDK in Frameworks */,
 				21BD25892D09073400CF0433 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -664,7 +667,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B390A3EE2D1B225700923AA4 /* MarkdownUI in Frameworks */,
-				7F2E74AF2E89B2090084A650 /* TootSDK in Frameworks */,
+				7F6714FF3001718A0059E9E2 /* TootSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -872,6 +875,7 @@
 				B3E420672DAF1A2D00FA1599 /* CatalogPostsModel.swift */,
 				7F9940D82FF6E7A700FB1799 /* ShelfItunes.swift */,
 				7F9940E12FF8294800FB1799 /* ShelfIGDB.swift */,
+				7F6714F9300169310059E9E2 /* ShelfItemCache.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1296,6 +1300,7 @@
 			packageProductDependencies = (
 				21BD25882D09073400CF0433 /* MarkdownUI */,
 				B3F645CE2D216DBC002EFB5C /* HTML2Markdown */,
+				7F6714FC300171830059E9E2 /* TootSDK */,
 			);
 			productName = Rateve;
 			productReference = 21EFAC1E2C7A7214001DD16D /* Chihu.app */;
@@ -1352,7 +1357,7 @@
 			name = ShareExtension;
 			packageProductDependencies = (
 				B390A3ED2D1B225700923AA4 /* MarkdownUI */,
-				7F2E74AE2E89B2090084A650 /* TootSDK */,
+				7F6714FE3001718A0059E9E2 /* TootSDK */,
 			);
 			productName = ShareExtension;
 			productReference = B390A38A2D1AF38800923AA4 /* ShareExtension.appex */;
@@ -1618,6 +1623,7 @@
 				B33EDC8E2D1AB8100042CF8C /* TipView.swift in Sources */,
 				212BA5562CA4CB2700DAB79E /* SettingImage.swift in Sources */,
 				7F2E74A42E899FCC0084A650 /* ReplyDataStore.swift in Sources */,
+				7F6714FA300169320059E9E2 /* ShelfItemCache.swift in Sources */,
 				7F2E74A52E899FCC0084A650 /* ReplyInteractor.swift in Sources */,
 				7F2E74A62E899FCC0084A650 /* ReplyModel.swift in Sources */,
 				7F2E74A72E899FCC0084A650 /* ReplyConfigurator.swift in Sources */,
@@ -1823,6 +1829,7 @@
 				B390A3E92D1B20F100923AA4 /* ReviewModel.swift in Sources */,
 				B390A3BC2D1AF47B00923AA4 /* SearchUrlConfigurator.swift in Sources */,
 				B3975C052DA15BE90071C40A /* UserPreferenceEndpoint.swift in Sources */,
+				7F6714FB300169320059E9E2 /* ShelfItemCache.swift in Sources */,
 				B390A3CA2D1AFD7000923AA4 /* ShelfGoogleBooks.swift in Sources */,
 				B390A3D02D1AFE3A00923AA4 /* SearchNetworkingWorker.swift in Sources */,
 				B390A3DD2D1B000F00923AA4 /* EnvironmentKeys.swift in Sources */,
@@ -2012,7 +2019,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.22.1;
+				MARKETING_VERSION = 1.23.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2056,7 +2063,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.22.1;
+				MARKETING_VERSION = 1.23.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2168,7 +2175,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.22.1;
+				MARKETING_VERSION = 1.23.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2201,7 +2208,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.22.1;
+				MARKETING_VERSION = 1.23.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nunesdennis.Chihu.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2280,7 +2287,7 @@
 			repositoryURL = "https://github.com/TootSDK/TootSDK";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 18.2.0;
+				minimumVersion = 23.0.0;
 			};
 		};
 		B3A0B7732CE2DF700046DEA5 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
@@ -2307,7 +2314,12 @@
 			package = 21BD25872D09061B00CF0433 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
 		};
-		7F2E74AE2E89B2090084A650 /* TootSDK */ = {
+		7F6714FC300171830059E9E2 /* TootSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3A0B43F2CE2A5250046DEA5 /* XCRemoteSwiftPackageReference "TootSDK" */;
+			productName = TootSDK;
+		};
+		7F6714FE3001718A0059E9E2 /* TootSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B3A0B43F2CE2A5250046DEA5 /* XCRemoteSwiftPackageReference "TootSDK" */;
 			productName = TootSDK;
@@ -2321,11 +2333,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B3A0B43F2CE2A5250046DEA5 /* XCRemoteSwiftPackageReference "TootSDK" */;
 			productName = MultipartKitTootSDK;
-		};
-		B3A0B4422CE2A5250046DEA5 /* TootSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B3A0B43F2CE2A5250046DEA5 /* XCRemoteSwiftPackageReference "TootSDK" */;
-			productName = TootSDK;
 		};
 		B3F645CE2D216DBC002EFB5C /* HTML2Markdown */ = {
 			isa = XCSwiftPackageProductDependency;
