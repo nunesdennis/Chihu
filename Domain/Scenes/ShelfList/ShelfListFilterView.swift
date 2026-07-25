@@ -5,7 +5,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 protocol ShelfListDisplayLogic {
     func display(viewModel: ShelfList.Load.ViewModel)
@@ -19,25 +18,14 @@ extension ShelfListFilterView: ShelfListDisplayLogic {
             dataStore.state = .error
         }
     }
-    
+
     func display(viewModel: ShelfList.Load.ViewModel) {
         DispatchQueue.main.async {
             if !viewModel.shelfItemsViewModel.isEmpty {
-                let isFirstPage = dataStore.pages == 1
-                if isFirstPage {
-                    dataStore.shelfItemsViewModel = viewModel.shelfItemsViewModel
-                    dataStore.count = viewModel.count
-                } else {
-                    for item in viewModel.shelfItemsViewModel {
-                        dataStore.shelfItemsViewModel.append(item)
-                    }
-                    dataStore.count += viewModel.count
+                for item in viewModel.shelfItemsViewModel {
+                    dataStore.shelfItemsViewModel.append(item)
                 }
-                dataStore.saveToCache(
-                    items: viewModel.shelfItemsViewModel,
-                    cacheKey: dataStore.currentCacheKey,
-                    replacing: isFirstPage
-                )
+                dataStore.count += viewModel.count
                 dataStore.pages += 1
                 if viewModel.pages < dataStore.pages {
                     dataStore.state = .noMorePages
@@ -49,40 +37,40 @@ extension ShelfListFilterView: ShelfListDisplayLogic {
             }
         }
     }
-    
+
     func fetch(type: ShelfType, category: ItemCategory.shelfAvailable, andPage page: Int) {
         guard dataStore.state == .canLoad || dataStore.state == .firstLoad else { return }
-        
+
         guard let interactor else {
             dataStore.lastError = ChihuError.codeError
             dataStore.state = .error
             return
         }
-        
+
         var categoryShelfAvailable: ItemCategory.shelfAvailable?
         if category != .allItems {
             categoryShelfAvailable = category
         }
-        
+
         dataStore.state = .loading
         let requestShelfs = ShelfList.Load.Request(type: type, page: page, category: categoryShelfAvailable)
         interactor.load(request: requestShelfs)
     }
-    
+
     func fetchMore(type: ShelfType, category: ItemCategory.shelfAvailable, andPage page: Int) {
         guard dataStore.state == .canLoad || dataStore.state == .firstLoad else { return }
-        
+
         guard let interactor else {
             dataStore.lastError = ChihuError.codeError
             dataStore.state = .error
             return
         }
-        
+
         var categoryShelfAvailable: ItemCategory.shelfAvailable?
         if category != .allItems {
             categoryShelfAvailable = category
         }
-        
+
         let requestShelfs = ShelfList.Load.Request(type: type, page: page, category: categoryShelfAvailable)
         interactor.load(request: requestShelfs)
     }
@@ -92,21 +80,21 @@ extension ShelfListFilterView: GridContentViewDelegate {
     func resetList() {
         // no-op
     }
-    
+
     func didTapCard(_ card: Card) {
         guard let item = (dataStore.shelfItemsViewModel.filter { $0.uuid == card.uuid }.first) else {
             dataStore.lastError = ChihuError.didTapCardFailed
             dataStore.state = .error
             return
         }
-        
+
         openItem(item)
     }
-    
+
     func shouldLoadMore() -> Bool {
         dataStore.state == .canLoad
     }
-    
+
     func loadMore() {
         if dataStore.state == .canLoad {
             fetchMore(type: shelfTypeList[selectedShelfType],
@@ -119,44 +107,43 @@ extension ShelfListFilterView: GridContentViewDelegate {
 struct ShelfListFilterView: View {
     @Environment(\.reviewItem) private var reviewItem
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.modelContext) private var modelContext
     @ObservedObject var dataStore: ShelfListDataStore
-    
+
     var nextPage: Int {
         dataStore.pages
     }
     var interactor: ShelfListBusinessLogic?
-    
+
     // Filter
     @State var isShelfTypeExpanded = false
     @State var isCategoryExpanded = false
-    
+
     var selectedCategory: Int {
         dataStore.selectedCategory
     }
     var selectedShelfType: Int {
         dataStore.selectedShelfType
     }
-    
+
     let shelfTypeList: [ShelfType] = [
         .complete, .wishlist, .progress, .dropped
     ]
-    
+
     // Do not add all items, it will break the view
     let categoryList: [ItemCategory.shelfAvailable] = [
         .allItems, .movie, .tv, .book, .music, .game, .podcast, .performance
     ]
-    
+
     let threeColumns = [
       GridItem(.flexible(minimum: 125)),
       GridItem(.flexible(minimum: 90)),
       GridItem(.flexible(minimum: 90))
     ]
-    
+
     init(dataStore: ShelfListDataStore = ShelfListDataStore()) {
         self.dataStore = dataStore
     }
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -164,8 +151,7 @@ struct ShelfListFilterView: View {
                     .frame(alignment: .top)
                 switch dataStore.state {
                 case .error:
-                    CompactErrorView(error: dataStore.lastError)
-                    GridContentView(delegate: self, cards: dataStore.shelfItemsViewModel.asCards())
+                    ErrorView(error: dataStore.lastError)
                 default:
                     GridContentView(delegate: self, cards: dataStore.shelfItemsViewModel.asCards())
                 }
@@ -188,7 +174,6 @@ struct ShelfListFilterView: View {
             CollectionsView(dataStore: dataStore.collectionDataStore).configureView()
         }
         .task {
-            dataStore.modelContext = modelContext
             fetch()
         }
         .onChange(of: dataStore.showSelection) {
@@ -275,20 +260,9 @@ struct ShelfListFilterView: View {
         dataStore.showSelection = true
         dataStore.selectedItem = item
     }
-    
-    var cacheKey: String {
-        "\(shelfTypeList[selectedShelfType].rawValue)_\(categoryList[selectedCategory].rawValue)"
-    }
 
     func fetch() {
-        let key = cacheKey
         cleanResult()
-        dataStore.currentCacheKey = key
-        let cached = dataStore.loadFromCache(cacheKey: key)
-        if !cached.isEmpty {
-            dataStore.shelfItemsViewModel = cached
-            dataStore.state = .canLoad
-        }
         Task {
             fetch(type: shelfTypeList[selectedShelfType],
                   category: categoryList[selectedCategory],
