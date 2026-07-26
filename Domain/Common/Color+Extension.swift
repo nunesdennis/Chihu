@@ -74,6 +74,15 @@ extension Color {
         .parisWhite
     }
     
+    // Sorter
+    public static var shelfListButtonHighlightedColor: Color {
+        .chihuGreen
+    }
+    
+    public static var shelfListButtonNormalColor: Color {
+        .parisWhite
+    }
+    
     // Tabbar
     public static var tabbarButtonColor: Color {
         .chihuGreen

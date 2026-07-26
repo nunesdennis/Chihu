@@ -74,6 +74,28 @@ extension ShelfListFilterView: ShelfListDisplayLogic {
         let requestShelfs = ShelfList.Load.Request(type: type, page: page, category: categoryShelfAvailable)
         interactor.load(request: requestShelfs)
     }
+    
+    func fetchAll(type: ShelfType, category: ItemCategory.shelfAvailable, andPage page: Int) {
+        guard dataStore.state == .canLoad || dataStore.state == .firstLoad else {
+            dataStore.objectWillChange.send()
+            return
+        }
+
+        guard let interactor else {
+            dataStore.lastError = ChihuError.codeError
+            dataStore.state = .error
+            return
+        }
+
+        var categoryShelfAvailable: ItemCategory.shelfAvailable?
+        if category != .allItems {
+            categoryShelfAvailable = category
+        }
+        
+        dataStore.state = .loading
+        let requestShelfs = ShelfList.Load.Request(type: type, page: page, category: categoryShelfAvailable)
+        interactor.loadAll(request: requestShelfs)
+    }
 }
 
 extension ShelfListFilterView: GridContentViewDelegate {
@@ -108,7 +130,7 @@ struct ShelfListFilterView: View {
     @Environment(\.reviewItem) private var reviewItem
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var dataStore: ShelfListDataStore
-
+    
     var nextPage: Int {
         dataStore.pages
     }
@@ -121,6 +143,7 @@ struct ShelfListFilterView: View {
     var selectedCategory: Int {
         dataStore.selectedCategory
     }
+    
     var selectedShelfType: Int {
         dataStore.selectedShelfType
     }
@@ -149,11 +172,18 @@ struct ShelfListFilterView: View {
             VStack {
                 filterView
                     .frame(alignment: .top)
+                sorterView
+                    .frame(alignment: .top)
                 switch dataStore.state {
                 case .error:
                     ErrorView(error: dataStore.lastError)
+                case .loading:
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(2)
+                        .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: .infinity)
                 default:
-                    GridContentView(delegate: self, cards: dataStore.shelfItemsViewModel.asCards())
+                    GridContentView(delegate: self, cards: dataStore.sortedShelfItemsViewModel.asCards())
                 }
             }
             .background(Color.searchViewColor)
@@ -183,6 +213,39 @@ struct ShelfListFilterView: View {
                 dataStore.showSelection = false
             }
         }
+    }
+    
+    var sorterView: some View {
+        HStack(spacing: 0) {
+            HStack(alignment: .center) {
+                orderByDateButton()
+                    .frame(width: 35)
+                orderByRateButton()
+                    .frame(width: 35)
+                orderByNameButton()
+                    .frame(width: 35)
+                Spacer()
+                    .frame(width: 8)
+            }
+            .border(sortButtonColor(isHighlighted: dataStore.orderDescending), width: 0.5)
+            ZStack {
+                Rectangle()
+                    .fill(sortButtonColor(isHighlighted: dataStore.orderDescending))
+                Image(systemName: "arrow.up.arrow.down")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .onTapGesture {
+                        dataStore.orderDescending.toggle()
+                        fetchAll()
+                    }
+                    .foregroundColor(sortButtonColor(isHighlighted: !dataStore.orderDescending))
+            }
+            .frame(width: 35)
+        }
+        .foregroundColor(sortButtonColor(isHighlighted: dataStore.orderDescending))
+        .frame(height: 35)
     }
     
     var filterView: some View {
@@ -243,6 +306,51 @@ struct ShelfListFilterView: View {
         .padding(EdgeInsets(top: .zero, leading: 16, bottom: .zero, trailing: 16))
     }
     
+    func orderByDateButton() -> some View {
+        orderButton(isEnabled: dataStore.shouldOrderByDate, systemName: "calendar")
+        .onTapGesture {
+            dataStore.shouldOrderByDate.toggle()
+            dataStore.shouldOrderByRate = false
+            dataStore.shouldOrderByName = false
+            fetchAll()
+        }
+    }
+    
+    func orderByRateButton() -> some View {
+        orderButton(isEnabled: dataStore.shouldOrderByRate, systemName: "star.fill")
+        .onTapGesture {
+            dataStore.shouldOrderByDate = false
+            dataStore.shouldOrderByRate.toggle()
+            dataStore.shouldOrderByName = false
+            fetchAll()
+        }
+    }
+    
+    func orderByNameButton() -> some View {
+        orderButton(isEnabled: dataStore.shouldOrderByName, systemName: "textformat")
+        .onTapGesture {
+            dataStore.shouldOrderByDate = false
+            dataStore.shouldOrderByRate = false
+            dataStore.shouldOrderByName.toggle()
+            fetchAll()
+        }
+    }
+    
+    func orderButton(isEnabled: Bool, systemName: String) -> some View {
+        HStack {
+            Image(systemName: systemName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 20, height: 20)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .foregroundColor(sortButtonColor(isHighlighted: isEnabled))
+    }
+    
+    func sortButtonColor(isHighlighted: Bool) -> Color {
+        isHighlighted ? .shelfListButtonHighlightedColor : .shelfListButtonNormalColor
+    }
+    
     func closeButton() -> some View {
         ZStack {
             Circle()
@@ -270,6 +378,14 @@ struct ShelfListFilterView: View {
         }
     }
     
+    func fetchAll() {
+        Task {
+            fetchAll(type: shelfTypeList[selectedShelfType],
+                  category: categoryList[selectedCategory],
+                  andPage: dataStore.pages)
+        }
+    }
+    
     func cleanResult() {
         dataStore.state = .firstLoad
         dataStore.shelfItemsViewModel = []
@@ -277,6 +393,10 @@ struct ShelfListFilterView: View {
         dataStore.selectedItem = nil
         dataStore.pages = 1
         dataStore.count = 0
+        dataStore.orderDescending = true
+        dataStore.shouldOrderByDate = true
+        dataStore.shouldOrderByRate = false
+        dataStore.shouldOrderByName = false
     }
     
     func buttonCategoryColor(index: Int) -> Color {
