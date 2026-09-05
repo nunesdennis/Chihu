@@ -75,12 +75,28 @@ extension Color {
     }
     
     // Sorter
+    public static var shelfListEmojiHighlightedColor: Color {
+        .cornSilk
+    }
+    
+    public static var shelfListEmojiNormalColor: Color {
+        .chihuGray
+    }
+    
     public static var shelfListButtonHighlightedColor: Color {
-        .chihuGreen
+        .chihuGreen.opacity(0.8)
     }
     
     public static var shelfListButtonNormalColor: Color {
-        .parisWhite
+        .chihuClear
+    }
+    
+    public static var shelfListSortedViewHighlightedColor: Color {
+        .chihuGreen.opacity(0.8)
+    }
+    
+    public static var shelfListSortedViewNormalColor: Color {
+        .chihuGray
     }
     
     // Tabbar

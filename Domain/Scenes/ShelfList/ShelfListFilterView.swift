@@ -216,36 +216,22 @@ struct ShelfListFilterView: View {
     }
     
     var sorterView: some View {
-        HStack(spacing: 0) {
-            HStack(alignment: .center) {
-                orderByDateButton()
-                    .frame(width: 35)
-                orderByRateButton()
-                    .frame(width: 35)
-                orderByNameButton()
-                    .frame(width: 35)
-                Spacer()
-                    .frame(width: 8)
-            }
-            .border(sortButtonColor(isHighlighted: dataStore.orderDescending), width: 0.5)
-            ZStack {
-                Rectangle()
-                    .fill(sortButtonColor(isHighlighted: dataStore.orderDescending))
-                Image(systemName: "arrow.up.arrow.down")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 20, height: 20)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .onTapGesture {
-                        dataStore.orderDescending.toggle()
-                        fetchAll()
-                    }
-                    .foregroundColor(sortButtonColor(isHighlighted: !dataStore.orderDescending))
-            }
-            .frame(width: 35)
+        HStack(spacing: 8) {
+            orderByDateButton()
+            orderByRateButton()
+            orderByNameButton()
+            orderButton(isEnabled: dataStore.orderDescending, systemName: "arrow.up.arrow.down")
+                .onTapGesture {
+                    dataStore.orderDescending.toggle()
+                    fetchAll()
+                }
         }
-        .foregroundColor(sortButtonColor(isHighlighted: dataStore.orderDescending))
-        .frame(height: 35)
+        .padding(0.5)
+        .background {
+            Capsule()
+                .stroke(sorterViewColor(isHighlighted: dataStore.orderDescending), lineWidth: 1.5)
+        }
+        .frame(height: 43)
     }
     
     var filterView: some View {
@@ -337,18 +323,29 @@ struct ShelfListFilterView: View {
     }
     
     func orderButton(isEnabled: Bool, systemName: String) -> some View {
-        HStack {
+        ZStack {
+            Circle()
+                .fill(sortButtonColor(isHighlighted: isEnabled))
             Image(systemName: systemName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 20, height: 20)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .foregroundColor(sortEmojiColor(isHighlighted: isEnabled))
         }
-        .foregroundColor(sortButtonColor(isHighlighted: isEnabled))
+        .frame(width: 35, height: 35)
+        .contentShape(Circle())
+    }
+    
+    func sortEmojiColor(isHighlighted: Bool) -> Color {
+        isHighlighted ? .shelfListEmojiHighlightedColor : .shelfListEmojiNormalColor
     }
     
     func sortButtonColor(isHighlighted: Bool) -> Color {
         isHighlighted ? .shelfListButtonHighlightedColor : .shelfListButtonNormalColor
+    }
+    
+    func sorterViewColor(isHighlighted: Bool) -> Color {
+        isHighlighted ? .shelfListSortedViewHighlightedColor : .shelfListSortedViewNormalColor
     }
     
     func closeButton() -> some View {
